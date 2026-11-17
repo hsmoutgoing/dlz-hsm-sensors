@@ -1,8 +1,10 @@
 "use client";
-
+import { useTranslations } from "@/lib/i18n/client";
 import { useState } from "react";
 
 export function AdminLogin() {
+  const tx = useTranslations();
+
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -36,13 +38,12 @@ export function AdminLogin() {
 
   return (
     <div className="mx-auto flex max-w-[420px] flex-col justify-center px-4 py-24 sm:px-6">
-      <p className="eyebrow">Internal</p>
+      <p className="eyebrow">{tx("Internal")} </p>
       <h1 className="mt-2 text-2xl font-semibold tracking-tight text-ink-900">
-        Inbound inquiries
-      </h1>
+        {tx("Inbound inquiries")} </h1>
       <form onSubmit={submit} className="mt-6 rounded-lg border border-ink-200 bg-white p-6">
         <label className="block">
-          <span className="text-[12.5px] font-medium text-ink-800">Password</span>
+          <span className="text-[12.5px] font-medium text-ink-800">{tx("Password")} </span>
           <input
             type="password"
             value={password}
@@ -54,7 +55,7 @@ export function AdminLogin() {
         </label>
         {error && (
           <p role="alert" className="mt-3 text-[12.5px] text-red-600">
-            {error}
+            {tx(error)}
           </p>
         )}
         <button
@@ -62,7 +63,7 @@ export function AdminLogin() {
           disabled={busy || password.length === 0}
           className="mt-5 w-full rounded bg-brand-600 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {busy ? "Checking…" : "Sign in"}
+          {tx(busy ? "Checking…" : "Sign in")}
         </button>
       </form>
     </div>

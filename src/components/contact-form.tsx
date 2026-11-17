@@ -1,5 +1,5 @@
 "use client";
-
+import { useTranslations } from "@/lib/i18n/client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
@@ -39,6 +39,8 @@ const emptyValues: ContactFormValues = {
 type State = "idle" | "submitting" | "success" | "error";
 
 export function ContactForm({ initialIntent, initialModel, initialCategory }: ContactFormProps) {
+  const tx = useTranslations();
+
   const [values, setValues] = useState<ContactFormValues>({
     ...emptyValues,
     intent: initialIntent,
@@ -129,16 +131,13 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
           </svg>
         </div>
         <h2 className="mt-5 text-2xl font-semibold tracking-tight text-ink-900">
-          Enquiry received
-        </h2>
+          {tx("Enquiry received")} </h2>
         <p className="mt-3 max-w-lg text-[14.5px] leading-relaxed text-ink-600">
-          Thank you — your request is with our engineering team. We will reply to{" "}
-          <span className="font-medium text-ink-900">{values.email}</span> with a model
-          recommendation and a price.
-        </p>
+          {tx("Thank you — your request is with our engineering team. We will reply to")} {tx(" ")} 
+          <span className="font-medium text-ink-900">{values.email}</span> {tx("with a model recommendation and a price.")} </p>
         {reference && (
           <p className="mt-5 rounded border border-ink-200 bg-ink-50 px-4 py-3 font-mono text-[12px] text-ink-600">
-            Reference: <span className="text-ink-900">{reference.slice(0, 8)}</span>
+            {tx("Reference:")} <span className="text-ink-900">{reference.slice(0, 8)}</span>
           </p>
         )}
         <div className="mt-7 flex flex-wrap gap-3">
@@ -146,8 +145,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
             href="/products"
             className="rounded border border-ink-300 px-5 py-3 text-[14px] font-medium text-ink-800 transition-colors hover:border-ink-400 hover:bg-ink-50"
           >
-            Continue browsing
-          </Link>
+            {tx("Continue browsing")} </Link>
           <button
             type="button"
             onClick={() => {
@@ -158,8 +156,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
             }}
             className="rounded px-5 py-3 text-[14px] font-medium text-brand-600 transition-colors hover:text-brand-700"
           >
-            Send another enquiry
-          </button>
+            {tx("Send another enquiry")} </button>
         </div>
       </div>
     );
@@ -174,7 +171,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
           role="alert"
           className="border-b border-signal-400/40 bg-signal-400/10 px-6 py-4 text-[13.5px] leading-relaxed text-ink-900"
         >
-          {formError}
+          {tx(formError)}
         </div>
       )}
 
@@ -182,8 +179,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
         {/* Intent */}
         <fieldset>
           <legend className="text-[12.5px] font-medium text-ink-800">
-            What do you need?
-          </legend>
+            {tx("What do you need?")} </legend>
           <div className="mt-2.5 flex flex-wrap gap-1.5">
             {INTENTS.map((intent) => (
               <label
@@ -202,7 +198,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
                   onChange={() => update("intent", intent)}
                   className="sr-only"
                 />
-                {intentLabels[intent]}
+                {tx(intentLabels[intent])}
               </label>
             ))}
           </div>
@@ -210,7 +206,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
 
         <div className="grid gap-5 sm:grid-cols-2">
           <Field
-            label="Name"
+            label={tx("Name")} 
             name="name"
             required
             value={values.name}
@@ -219,7 +215,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
             onChange={(v) => update("name", v)}
           />
           <Field
-            label="Company"
+            label={tx("Company")} 
             name="company"
             required
             value={values.company}
@@ -228,7 +224,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
             onChange={(v) => update("company", v)}
           />
           <Field
-            label="Work email"
+            label={tx("Work email")} 
             name="email"
             type="email"
             required
@@ -238,7 +234,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
             onChange={(v) => update("email", v)}
           />
           <Field
-            label="Phone / WhatsApp"
+            label={tx("Phone / WhatsApp")} 
             name="phone"
             type="tel"
             value={values.phone ?? ""}
@@ -247,7 +243,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
             onChange={(v) => update("phone", v)}
           />
           <Field
-            label="Country"
+            label={tx("Country")} 
             name="country"
             value={values.country ?? ""}
             error={errors.country}
@@ -255,33 +251,33 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
             onChange={(v) => update("country", v)}
           />
           <Field
-            label="Quantity required"
+            label={tx("Quantity required")} 
             name="quantity"
             value={values.quantity ?? ""}
             error={errors.quantity}
-            placeholder="e.g. 5 pcs, or 1 sample"
+            placeholder={tx("e.g. 5 pcs, or 1 sample")} 
             onChange={(v) => update("quantity", v)}
           />
           <Field
-            label="Model reference"
+            label={tx("Model reference")} 
             name="model"
             value={values.model ?? ""}
             error={errors.model}
-            placeholder="e.g. HSM10"
+            placeholder={tx("e.g. HSM10")} 
             onChange={(v) => update("model", v)}
           />
           <label className="block">
-            <span className="text-[12.5px] font-medium text-ink-800">Product family</span>
+            <span className="text-[12.5px] font-medium text-ink-800">{tx("Product family")} </span>
             <select
               name="category"
               value={values.category ?? ""}
               onChange={(e) => update("category", e.target.value)}
               className="mt-1.5 w-full rounded border border-ink-300 bg-white px-3 py-2.5 text-[13.5px] text-ink-900 focus:border-brand-500 focus:outline-none"
             >
-              <option value="">Not sure / other</option>
+              <option value="">{tx("Not sure / other")} </option>
               {categories.map((c) => (
                 <option key={c.slug} value={c.slug}>
-                  {c.name}
+                  {tx(c.name)}
                 </option>
               ))}
             </select>
@@ -290,8 +286,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
 
         <label className="block">
           <span className="text-[12.5px] font-medium text-ink-800">
-            Process conditions or message
-            <span className="ml-1 text-signal-500" aria-hidden="true">
+            {tx("Process conditions or message")} <span className="ml-1 text-signal-500" aria-hidden="true">
               *
             </span>
           </span>
@@ -303,7 +298,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
             onChange={(e) => update("message", e.target.value)}
             aria-invalid={Boolean(errors.message)}
             aria-describedby={errors.message ? "message-error" : "message-hint"}
-            placeholder="Medium, temperature, pressure, pipe or vessel size, and the signal your control system accepts. A drawing or photo of the existing installation helps."
+            placeholder={tx("Medium, temperature, pressure, pipe or vessel size, and the signal your control system accepts. A drawing or photo of the existing installation helps.")} 
             className={`mt-1.5 w-full resize-y rounded border px-3 py-2.5 text-[13.5px] leading-relaxed text-ink-900 placeholder:text-ink-400 focus:outline-none ${
               errors.message
                 ? "border-red-500 focus:border-red-500"
@@ -312,20 +307,18 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
           />
           {errors.message ? (
             <span id="message-error" className="mt-1.5 block text-[12px] text-red-600">
-              {errors.message}
+              {tx(errors.message)}
             </span>
           ) : (
             <span id="message-hint" className="mt-1.5 block text-[12px] text-ink-500">
-              The more of this you can give, the more precise the answer.
-            </span>
+              {tx("The more of this you can give, the more precise the answer.")} </span>
           )}
         </label>
 
         {/* Honeypot — visually hidden, never announced */}
         <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
           <label>
-            Website
-            <input
+            {tx("Website")} <input
               type="text"
               name="website"
               tabIndex={-1}
@@ -338,10 +331,9 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
 
         <div className="flex flex-col gap-3 border-t border-ink-100 pt-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-sm text-[12px] leading-relaxed text-ink-500">
-            We use your details only to answer this enquiry. See the{" "}
+            {tx("We use your details only to answer this enquiry. See the")} {tx(" ")} 
             <Link href="/privacy" className="underline underline-offset-2 hover:text-brand-600">
-              privacy notice
-            </Link>
+              {tx("privacy notice")} </Link>
             .
           </p>
           <button
@@ -349,7 +341,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
             disabled={state === "submitting"}
             className="shrink-0 rounded bg-brand-600 px-6 py-3.5 text-[14.5px] font-medium text-white transition-colors hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {state === "submitting" ? "Sending…" : "Send enquiry"}
+            {tx(state === "submitting" ? "Sending…" : "Send enquiry")}
           </button>
         </div>
       </div>
@@ -380,16 +372,18 @@ function Field({
   placeholder,
   autoComplete,
 }: FieldProps) {
+  const tx = useTranslations();
+
   return (
     <label className="block">
       <span className="text-[12.5px] font-medium text-ink-800">
-        {label}
+        {tx(label)}
         {required && (
           <span className="ml-1 text-signal-500" aria-hidden="true">
             *
           </span>
         )}
-        {required && <span className="sr-only"> (required)</span>}
+        {required && <span className="sr-only"> {tx("(required)")} </span>}
       </span>
       <input
         type={type}
@@ -407,7 +401,7 @@ function Field({
       />
       {error && (
         <span id={`${name}-error`} className="mt-1.5 block text-[12px] text-red-600">
-          {error}
+          {tx(error)}
         </span>
       )}
     </label>

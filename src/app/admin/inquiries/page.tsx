@@ -1,3 +1,5 @@
+import { localizeMetadata } from "@/lib/i18n/metadata";
+import { useTranslations, getI18n } from "@/lib/i18n/server";
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import { adminCookie, isAdminConfigured, isValidSession } from "@/lib/inquiries/admin-auth";
@@ -5,21 +7,24 @@ import { getInquiryStore, isStoreConfigured, type InquiryRecord } from "@/lib/in
 import { AdminLogin } from "@/components/admin-login";
 import { AdminList } from "@/components/admin-list";
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+ const {t, locale} = await getI18n();
+ const metadata: Metadata = {
   title: "Inquiries",
   robots: { index: false, follow: false },
 };
+ return localizeMetadata(metadata, t, locale);
+}
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminInquiriesPage() {
+  const tx = (await getI18n()).t;
+
   if (!isAdminConfigured()) {
     return (
-      <Notice title="Admin access is not configured">
-        Set <code className="font-mono text-[13px]">ADMIN_PASSWORD</code> (at least 12
-        characters) in the environment, then reload. The enquiry form itself works without
-        this — only this list is gated.
-      </Notice>
+      <Notice title={tx("Admin access is not configured")} >
+        {tx("Set")} <code className="font-mono text-[13px]">{tx("ADMIN_PASSWORD")} </code> {tx("(at least 12 characters) in the environment, then reload. The enquiry form itself works without this — only this list is gated.")} </Notice>
     );
   }
 
@@ -49,10 +54,9 @@ export default async function AdminInquiriesPage() {
     <div className="mx-auto max-w-[1100px] px-4 py-10 sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="eyebrow">Internal</p>
+          <p className="eyebrow">{tx("Internal")} </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-ink-900">
-            Inbound inquiries
-          </h1>
+            {tx("Inbound inquiries")} </h1>
         </div>
         <dl className="flex gap-6">
           {[
@@ -63,9 +67,9 @@ export default async function AdminInquiriesPage() {
           ].map((s) => (
             <div key={s.k}>
               <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-ink-500">
-                {s.k}
+                {tx(s.k)}
               </dt>
-              <dd className="font-mono text-xl font-medium text-ink-900 tnum">{s.v}</dd>
+              <dd className="font-mono text-xl font-medium text-ink-900 tnum">{tx(s.v)}</dd>
             </div>
           ))}
         </dl>
@@ -73,16 +77,14 @@ export default async function AdminInquiriesPage() {
 
       {!isStoreConfigured() && (
         <p className="mt-6 rounded border border-signal-400/50 bg-signal-400/10 px-4 py-3 text-[12.5px] leading-relaxed text-ink-800">
-          <strong className="font-semibold">Development mode.</strong>{" "}
-          <code className="font-mono">SUPABASE_URL</code> and{" "}
-          <code className="font-mono">SUPABASE_SERVICE_ROLE_KEY</code> are not set, so
-          submissions are held in memory and will disappear when the server restarts.
-        </p>
+          <strong className="font-semibold">{tx("Development mode.")} </strong>{tx(" ")} 
+          <code className="font-mono">{tx("SUPABASE_URL")} </code> {tx("and")} {tx(" ")} 
+          <code className="font-mono">{tx("SUPABASE_SERVICE_ROLE_KEY")} </code> {tx("are not set, so submissions are held in memory and will disappear when the server restarts.")} </p>
       )}
 
       {loadError && (
         <p className="mt-6 rounded border border-red-300 bg-red-50 px-4 py-3 text-[12.5px] text-red-800">
-          {loadError}
+          {tx(loadError)}
         </p>
       )}
 
@@ -92,10 +94,12 @@ export default async function AdminInquiriesPage() {
 }
 
 function Notice({ title, children }: { title: string; children: React.ReactNode }) {
+  const tx = useTranslations();
+
   return (
     <div className="mx-auto max-w-[720px] px-4 py-20 sm:px-6">
-      <h1 className="text-2xl font-semibold tracking-tight text-ink-900">{title}</h1>
-      <p className="mt-3 text-[14px] leading-relaxed text-ink-600">{children}</p>
+      <h1 className="text-2xl font-semibold tracking-tight text-ink-900">{tx(title)}</h1>
+      <p className="mt-3 text-[14px] leading-relaxed text-ink-600">{tx(children)}</p>
     </div>
   );
 }

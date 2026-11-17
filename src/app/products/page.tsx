@@ -1,3 +1,5 @@
+import { localizeMetadata } from "@/lib/i18n/metadata";
+import { useTranslations, getI18n } from "@/lib/i18n/server";
 import type { Metadata } from "next";
 import { PageHero, QuoteCta } from "@/components/page-hero";
 import { ProductExplorer } from "@/components/product-explorer";
@@ -5,13 +7,19 @@ import { categories, getCategory } from "@/lib/categories";
 import { categoryCounts, products } from "@/lib/products";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+ const {t, locale} = await getI18n();
+ const metadata: Metadata = {
   title: "Product Catalogue — Flow, Level, Pressure, Temperature Sensors",
   description: `All ${products.length} industrial sensor models from HSM Sensors: flow switches, level transmitters, pressure transmitters, RTD probes, ultrasonic sensors, laser methane detectors and wireless IoT instruments. Filter by model, output or material.`,
   alternates: { canonical: "/products" },
 };
+ return localizeMetadata(metadata, t, locale);
+}
 
 export default function ProductsIndexPage() {
+  const tx = useTranslations();
+
   const counts = categoryCounts();
 
   const items = products.map((p) => {
@@ -44,8 +52,8 @@ export default function ProductsIndexPage() {
     <>
       <PageHero
         eyebrow={`${products.length} models · 10 families`}
-        title="The full catalogue"
-        lede="Every instrument is assembled, calibrated and pressure-tested in our own facility in Jimei District, Xiamen. Filter by model code, measured quantity, wetted material or output signal — then send the process conditions for a price and a lead time."
+        title={tx("The full catalogue")} 
+        lede={tx("Every instrument is assembled, calibrated and pressure-tested in our own facility in Jimei District, Xiamen. Filter by model code, measured quantity, wetted material or output signal — then send the process conditions for a price and a lead time.")} 
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Products" }]}
         actions={[
           { label: "Request a quote", href: "/contact?intent=quote", primary: true },
@@ -62,14 +70,11 @@ export default function ProductsIndexPage() {
         <div className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           <div className="grid gap-10 lg:grid-cols-3">
             <div>
-              <p className="eyebrow">How to choose</p>
+              <p className="eyebrow">{tx("How to choose")} </p>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-ink-900">
-                Three questions decide most specifications
-              </h2>
+                {tx("Three questions decide most specifications")} </h2>
               <p className="mt-3 text-[14.5px] leading-relaxed text-ink-600">
-                If you can answer these, the model list narrows to two or three candidates —
-                and we will confirm which one we would ship for the duty.
-              </p>
+                {tx("If you can answer these, the model list narrows to two or three candidates — and we will confirm which one we would ship for the duty.")} </p>
             </div>
             <ol className="lg:col-span-2 grid gap-px overflow-hidden rounded-lg border border-ink-200 bg-ink-200 sm:grid-cols-3">
               {[
@@ -90,11 +95,11 @@ export default function ProductsIndexPage() {
                 },
               ].map((s) => (
                 <li key={s.n} className="bg-white p-6">
-                  <span className="font-mono text-[11px] text-brand-500 tnum">{s.n}</span>
+                  <span className="font-mono text-[11px] text-brand-500 tnum">{tx(s.n)}</span>
                   <h3 className="mt-2 text-[14.5px] font-semibold tracking-tight text-ink-900">
-                    {s.t}
+                    {tx(s.t)}
                   </h3>
-                  <p className="mt-1.5 text-[13px] leading-relaxed text-ink-600">{s.b}</p>
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-ink-600">{tx(s.b)}</p>
                 </li>
               ))}
             </ol>
@@ -102,7 +107,7 @@ export default function ProductsIndexPage() {
 
           <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-ink-200 pt-8 text-[13px] text-ink-600">
             <span>
-              Still unsure? Send the process conditions to{" "}
+              {tx("Still unsure? Send the process conditions to")} {tx(" ")} 
               <a
                 href={`mailto:${site.contact.email}`}
                 className="font-medium text-brand-600 hover:text-brand-700"
@@ -111,8 +116,7 @@ export default function ProductsIndexPage() {
               </a>
             </span>
             <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-ink-500">
-              Answered by the engineering team
-            </span>
+              {tx("Answered by the engineering team")} </span>
           </div>
         </div>
       </section>

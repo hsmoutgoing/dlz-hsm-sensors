@@ -1,14 +1,20 @@
+import { localizeMetadata } from "@/lib/i18n/metadata";
+import { useTranslations, getI18n } from "@/lib/i18n/server";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { PageHero, QuoteCta } from "@/components/page-hero";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+ const {t, locale} = await getI18n();
+ const metadata: Metadata = {
   title: "Custom Sensor Engineering — Non-Standard Ranges, Threads, Materials",
   description:
     "Non-standard probe lengths, process threads, wetted materials, output signals and hazardous-area variants, built to order at the HSM factory in Xiamen. Send the process conditions for an engineering review.",
   alternates: { canonical: "/custom" },
 };
+ return localizeMetadata(metadata, t, locale);
+}
 
 const changeable = [
   {
@@ -78,12 +84,14 @@ const common = [
 ];
 
 export default function CustomPage() {
+  const tx = useTranslations();
+
   return (
     <>
       <PageHero
-        eyebrow="Custom engineering"
-        title="The catalogue is the starting point, not the limit"
-        lede="A non-standard thread, a longer probe, a different wetted material or a signal your control system already speaks — these are normal orders when the people quoting them are the people building them. Describe the duty and we will tell you what it takes."
+        eyebrow={tx("Custom engineering")} 
+        title={tx("The catalogue is the starting point, not the limit")} 
+        lede={tx("A non-standard thread, a longer probe, a different wetted material or a signal your control system already speaks — these are normal orders when the people quoting them are the people building them. Describe the duty and we will tell you what it takes.")} 
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Custom engineering" }]}
         actions={[
           { label: "Send the process conditions", href: "/contact?intent=custom", primary: true },
@@ -94,24 +102,20 @@ export default function CustomPage() {
       {/* What can change */}
       <section className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="max-w-2xl">
-          <p className="eyebrow">What can change</p>
+          <p className="eyebrow">{tx("What can change")} </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900 sm:text-[2.2rem]">
-            Six parameters, set on the line
-          </h2>
+            {tx("Six parameters, set on the line")} </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-ink-600">
-            These are the variables the factory can move without becoming a different product.
-            Anything outside them is a development project, and we will say so at the review
-            stage rather than after the order.
-          </p>
+            {tx("These are the variables the factory can move without becoming a different product. Anything outside them is a development project, and we will say so at the review stage rather than after the order.")} </p>
         </div>
 
         <div className="mt-10 grid gap-px overflow-hidden rounded-lg border border-ink-200 bg-ink-200 sm:grid-cols-2 lg:grid-cols-3">
           {changeable.map((c) => (
             <div key={c.title} className="flex flex-col bg-white p-6">
-              <h3 className="text-[15px] font-semibold tracking-tight text-ink-900">{c.title}</h3>
-              <p className="mt-2 flex-1 text-[13px] leading-relaxed text-ink-600">{c.body}</p>
+              <h3 className="text-[15px] font-semibold tracking-tight text-ink-900">{tx(c.title)}</h3>
+              <p className="mt-2 flex-1 text-[13px] leading-relaxed text-ink-600">{tx(c.body)}</p>
               <p className="mt-4 border-t border-ink-100 pt-3 font-mono text-[10.5px] uppercase tracking-[0.1em] text-brand-600">
-                {c.detail}
+                {tx(c.detail)}
               </p>
             </div>
           ))}
@@ -122,20 +126,19 @@ export default function CustomPage() {
       <section className="border-y border-ink-200 bg-ink-900">
         <div className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
           <div className="max-w-2xl">
-            <p className="eyebrow !text-brand-300">How it runs</p>
+            <p className="eyebrow !text-brand-300">{tx("How it runs")} </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-[2.2rem]">
-              From process conditions to a unit on the bench
-            </h2>
+              {tx("From process conditions to a unit on the bench")} </h2>
           </div>
 
           <ol className="mt-10 grid gap-px overflow-hidden rounded-lg bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map((s) => (
               <li key={s.n} className="bg-ink-800 p-6">
-                <span className="font-mono text-[11px] text-brand-300 tnum">{s.n}</span>
+                <span className="font-mono text-[11px] text-brand-300 tnum">{tx(s.n)}</span>
                 <h3 className="mt-2 text-[14.5px] font-semibold tracking-tight text-white">
-                  {s.title}
+                  {tx(s.title)}
                 </h3>
-                <p className="mt-2 text-[12.5px] leading-relaxed text-ink-400">{s.body}</p>
+                <p className="mt-2 text-[12.5px] leading-relaxed text-ink-400">{tx(s.body)}</p>
               </li>
             ))}
           </ol>
@@ -146,21 +149,18 @@ export default function CustomPage() {
       <section className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-4">
-            <p className="eyebrow">Common requests</p>
+            <p className="eyebrow">{tx("Common requests")} </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-ink-900 sm:text-[1.9rem]">
-              What buyers usually ask for
-            </h2>
+              {tx("What buyers usually ask for")} </h2>
             <p className="mt-3 text-[14px] leading-relaxed text-ink-600">
-              If your requirement is on this list, it has been built before and there is a
-              known answer.
-            </p>
+              {tx("If your requirement is on this list, it has been built before and there is a known answer.")} </p>
           </div>
 
           <ul className="lg:col-span-8 grid gap-px overflow-hidden rounded-lg border border-ink-200 bg-ink-200 sm:grid-cols-2">
             {common.map((c) => (
               <li key={c.q} className="bg-white p-5">
-                <h3 className="text-[13.5px] font-semibold text-ink-900">{c.q}</h3>
-                <p className="mt-1 text-[12.5px] leading-relaxed text-ink-600">{c.a}</p>
+                <h3 className="text-[13.5px] font-semibold text-ink-900">{tx(c.q)}</h3>
+                <p className="mt-1 text-[12.5px] leading-relaxed text-ink-600">{tx(c.a)}</p>
               </li>
             ))}
           </ul>
@@ -173,13 +173,9 @@ export default function CustomPage() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
               <h2 className="text-xl font-semibold tracking-tight text-ink-900">
-                Fastest route for a custom enquiry
-              </h2>
+                {tx("Fastest route for a custom enquiry")} </h2>
               <p className="mt-2 text-[14px] leading-relaxed text-ink-600">
-                Email the process conditions and any drawing or photograph of the existing
-                installation. That skips the form and puts the enquiry straight in front of
-                an engineer.
-              </p>
+                {tx("Email the process conditions and any drawing or photograph of the existing installation. That skips the form and puts the enquiry straight in front of an engineer.")} </p>
             </div>
             <div className="flex shrink-0 flex-wrap gap-3">
               <a
@@ -197,12 +193,10 @@ export default function CustomPage() {
             </div>
           </div>
           <p className="mt-6 text-[12.5px] text-ink-500">
-            Not sure whether you need a custom build?{" "}
+            {tx("Not sure whether you need a custom build?")} {tx(" ")} 
             <Link href="/products" className="font-medium text-brand-600 hover:text-brand-700">
-              Start from the catalogue
-            </Link>{" "}
-            — most enquiries are answered by a standard model.
-          </p>
+              {tx("Start from the catalogue")} </Link>{tx(" ")} 
+            {tx("— most enquiries are answered by a standard model.")} </p>
         </div>
       </section>
 

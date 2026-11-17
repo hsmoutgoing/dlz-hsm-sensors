@@ -1,3 +1,5 @@
+import { localizeMetadata } from "@/lib/i18n/metadata";
+import { useTranslations, getI18n } from "@/lib/i18n/server";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
@@ -7,12 +9,16 @@ import { categories } from "@/lib/categories";
 import { categoryCounts, featuredProducts, products } from "@/lib/products";
 import { site, trustPoints } from "@/lib/site";
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+ const {t, locale} = await getI18n();
+ const metadata: Metadata = {
   title: "Industrial Sensors — Flow, Level, Pressure, Temperature | HSM Sensors",
   description:
     "Factory-direct manufacturer of industrial flow switches, level transmitters, pressure transmitters, RTD sensors, ultrasonic and gas detectors. 4-20 mA, RS485 and relay outputs, custom ranges, worldwide shipping from Xiamen, China.",
   alternates: { canonical: "/" },
 };
+ return localizeMetadata(metadata, t, locale);
+}
 
 const applications = [
   {
@@ -48,13 +54,15 @@ const applications = [
 ];
 
 export default function HomePage() {
+  const tx = useTranslations();
+
   const counts = categoryCounts();
   const total = products.length;
 
   return (
     <>
       {/* ============================ HERO ============================ */}
-      <section className="relative overflow-hidden bg-ink-900">
+      <section className="home-hero relative overflow-hidden bg-ink-900">
         <div className="absolute inset-0 grid-backdrop opacity-50" aria-hidden="true" />
         <div
           className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-400/60 to-transparent"
@@ -66,34 +74,26 @@ export default function HomePage() {
             {/* Copy */}
             <div className="relative z-10 lg:col-span-6 lg:py-20">
               <p className="eyebrow !text-brand-300">
-                Manufacturer · Xiamen, China
-                {site.founded ? ` · Since ${site.founded}` : " · Factory-direct"}
+                {tx("Manufacturer · Xiamen, China")} {tx(site.founded ? ` · Since ${site.founded}` : " · Factory-direct")}
               </p>
               <h1 className="mt-4 text-4xl font-semibold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-[3.65rem]">
-                Industrial sensors,
-                <br className="hidden sm:block" />{" "}
-                <span className="text-brand-300">built in our own factory.</span>
+                {tx("Industrial sensors,")} <br className="hidden sm:block" />{tx(" ")} 
+                <span className="text-brand-300">{tx("built in our own factory.")} </span>
               </h1>
               <p className="mt-6 max-w-xl text-[16.5px] leading-relaxed text-ink-300">
-                Flow, level, pressure, temperature, ultrasonic and gas instrumentation for
-                plant engineers and machine builders. {total} models in ten families, with
-                4–20 mA, RS485 and relay outputs — and custom ranges built to order rather
-                than refused.
-              </p>
+                {tx("Flow, level, pressure, temperature, ultrasonic and gas instrumentation for plant engineers and machine builders.")} {tx(total)} {tx("models in ten families, with 4–20 mA, RS485 and relay outputs — and custom ranges built to order rather than refused.")} </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   href="/products"
                   className="rounded bg-brand-500 px-6 py-3.5 text-[14.5px] font-medium text-white transition-colors hover:bg-brand-400"
                 >
-                  Browse the catalogue
-                </Link>
+                  {tx("Browse the catalogue")} </Link>
                 <Link
                   href="/contact?intent=quote"
                   className="rounded border border-white/25 px-6 py-3.5 text-[14.5px] font-medium text-white transition-colors hover:border-white/50 hover:bg-white/5"
                 >
-                  Request a quote
-                </Link>
+                  {tx("Request a quote")} </Link>
               </div>
 
               {/* Quick stats */}
@@ -104,13 +104,13 @@ export default function HomePage() {
                   { v: "316L", k: "wetted stainless standard" },
                 ].map((s) => (
                   <div key={s.k}>
-                    <dt className="sr-only">{s.k}</dt>
+                    <dt className="sr-only">{tx(s.k)}</dt>
                     <dd>
                       <span className="block font-mono text-2xl font-medium text-white tnum">
-                        {s.v}
+                        {tx(s.v)}
                       </span>
                       <span className="mt-1 block text-[12px] leading-snug text-ink-400">
-                        {s.k}
+                        {tx(s.k)}
                       </span>
                     </dd>
                   </div>
@@ -130,9 +130,9 @@ export default function HomePage() {
           {trustPoints.map((t) => (
             <div key={t.title} className="bg-white px-6 py-7">
               <h2 className="text-[14.5px] font-semibold tracking-tight text-ink-900">
-                {t.title}
+                {tx(t.title)}
               </h2>
-              <p className="mt-1.5 text-[13px] leading-relaxed text-ink-600">{t.body}</p>
+              <p className="mt-1.5 text-[13px] leading-relaxed text-ink-600">{tx(t.body)}</p>
             </div>
           ))}
         </div>
@@ -142,21 +142,17 @@ export default function HomePage() {
       <section className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
-            <p className="eyebrow">Product families</p>
+            <p className="eyebrow">{tx("Product families")} </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900 sm:text-[2.4rem]">
-              Find the measurement you need
-            </h2>
+              {tx("Find the measurement you need")} </h2>
             <p className="mt-3 text-[15px] leading-relaxed text-ink-600">
-              Ten families, each built around a specific measuring principle. Pick the
-              quantity, then narrow by range, output and process connection.
-            </p>
+              {tx("Ten families, each built around a specific measuring principle. Pick the quantity, then narrow by range, output and process connection.")} </p>
           </div>
           <Link
             href="/products"
             className="text-[13.5px] font-medium text-brand-600 hover:text-brand-700"
           >
-            All {total} models →
-          </Link>
+            {tx("All")} {tx(total)} {tx("models →")} </Link>
         </div>
 
         <div className="mt-10 grid gap-px overflow-hidden rounded-lg border border-ink-200 bg-ink-200 sm:grid-cols-2 lg:grid-cols-3">
@@ -168,20 +164,20 @@ export default function HomePage() {
             >
               <div className="flex items-start justify-between gap-3">
                 <h3 className="text-[16px] font-semibold leading-snug tracking-tight text-ink-900 group-hover:text-brand-700">
-                  {c.name}
+                  {tx(c.name)}
                 </h3>
                 <span className="shrink-0 font-mono text-[11px] text-ink-400">
-                  {counts[c.slug] ?? 0}
+                  {tx(counts[c.slug] ?? 0)}
                 </span>
               </div>
-              <p className="mt-2 text-[13px] leading-relaxed text-ink-600">{c.tagline}</p>
+              <p className="mt-2 text-[13px] leading-relaxed text-ink-600">{tx(c.tagline)}</p>
               <div className="mt-4 flex flex-wrap gap-1.5">
                 {c.outputs.slice(0, 3).map((o) => (
                   <span
                     key={o}
                     className="rounded-sm border border-ink-200 bg-ink-50 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-ink-500"
                   >
-                    {o}
+                    {tx(o)}
                   </span>
                 ))}
               </div>
@@ -192,14 +188,11 @@ export default function HomePage() {
             className="group flex flex-col justify-center bg-ink-900 p-6 transition-colors hover:bg-brand-800"
           >
             <h3 className="text-[16px] font-semibold leading-snug tracking-tight text-white">
-              Need something not listed?
-            </h3>
+              {tx("Need something not listed?")} </h3>
             <p className="mt-2 text-[13px] leading-relaxed text-ink-400">
-              Send the medium, range and thread. We build custom variants as a matter of course.
-            </p>
+              {tx("Send the medium, range and thread. We build custom variants as a matter of course.")} </p>
             <span className="mt-4 text-[13px] font-medium text-brand-300">
-              Talk to an engineer →
-            </span>
+              {tx("Talk to an engineer →")} </span>
           </Link>
         </div>
       </section>
@@ -209,17 +202,15 @@ export default function HomePage() {
         <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="eyebrow">Widely specified</p>
+              <p className="eyebrow">{tx("Widely specified")} </p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900 sm:text-[2.4rem]">
-                Workhorse models
-              </h2>
+                {tx("Workhorse models")} </h2>
             </div>
             <Link
               href="/products"
               className="text-[13.5px] font-medium text-brand-600 hover:text-brand-700"
             >
-              See everything →
-            </Link>
+              {tx("See everything →")} </Link>
           </div>
 
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -234,21 +225,16 @@ export default function HomePage() {
       <section className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <p className="eyebrow">Industries</p>
+            <p className="eyebrow">{tx("Industries")} </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900 sm:text-[2.4rem]">
-              Where these instruments run
-            </h2>
+              {tx("Where these instruments run")} </h2>
             <p className="mt-4 text-[15px] leading-relaxed text-ink-600">
-              Most of what we ship goes into six industries. Each has its own failure modes
-              — fouling, corrosion, vibration, hazardous area classification — and the
-              instrument has to be specified for the one that applies.
-            </p>
+              {tx("Most of what we ship goes into six industries. Each has its own failure modes — fouling, corrosion, vibration, hazardous area classification — and the instrument has to be specified for the one that applies.")} </p>
             <Link
               href="/industries"
               className="mt-6 inline-block text-[13.5px] font-medium text-brand-600 hover:text-brand-700"
             >
-              Industry applications →
-            </Link>
+              {tx("Industry applications →")} </Link>
           </div>
 
           <div className="lg:col-span-8">
@@ -257,13 +243,13 @@ export default function HomePage() {
                 <div key={a.title} className="bg-white p-6">
                   <div className="flex items-baseline justify-between gap-3">
                     <h3 className="text-[15px] font-semibold tracking-tight text-ink-900">
-                      {a.title}
+                      {tx(a.title)}
                     </h3>
                     <span className="shrink-0 font-mono text-[10px] uppercase tracking-wide text-brand-600">
-                      {a.metric}
+                      {tx(a.metric)}
                     </span>
                   </div>
-                  <p className="mt-2 text-[13px] leading-relaxed text-ink-600">{a.body}</p>
+                  <p className="mt-2 text-[13px] leading-relaxed text-ink-600">{tx(a.body)}</p>
                 </div>
               ))}
             </div>
@@ -276,22 +262,16 @@ export default function HomePage() {
         <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
             <div>
-              <p className="eyebrow !text-brand-300">How we work</p>
+              <p className="eyebrow !text-brand-300">{tx("How we work")} </p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-[2.4rem]">
-                You are dealing with the factory, not a trading desk
-              </h2>
+                {tx("You are dealing with the factory, not a trading desk")} </h2>
               <p className="mt-5 text-[15px] leading-relaxed text-ink-300">
-                Everything in this catalogue is assembled, calibrated and tested in Jimei
-                District, Xiamen. The engineering team that answers your enquiry is the same
-                team that sets the production parameters — which is why a non-standard thread
-                or a 450 °C version is a normal order rather than an exception.
-              </p>
+                {tx("Everything in this catalogue is assembled, calibrated and tested in Jimei District, Xiamen. The engineering team that answers your enquiry is the same team that sets the production parameters — which is why a non-standard thread or a 450 °C version is a normal order rather than an exception.")} </p>
               <Link
                 href="/about"
                 className="mt-7 inline-block rounded border border-white/25 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:border-white/50 hover:bg-white/5"
               >
-                About the company
-              </Link>
+                {tx("About the company")} </Link>
             </div>
 
             <dl className="grid gap-px overflow-hidden rounded-lg bg-white/10 sm:grid-cols-2">
@@ -314,8 +294,8 @@ export default function HomePage() {
                 },
               ].map((s) => (
                 <div key={s.v} className="bg-ink-800 p-6">
-                  <dt className="font-mono text-xl font-medium text-brand-300 tnum">{s.v}</dt>
-                  <dd className="mt-2 text-[12.5px] leading-relaxed text-ink-400">{s.k}</dd>
+                  <dt className="font-mono text-xl font-medium text-brand-300 tnum">{tx(s.v)}</dt>
+                  <dd className="mt-2 text-[12.5px] leading-relaxed text-ink-400">{tx(s.k)}</dd>
                 </div>
               ))}
             </dl>
@@ -328,22 +308,17 @@ export default function HomePage() {
         <div className="overflow-hidden rounded-xl border border-ink-200">
           <div className="grid lg:grid-cols-12">
             <div className="lg:col-span-7 px-8 py-12 sm:px-12">
-              <p className="eyebrow">Next step</p>
+              <p className="eyebrow">{tx("Next step")} </p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900">
-                Send the process conditions and we will specify the instrument
-              </h2>
+                {tx("Send the process conditions and we will specify the instrument")} </h2>
               <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-ink-600">
-                Medium, pressure, temperature, pipe or vessel size, and the signal your control
-                system accepts — that is enough for us to come back with a model, a price and a
-                lead time. If a catalogue item will not do, we say what will.
-              </p>
+                {tx("Medium, pressure, temperature, pipe or vessel size, and the signal your control system accepts — that is enough for us to come back with a model, a price and a lead time. If a catalogue item will not do, we say what will.")} </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link
                   href="/contact?intent=quote"
                   className="rounded bg-brand-600 px-6 py-3.5 text-[14.5px] font-medium text-white transition-colors hover:bg-brand-700"
                 >
-                  Request a quote
-                </Link>
+                  {tx("Request a quote")} </Link>
                 <a
                   href={`mailto:${site.contact.email}`}
                   className="rounded border border-ink-300 px-6 py-3.5 text-[14.5px] font-medium text-ink-800 transition-colors hover:border-ink-400"
@@ -355,7 +330,7 @@ export default function HomePage() {
             <div className="relative min-h-[240px] bg-ink-50 lg:col-span-5">
               <Image
                 src="/images/products/hwt10-magnetic-level-transmitter.jpg"
-                alt="HSM magnetic level transmitter"
+                alt={tx("HSM magnetic level transmitter")} 
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-contain p-10"

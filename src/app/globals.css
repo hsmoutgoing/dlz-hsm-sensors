@@ -37,12 +37,18 @@
   --color-ink-900: #121a22;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", sans-serif;
+    "Segoe UI", "Microsoft YaHei", "PingFang SC", "Hiragino Kaku Gothic ProN",
+    "Yu Gothic", "Meiryo", sans-serif;
   --font-mono: var(--font-mono-spec), ui-monospace, "SF Mono", Menlo,
     monospace;
 
-  --radius-xs: 2px;
-  --radius-sm: 4px;
+  --radius-xs: 6px;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
+  --radius-xl: 32px;
+  --radius-2xl: 40px;
+  --radius-default: 16px;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -86,7 +92,7 @@
   :focus-visible {
     outline: 2px solid var(--color-brand-500);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 12px;
   }
 
   ::selection {
@@ -197,3 +203,141 @@
     animation: rise 0.7s var(--ease-out-expo) both;
   }
 }
+
+/* Softer industrial UI: restrained motion, rounded surfaces, clear focus. */
+@layer components {
+  :where(a, button, input, select, textarea) {
+    -webkit-tap-highlight-color: transparent;
+  }
+  :where(button, a.rounded, a.rounded-lg, a.rounded-full, select) {
+    transition: background-color 180ms ease, color 180ms ease,
+      border-color 180ms ease, box-shadow 220ms ease, translate 220ms ease;
+  }
+  :where(a.rounded, a.rounded-lg, button.rounded) {
+    border-radius: 999px;
+  }
+  :where(input:not([type='radio']):not([type='checkbox']), select, textarea) {
+    border-radius: 12px;
+    transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+  }
+  :where(input, select, textarea):focus-visible {
+    box-shadow: 0 0 0 4px rgb(26 111 188 / 0.11);
+  }
+  :where(input, select, textarea):disabled { cursor: not-allowed; }
+  :where(header) { box-shadow: 0 4px 24px rgb(8 42 72 / 0.04); }
+  :where(main .rounded-lg.border) {
+    box-shadow: 0 3px 16px rgb(8 42 72 / 0.035);
+    transition: box-shadow 250ms ease, border-color 200ms ease;
+  }
+  :where(main a.group) {
+    border-radius: 20px;
+    transition: translate 250ms var(--ease-out-expo), box-shadow 250ms ease, border-color 200ms ease;
+  }
+  :where(header [aria-haspopup='true']) { border-radius: 12px; }
+  :where(header [aria-haspopup='true'][aria-expanded='true']) { background: var(--color-brand-50); }
+  :where(header .shadow-xl) { animation: menu-appear 180ms var(--ease-out-expo) both; }
+  :where(main img) { transition: scale 450ms var(--ease-out-expo); }
+  :where(main [id], main section[id]) { scroll-margin-top: 100px; }
+  .section-arrived { animation: section-arrive 550ms var(--ease-out-expo) both; }
+  @keyframes section-arrive {
+    from { opacity: 0.6; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes menu-appear {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (hover: hover) and (pointer: fine) {
+    :where(a.rounded, a.rounded-lg, button.rounded):not(:disabled):hover {
+      translate: 0 -2px;
+      box-shadow: 0 6px 18px rgb(11 79 138 / 0.14);
+    }
+    :where(main a.group):hover {
+      translate: 0 -4px;
+      box-shadow: 0 14px 32px rgb(8 42 72 / 0.10);
+      border-color: var(--color-brand-200);
+    }
+    :where(main a.group):hover img { scale: 1.025; }
+  }
+  :where(a.rounded, a.rounded-lg, button.rounded):not(:disabled):active {
+    translate: 0 1px;
+    box-shadow: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .section-arrived, header .shadow-xl { animation: none; }
+    :where(a, button, img, input, select, textarea) {
+      transition: none !important;
+      translate: none !important;
+      scale: none !important;
+    }
+  }
+}
+
+
+/* Deliberately after utilities: prior component-layer rules were overridden by
+   rounded/transition utilities. Only visual controls and named surfaces opt in. */
+:root { --surface-shadow: 0 8px 32px rgb(17 55 91 / 0.055); }
+.home-hero {
+  margin: 12px clamp(12px, 2.2vw, 36px) 0;
+  border-radius: clamp(24px, 3vw, 44px);
+  background-image: radial-gradient(ellipse at 85% 15%, rgb(53 115 185 / .24), transparent 65%);
+  box-shadow: 0 14px 44px rgb(8 42 72 / .13);
+}
+.site-header { box-shadow: 0 5px 28px rgb(17 55 91 / .035); }
+.site-header > div { gap: 16px; }
+.site-header nav[aria-label] > div > button {
+  border-radius: 999px;
+  background: #edf5ff;
+  padding-inline: 16px;
+}
+.site-header nav > a { border-radius: 999px; }
+.site-header select { background-color: #f5f7fb; border-color: transparent; }
+/* Pill actions; rectangular product cards explicitly stay rounded rectangles. */
+:where(a, button):is(.rounded, .rounded-full):not(.product-surface) {
+  border-radius: 999px;
+  transition: background-color .2s ease, color .2s ease, box-shadow .25s ease, translate .25s ease;
+}
+:where(input:not([type='radio']):not([type='checkbox']), select) {
+  border-radius: 999px;
+}
+textarea { border-radius: 20px; }
+.product-surface {
+  padding: 8px;
+  border-radius: 28px;
+  border-color: #e9edf3;
+  box-shadow: var(--surface-shadow);
+  transition: translate .3s var(--ease-out-expo), box-shadow .3s ease, border-color .2s ease;
+}
+.product-surface > div:first-child {
+  border-radius: 21px;
+  border-bottom: 0;
+  background: linear-gradient(140deg, #f5f8fc, #f0f4f9);
+}
+.product-surface > div:last-child { padding: 20px 16px 16px; }
+.product-surface img { transition: transform .45s var(--ease-out-expo); }
+main form.rounded-lg { border-radius: 30px; box-shadow: var(--surface-shadow); }
+main form > div:first-child { border-radius: 29px 29px 0 0; }
+main section[aria-labelledby='technical-data-heading'] section {
+  border-radius: 22px;
+  box-shadow: 0 4px 18px rgb(17 55 91 / .03);
+}
+main section[aria-labelledby='technical-data-heading'] section h3 {
+  background: #f0f5fc;
+}
+@media (hover: hover) and (pointer: fine) {
+  .product-surface:hover { box-shadow: 0 18px 45px rgb(17 55 91 / .11); translate: 0 -4px; }
+  .site-header nav > a:hover { background-color: #f1f5fa; }
+}
+@media (max-width: 639px) {
+  .site-header > div { gap: 8px; }
+  .site-header > div > a:first-child { gap: 6px; }
+  .site-header > div > a:first-child > span > span:first-child { font-size: 16px; }
+  .site-header > div > a:first-child > span > span:last-child { font-size: 8px; letter-spacing: .05em; }
+  .home-hero { margin-inline: 8px; border-radius: 24px; }
+  .product-surface { border-radius: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-surface, .product-surface img { transition: none; }
+  .product-surface:hover { translate: none; }
+}
+
