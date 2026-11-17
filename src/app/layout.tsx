@@ -1,3 +1,4 @@
+import { localizeMetadata } from "@/lib/i18n/metadata";
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { JsonLd } from "@/components/json-ld";
@@ -6,6 +7,9 @@ import { site } from "@/lib/site";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import "./globals.css";
+import { InteractionEffects } from "@/components/interaction-effects";
+import { getI18n } from "@/lib/i18n/server";
+import { I18nProvider } from "@/lib/i18n/client";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,7 +25,9 @@ const mono = JetBrains_Mono({
   weight: ["400", "500", "600"],
 });
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+ const {t, locale} = await getI18n();
+ const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
     default: `${site.name} — ${site.tagline}`,
@@ -60,6 +66,8 @@ export const metadata: Metadata = {
     apple: [{ url: "/brand/apple-touch-icon.png", sizes: "180x180" }],
   },
 };
+ return localizeMetadata(metadata, t, locale);
+}
 
 export const viewport: Viewport = {
   themeColor: "#0b4f8a",
@@ -67,19 +75,23 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const { locale, messages, t } = await getI18n();
   return (
-    <html lang="en" className={`${inter.variable} ${mono.variable}`}>
+    <html lang={locale} className={`${inter.variable} ${mono.variable}`}>
       <body className="min-h-screen bg-white text-ink-900 antialiased">
+        <I18nProvider locale={locale} messages={messages}>
         <JsonLd data={organizationSchema()} />
         <a href="#main" className="skip-link">
-          Skip to content
+          {t("Skip to content")}
         </a>
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
+        <InteractionEffects />
+        </I18nProvider>
       </body>
     </html>
   );

@@ -1,3 +1,5 @@
+import { localizeMetadata } from "@/lib/i18n/metadata";
+import { useTranslations, getI18n } from "@/lib/i18n/server";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { PageHero, QuoteCta } from "@/components/page-hero";
@@ -5,12 +7,16 @@ import { categories } from "@/lib/categories";
 import { products } from "@/lib/products";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+ const {t, locale} = await getI18n();
+ const metadata: Metadata = {
   title: "Resources — Selection Guides, Output Signals, Datasheets",
   description:
     "How to specify an industrial sensor: choosing between relay, 4-20 mA, 0-10 V and RS485 outputs; picking a level principle; reading ingress protection ratings. Plus datasheet and certificate requests.",
   alternates: { canonical: "/resources" },
 };
+ return localizeMetadata(metadata, t, locale);
+}
 
 const outputSignals = [
   {
@@ -97,12 +103,14 @@ const ipRatings = [
 ];
 
 export default function ResourcesPage() {
+  const tx = useTranslations();
+
   return (
     <>
       <PageHero
-        eyebrow="Resources"
-        title="Specifying an instrument without a sales call"
-        lede="Three things decide most sensor orders: the measuring principle, the output signal your panel accepts, and the environmental rating. These pages cover all three, so an enquiry can start from a shortlist rather than a blank page."
+        eyebrow={tx("Resources")} 
+        title={tx("Specifying an instrument without a sales call")} 
+        lede={tx("Three things decide most sensor orders: the measuring principle, the output signal your panel accepts, and the environmental rating. These pages cover all three, so an enquiry can start from a shortlist rather than a blank page.")} 
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Resources" }]}
         actions={[
           { label: "Request a datasheet", href: "/contact?intent=datasheet", primary: true },
@@ -113,22 +121,17 @@ export default function ResourcesPage() {
       {/* Output signals */}
       <section id="outputs" className="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="max-w-2xl">
-          <p className="eyebrow">Reference · Output signals</p>
+          <p className="eyebrow">{tx("Reference · Output signals")} </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900 sm:text-[2.2rem]">
-            Which output do you need?
-          </h2>
+            {tx("Which output do you need?")} </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-ink-600">
-            The output is usually the first thing to fix, because it decides what the control
-            system has to do with the measurement — and whether you need a control system at
-            all.
-          </p>
+            {tx("The output is usually the first thing to fix, because it decides what the control system has to do with the measurement — and whether you need a control system at all.")} </p>
         </div>
 
         <div className="mt-10 overflow-x-auto rounded-lg border border-ink-200">
           <table className="w-full min-w-[720px] border-collapse text-left">
             <caption className="sr-only">
-              Industrial sensor output signals, their typical use, and what to watch for
-            </caption>
+              {tx("Industrial sensor output signals, their typical use, and what to watch for")} </caption>
             <thead className="bg-ink-50">
               <tr>
                 {["Signal", "When to use it", "What to watch", "Where it appears"].map((h) => (
@@ -137,7 +140,7 @@ export default function ResourcesPage() {
                     scope="col"
                     className="border-b border-ink-200 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-500"
                   >
-                    {h}
+                    {tx(h)}
                   </th>
                 ))}
               </tr>
@@ -149,16 +152,16 @@ export default function ResourcesPage() {
                     scope="row"
                     className="whitespace-nowrap px-4 py-4 align-top text-[13px] font-semibold text-ink-900"
                   >
-                    {row.signal}
+                    {tx(row.signal)}
                   </th>
                   <td className="px-4 py-4 align-top text-[12.5px] leading-relaxed text-ink-700">
-                    {row.use}
+                    {tx(row.use)}
                   </td>
                   <td className="px-4 py-4 align-top text-[12.5px] leading-relaxed text-ink-600">
-                    {row.watch}
+                    {tx(row.watch)}
                   </td>
                   <td className="px-4 py-4 align-top text-[12px] leading-relaxed text-ink-500">
-                    {row.models}
+                    {tx(row.models)}
                   </td>
                 </tr>
               ))}
@@ -166,51 +169,43 @@ export default function ResourcesPage() {
           </table>
         </div>
         <p className="mt-3 text-[12px] text-ink-500 md:hidden">
-          Scroll the table sideways to read all four columns.
-        </p>
+          {tx("Scroll the table sideways to read all four columns.")} </p>
       </section>
 
       {/* Level principles */}
       <section className="border-y border-ink-200 bg-ink-50">
         <div className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
           <div className="max-w-2xl">
-            <p className="eyebrow">Reference · Level measurement</p>
+            <p className="eyebrow">{tx("Reference · Level measurement")} </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900 sm:text-[2.2rem]">
-              Six level principles, and when each one fails
-            </h2>
+              {tx("Six level principles, and when each one fails")} </h2>
             <p className="mt-3 text-[15px] leading-relaxed text-ink-600">
-              Level is the widest part of the catalogue because no single principle suits every
-              tank. The column that matters is the second one — the conditions where each
-              principle is the wrong choice.
-            </p>
+              {tx("Level is the widest part of the catalogue because no single principle suits every tank. The column that matters is the second one — the conditions where each principle is the wrong choice.")} </p>
           </div>
 
           <ul className="mt-10 grid gap-px overflow-hidden rounded-lg border border-ink-200 bg-ink-200 lg:grid-cols-2">
             {levelPrinciples.map((p) => (
               <li key={p.principle} className="bg-white p-6">
                 <h3 className="text-[15px] font-semibold tracking-tight text-ink-900">
-                  {p.principle}
+                  {tx(p.principle)}
                 </h3>
                 <dl className="mt-3 space-y-2.5">
                   <div>
                     <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-brand-600">
-                      Good for
-                    </dt>
-                    <dd className="mt-1 text-[12.5px] leading-relaxed text-ink-700">{p.good}</dd>
+                      {tx("Good for")} </dt>
+                    <dd className="mt-1 text-[12.5px] leading-relaxed text-ink-700">{tx(p.good)}</dd>
                   </div>
                   <div>
                     <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-ink-500">
-                      Avoid when
-                    </dt>
-                    <dd className="mt-1 text-[12.5px] leading-relaxed text-ink-600">{p.avoid}</dd>
+                      {tx("Avoid when")} </dt>
+                    <dd className="mt-1 text-[12.5px] leading-relaxed text-ink-600">{tx(p.avoid)}</dd>
                   </div>
                 </dl>
                 <Link
                   href={p.href}
                   className="mt-4 inline-block text-[12.5px] font-medium text-brand-600 hover:text-brand-700"
                 >
-                  Level models →
-                </Link>
+                  {tx("Level models →")} </Link>
               </li>
             ))}
           </ul>
@@ -221,27 +216,21 @@ export default function ResourcesPage() {
       <section className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
-            <p className="eyebrow">Reference · Environmental rating</p>
+            <p className="eyebrow">{tx("Reference · Environmental rating")} </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-ink-900 sm:text-[1.9rem]">
-              Reading an IP code
-            </h2>
+              {tx("Reading an IP code")} </h2>
             <p className="mt-3 text-[14px] leading-relaxed text-ink-600">
-              The first digit is solids, the second is water. The catalogue ratings below are
-              the ones that appear across the product range; a higher number is not
-              automatically better if the installation never sees water.
-            </p>
+              {tx("The first digit is solids, the second is water. The catalogue ratings below are the ones that appear across the product range; a higher number is not automatically better if the installation never sees water.")} </p>
             <p className="mt-4 text-[13px] leading-relaxed text-ink-500">
-              Note that IP68 requires a stated depth and duration — an IP68 claim without those
-              two numbers is not meaningful.
-            </p>
+              {tx("Note that IP68 requires a stated depth and duration — an IP68 claim without those two numbers is not meaningful.")} </p>
           </div>
           <dl className="lg:col-span-7 grid gap-px overflow-hidden rounded-lg border border-ink-200 bg-ink-200">
             {ipRatings.map((r) => (
               <div key={r.code} className="flex flex-col gap-1 bg-white p-5 sm:flex-row sm:items-baseline sm:gap-6">
                 <dt className="w-20 shrink-0 font-mono text-[14px] font-medium text-brand-600">
-                  {r.code}
+                  {tx(r.code)}
                 </dt>
-                <dd className="text-[13px] leading-relaxed text-ink-700">{r.meaning}</dd>
+                <dd className="text-[13px] leading-relaxed text-ink-700">{tx(r.meaning)}</dd>
               </div>
             ))}
           </dl>
@@ -253,24 +242,17 @@ export default function ResourcesPage() {
         <div className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-6">
-              <p className="eyebrow !text-brand-300">Documentation</p>
+              <p className="eyebrow !text-brand-300">{tx("Documentation")} </p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-[2.2rem]">
-                Datasheets, drawings and certificates
-              </h2>
+                {tx("Datasheets, drawings and certificates")} </h2>
               <p className="mt-4 text-[15px] leading-relaxed text-ink-300">
-                The specification tables on every product page are the current published data.
-                For a purchase, an installation or an import file you usually need the document
-                underneath it — the PDF datasheet for the exact model, a dimensioned drawing, or
-                the certificate scans. Those are issued per request rather than posted publicly,
-                because the revision has to match the unit you are buying.
-              </p>
+                {tx("The specification tables on every product page are the current published data. For a purchase, an installation or an import file you usually need the document underneath it — the PDF datasheet for the exact model, a dimensioned drawing, or the certificate scans. Those are issued per request rather than posted publicly, because the revision has to match the unit you are buying.")} </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link
                   href="/contact?intent=datasheet"
                   className="rounded bg-brand-500 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-brand-400"
                 >
-                  Request documentation
-                </Link>
+                  {tx("Request documentation")} </Link>
                 <a
                   href={`mailto:${site.contact.email}?subject=${encodeURIComponent("Datasheet request")}`}
                   className="rounded border border-white/25 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:border-white/50 hover:bg-white/5"
@@ -290,8 +272,8 @@ export default function ResourcesPage() {
                 { t: "Selection shortlist", b: "Two or three candidate models against your process conditions." },
               ].map((d) => (
                 <li key={d.t} className="bg-ink-800 p-5">
-                  <h3 className="text-[13.5px] font-semibold text-white">{d.t}</h3>
-                  <p className="mt-1.5 text-[12px] leading-relaxed text-ink-400">{d.b}</p>
+                  <h3 className="text-[13.5px] font-semibold text-white">{tx(d.t)}</h3>
+                  <p className="mt-1.5 text-[12px] leading-relaxed text-ink-400">{tx(d.b)}</p>
                 </li>
               ))}
             </ul>
@@ -302,8 +284,7 @@ export default function ResourcesPage() {
       {/* Family index */}
       <section className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <h2 className="text-2xl font-semibold tracking-tight text-ink-900 sm:text-[1.9rem]">
-          Browse by family
-        </h2>
+          {tx("Browse by family")} </h2>
         <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((c) => (
             <li key={c.slug}>
@@ -312,10 +293,10 @@ export default function ResourcesPage() {
                 className="group flex items-baseline justify-between gap-3 rounded-lg border border-ink-200 bg-white px-5 py-4 transition-colors hover:border-brand-300 hover:bg-brand-50"
               >
                 <span className="text-[14px] font-medium text-ink-900 group-hover:text-brand-700">
-                  {c.name}
+                  {tx(c.name)}
                 </span>
                 <span className="shrink-0 font-mono text-[11px] text-ink-400">
-                  {products.filter((p) => p.category === c.slug).length}
+                  {tx(products.filter((p) => p.category === c.slug).length)}
                 </span>
               </Link>
             </li>

@@ -1,3 +1,5 @@
+"use client";
+import { useTranslations } from "@/lib/i18n/client";
 import Link from "next/link";
 import { site } from "@/lib/site";
 
@@ -18,6 +20,8 @@ export function PageHero({
   actions,
   compact = false,
 }: PageHeroProps) {
+  const tx = useTranslations();
+
   return (
     <section className="relative overflow-hidden border-b border-ink-200 bg-ink-900">
       <div className="absolute inset-0 grid-backdrop opacity-40" aria-hidden="true" />
@@ -31,17 +35,17 @@ export function PageHero({
         }`}
       >
         {breadcrumbs && breadcrumbs.length > 0 && (
-          <nav aria-label="Breadcrumb" className="mb-5">
+          <nav aria-label={tx("Breadcrumb")}  className="mb-5">
             <ol className="flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-400">
               {breadcrumbs.map((b, i) => (
                 <li key={`${b.label}-${i}`} className="flex items-center gap-2">
                   {i > 0 && <span aria-hidden="true">/</span>}
                   {b.href ? (
                     <Link href={b.href} className="transition-colors hover:text-white">
-                      {b.label}
+                      {tx(b.label)}
                     </Link>
                   ) : (
-                    <span className="text-ink-300">{b.label}</span>
+                    <span className="text-ink-300">{tx(b.label)}</span>
                   )}
                 </li>
               ))}
@@ -49,17 +53,17 @@ export function PageHero({
           </nav>
         )}
 
-        <p className="eyebrow !text-brand-300">{eyebrow}</p>
+        <p className="eyebrow !text-brand-300">{tx(eyebrow)}</p>
         <h1
           className={`mt-3 max-w-4xl font-semibold tracking-tight text-white ${
             compact ? "text-3xl sm:text-4xl" : "text-4xl sm:text-5xl lg:text-[3.4rem]"
           }`}
         >
-          {title}
+          {tx(title)}
         </h1>
         {lede && (
           <p className="mt-5 max-w-3xl text-[15.5px] leading-relaxed text-ink-300 sm:text-base">
-            {lede}
+            {tx(lede)}
           </p>
         )}
 
@@ -75,7 +79,7 @@ export function PageHero({
                     : "rounded border border-white/25 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:border-white/50 hover:bg-white/5"
                 }
               >
-                {a.label}
+                {tx(a.label)}
               </Link>
             ))}
           </div>
@@ -92,22 +96,23 @@ export function QuoteCta({
   title?: string;
   body?: string;
 }) {
+  const tx = useTranslations();
+
   return (
     <section className="border-y border-ink-200 bg-ink-50">
       <div className="mx-auto flex max-w-[1400px] flex-col gap-6 px-4 py-12 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
         <div className="max-w-2xl">
           <h2 className="text-2xl font-semibold tracking-tight text-ink-900 sm:text-[1.7rem]">
-            {title}
+            {tx(title)}
           </h2>
-          <p className="mt-2.5 text-[14.5px] leading-relaxed text-ink-600">{body}</p>
+          <p className="mt-2.5 text-[14.5px] leading-relaxed text-ink-600">{tx(body)}</p>
         </div>
         <div className="flex shrink-0 flex-wrap gap-3">
           <Link
             href="/contact?intent=quote"
             className="rounded bg-brand-600 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-brand-700"
           >
-            Request a quote
-          </Link>
+            {tx("Request a quote")} </Link>
           <a
             href={`mailto:${site.contact.email}`}
             className="rounded border border-ink-300 px-5 py-3 text-[14px] font-medium text-ink-800 transition-colors hover:border-ink-400 hover:bg-white"

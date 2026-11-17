@@ -1,3 +1,4 @@
+import { useTranslations, getI18n } from "@/lib/i18n/server";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -22,20 +23,21 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const {t} = await getI18n();
   const { slug } = await params;
   const product = getProduct(slug);
   if (!product) return {};
 
-  const title = `${product.model} ${product.name}${product.variant ? ` — ${product.variant}` : ""}`;
+  const title = `${product.model} ${t(product.name)}${product.variant ? ` — ${t(product.variant)}` : ""}`;
   const url = `/products/${product.category}/${product.slug}`;
 
   return {
     title,
-    description: product.summary,
+    description: t(product.summary),
     alternates: { canonical: url },
     openGraph: {
       title: `${title} | ${site.name}`,
-      description: product.summary,
+      description: t(product.summary),
       url,
       images: [{ url: product.image, alt: `${product.model} ${product.name}` }],
     },
@@ -43,6 +45,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ProductPage({ params }: PageProps) {
+  const tx = (await getI18n()).t;
+
   const { category: categorySlug, slug } = await params;
   const product = getProduct(slug);
   const category = getCategory(categorySlug);
@@ -66,19 +70,17 @@ export default async function ProductPage({ params }: PageProps) {
       />
 
       {/* ========================= BREADCRUMB ========================= */}
-      <nav aria-label="Breadcrumb" className="border-b border-ink-200 bg-white">
+      <nav aria-label={tx("Breadcrumb")}  className="border-b border-ink-200 bg-white">
         <div className="mx-auto max-w-[1400px] px-4 py-3.5 sm:px-6 lg:px-8">
           <ol className="flex flex-wrap items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.13em] text-ink-500">
             <li>
               <Link href="/" className="transition-colors hover:text-brand-600">
-                Home
-              </Link>
+                {tx("Home")} </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li>
               <Link href="/products" className="transition-colors hover:text-brand-600">
-                Products
-              </Link>
+                {tx("Products")} </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li>
@@ -86,7 +88,7 @@ export default async function ProductPage({ params }: PageProps) {
                 href={`/products/${category.slug}`}
                 className="transition-colors hover:text-brand-600"
               >
-                {category.shortName}
+                {tx(category.shortName)}
               </Link>
             </li>
             <li aria-hidden="true">/</li>
@@ -97,20 +99,28 @@ export default async function ProductPage({ params }: PageProps) {
         </div>
       </nav>
 
-      {/* ========================== OVERVIEW ========================== */}
-      <section className="mx-auto max-w-[1400px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+      {/* Parameters come first on every product page, without collapsed groups. */}
+      <section aria-labelledby="technical-data-heading" className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="text-xs font-medium text-brand-600">{tx(category.name)}</p>
+            <h1 className="mt-2 text-2xl font-semibold tracking-tight text-ink-900 sm:text-3xl">{product.model} <span className="font-medium text-ink-600">{tx(product.name)}</span></h1>
+            {product.variant && <p className="mt-2 text-sm text-ink-500">{tx(product.variant)}</p>}
+          </div>
+          <Link href={`/contact?intent=quote&model=${product.model}`} className="rounded bg-brand-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-700">{tx("Request a quote")}</Link>
+        </div>
+        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-8">
           {/* Gallery */}
-          <div className="lg:col-span-6">
+          <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
             <div className="overflow-hidden rounded-lg border border-ink-200 bg-ink-50">
               <div className="relative aspect-[4/3]">
                 <Image
                   src={product.image}
-                  alt={`${product.model} ${product.name}`}
+                  alt={`${product.model} ${tx(product.name)}`}
                   fill
                   priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-contain p-10 sm:p-14"
+                  sizes="(max-width: 1024px) 100vw, 36vw"
+                  className="object-contain p-6 sm:p-8"
                 />
               </div>
             </div>
@@ -134,59 +144,54 @@ export default async function ProductPage({ params }: PageProps) {
             )}
           </div>
 
-          {/* Key facts + CTA */}
-          <div className="lg:col-span-6">
+          <div className="min-w-0">
+        <h2 id="technical-data-heading" className="mb-3 text-lg font-semibold text-ink-900">{product.model} {tx("technical data")}</h2>
+        <SpecTable groups={product.specs} />
+        <p className="mt-3 text-xs leading-relaxed text-ink-500">{tx("Values are for the standard configuration. Ranges, threads, probe lengths and output types outside this table are available on request — the datasheet revision for a custom build is issued with the quotation.")}</p>
+        <a href={`mailto:${site.contact.email}?subject=${encodeURIComponent(`Datasheet request — ${product.model}`)}`} className="mt-2 inline-block text-sm font-medium text-brand-600 hover:text-brand-700">{tx("Request the PDF datasheet →")}</a>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================== OVERVIEW ========================== */}
+      <section className="mx-auto max-w-[1400px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          {/* Product introduction follows the image and full specification section. */}
+          <div className="lg:col-span-12">
             <p className="font-mono text-[11.5px] uppercase tracking-[0.14em] text-brand-600">
-              {category.name}
+              {tx(category.name)}
             </p>
-            <h1 className="mt-3 text-3xl font-semibold leading-tight tracking-tight text-ink-900 sm:text-[2.6rem]">
+            <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-tight text-ink-900 sm:text-[2.6rem]">
               {product.model}
               <span className="mt-1 block text-[1.45rem] font-medium text-ink-600 sm:text-[1.6rem]">
-                {product.name}
+                {tx(product.name)}
               </span>
-            </h1>
+            </h2>
             {product.variant && (
               <p className="mt-2 font-mono text-[12.5px] uppercase tracking-[0.1em] text-ink-500">
-                {product.variant}
+                {tx(product.variant)}
               </p>
             )}
 
-            <p className="mt-5 text-[15px] leading-relaxed text-ink-700">{product.summary}</p>
-
-            {/* At-a-glance spec strip */}
-            <dl className="mt-7 grid gap-px overflow-hidden rounded-lg border border-ink-200 bg-ink-200 sm:grid-cols-2">
-              {atGlance(product).map((row) => (
-                <div key={row.label} className="bg-white px-4 py-3.5">
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-ink-500">
-                    {row.label}
-                  </dt>
-                  <dd className="mt-1 text-[13.5px] font-medium leading-snug text-ink-900 tnum">
-                    {row.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
+            <p className="mt-5 text-[15px] leading-relaxed text-ink-700">{tx(product.summary)}</p>
 
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
                 href={`/contact?intent=quote&model=${product.model}`}
                 className="rounded bg-brand-600 px-6 py-3.5 text-[14.5px] font-medium text-white transition-colors hover:bg-brand-700"
               >
-                Request a quote
-              </Link>
+                {tx("Request a quote")} </Link>
               <a
                 href={`mailto:${site.contact.email}?subject=${encodeURIComponent(
                   `Enquiry — ${product.model} ${product.name}`,
                 )}`}
                 className="rounded border border-ink-300 px-6 py-3.5 text-[14.5px] font-medium text-ink-800 transition-colors hover:border-ink-400 hover:bg-ink-50"
               >
-                Email an engineer
-              </a>
+                {tx("Email an engineer")} </a>
             </div>
 
             <p className="mt-4 text-[12.5px] leading-relaxed text-ink-500">
-              Engineering reply · Evaluation samples available · Custom ranges built to order
-            </p>
+              {tx("Engineering reply · Evaluation samples available · Custom ranges built to order")} </p>
 
             {product.highlights.length > 0 && (
               <ul className="mt-8 space-y-2.5 border-t border-ink-200 pt-6">
@@ -208,7 +213,7 @@ export default async function ProductPage({ params }: PageProps) {
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <span>{h}</span>
+                    <span>{tx(h)}</span>
                   </li>
                 ))}
               </ul>
@@ -223,9 +228,8 @@ export default async function ProductPage({ params }: PageProps) {
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
               <h2 className="text-xl font-semibold tracking-tight text-ink-900">
-                How it works
-              </h2>
-              <p className="mt-4 text-[14.5px] leading-[1.75] text-ink-700">{product.intro}</p>
+                {tx("How it works")} </h2>
+              <p className="mt-4 text-[14.5px] leading-[1.75] text-ink-700">{tx(product.intro)}</p>
 
               {product.notes && product.notes.length > 0 && (
                 <div className="mt-8 rounded-lg border border-ink-200 bg-white px-5 py-4">
@@ -234,12 +238,11 @@ export default async function ProductPage({ params }: PageProps) {
                       className="h-1.5 w-1.5 rounded-full bg-signal-400"
                       aria-hidden="true"
                     />
-                    Ordering notes
-                  </h3>
+                    {tx("Ordering notes")} </h3>
                   <ul className="mt-2.5 space-y-1.5">
                     {product.notes.map((n) => (
                       <li key={n} className="text-[13px] leading-relaxed text-ink-700">
-                        {n}
+                        {tx(n)}
                       </li>
                     ))}
                   </ul>
@@ -249,8 +252,7 @@ export default async function ProductPage({ params }: PageProps) {
 
             <div className="lg:col-span-5">
               <h2 className="text-xl font-semibold tracking-tight text-ink-900">
-                Typical applications
-              </h2>
+                {tx("Typical applications")} </h2>
               {product.applications && product.applications.length > 0 ? (
                 <ul className="mt-4 divide-y divide-ink-200 rounded-lg border border-ink-200 bg-white">
                   {product.applications.map((a) => (
@@ -259,45 +261,15 @@ export default async function ProductPage({ params }: PageProps) {
                         className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"
                         aria-hidden="true"
                       />
-                      <span className="text-[13px] leading-relaxed text-ink-700">{a}</span>
+                      <span className="text-[13px] leading-relaxed text-ink-700">{tx(a)}</span>
                     </li>
                   ))}
                 </ul>
               ) : (
                 <p className="mt-4 text-[14px] leading-relaxed text-ink-600">
-                  Tell us the process conditions and we will confirm the right variant for
-                  your duty.
-                </p>
+                  {tx("Tell us the process conditions and we will confirm the right variant for your duty.")} </p>
               )}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ======================== SPEC SHEET ======================== */}
-      <section className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <div className="grid gap-8 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-4">
-            <p className="eyebrow">Specification</p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-ink-900 sm:text-[1.9rem]">
-              {product.model} technical data
-            </h2>
-            <p className="mt-3 text-[14px] leading-relaxed text-ink-600">
-              Values are for the standard configuration. Ranges, threads, probe lengths and
-              output types outside this table are available on request — the datasheet
-              revision for a custom build is issued with the quotation.
-            </p>
-            <a
-              href={`mailto:${site.contact.email}?subject=${encodeURIComponent(
-                `Datasheet request — ${product.model}`,
-              )}`}
-              className="mt-5 inline-block text-[13.5px] font-medium text-brand-600 hover:text-brand-700"
-            >
-              Request the PDF datasheet →
-            </a>
-          </div>
-          <div className="lg:col-span-8">
-            <SpecTable groups={product.specs} />
           </div>
         </div>
       </section>
@@ -307,27 +279,21 @@ export default async function ProductPage({ params }: PageProps) {
         <div className="mx-auto flex max-w-[1400px] flex-col gap-5 px-4 py-10 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <div className="max-w-2xl">
             <h2 className="text-[1.35rem] font-semibold tracking-tight text-ink-900">
-              Not certain {product.model} is the right unit?
-            </h2>
+              {tx("Not certain")} {product.model} {tx("is the right unit?")} </h2>
             <p className="mt-2 text-[14px] leading-relaxed text-ink-600">
-              Send the medium, range, process connection and the signal your control system
-              accepts. We will confirm the model — or tell you which one fits better — before
-              you commit to an order.
-            </p>
+              {tx("Send the medium, range, process connection and the signal your control system accepts. We will confirm the model — or tell you which one fits better — before you commit to an order.")} </p>
           </div>
           <div className="flex shrink-0 flex-wrap gap-3">
             <Link
               href={`/products/${category.slug}`}
               className="rounded border border-ink-300 px-5 py-3 text-[14px] font-medium text-ink-800 transition-colors hover:border-ink-400 hover:bg-ink-50"
             >
-              All {category.shortName.toLowerCase()} models
-            </Link>
+              {tx("All")} {tx(category.shortName.toLowerCase())} {tx("models")} </Link>
             <Link
               href="/custom"
               className="rounded bg-brand-600 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-brand-700"
             >
-              Custom engineering
-            </Link>
+              {tx("Custom engineering")} </Link>
           </div>
         </div>
       </section>
@@ -337,17 +303,15 @@ export default async function ProductPage({ params }: PageProps) {
         <section className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="eyebrow">Same family</p>
+              <p className="eyebrow">{tx("Same family")} </p>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-ink-900 sm:text-[1.9rem]">
-                Other {category.shortName.toLowerCase()} instruments
-              </h2>
+                {tx("Other")} {tx(category.shortName.toLowerCase())} {tx("instruments")} </h2>
             </div>
             <Link
               href={`/products/${category.slug}`}
               className="text-[13.5px] font-medium text-brand-600 hover:text-brand-700"
             >
-              View the family →
-            </Link>
+              {tx("View the family →")} </Link>
           </div>
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {related.map((p) => (

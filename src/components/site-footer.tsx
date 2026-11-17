@@ -1,3 +1,5 @@
+"use client";
+import { useTranslations } from "@/lib/i18n/client";
 import Link from "next/link";
 import Image from "next/image";
 import { mainNav, site } from "@/lib/site";
@@ -20,6 +22,8 @@ const resources = [
 ];
 
 export function SiteFooter() {
+  const tx = useTranslations();
+
   const year = new Date().getFullYear();
 
   return (
@@ -38,22 +42,18 @@ export function SiteFooter() {
               />
               <div className="flex flex-col leading-none">
                 <span className="text-[19px] font-semibold tracking-tight text-white">
-                  HSM Sensors
-                </span>
+                  {tx("HSM Sensors")} </span>
                 <span className="mt-1 font-mono text-[9.5px] uppercase tracking-[0.16em] text-ink-400">
-                  {site.founded ? `Xiamen · Since ${site.founded}` : "Xiamen · Factory-direct"}
+                  {tx(site.founded ? `Xiamen · Since ${site.founded}` : "Xiamen · Factory-direct")}
                 </span>
               </div>
             </div>
             <p className="mt-5 max-w-sm text-[13.5px] leading-relaxed text-ink-400">
-              Manufacturer of industrial flow, level, pressure, temperature and gas
-              instrumentation. Every unit is assembled and calibrated in our own
-              facility, and custom ranges are built to order.
-            </p>
+              {tx("Manufacturer of industrial flow, level, pressure, temperature and gas instrumentation. Every unit is assembled and calibrated in our own facility, and custom ranges are built to order.")} </p>
             <address className="mt-5 not-italic text-[13px] leading-relaxed text-ink-400">
-              {site.address.street}
+              {tx(site.address.street)}
               <br />
-              {site.address.city} {site.address.postalCode}, {site.address.countryName}
+              {tx(site.address.city)} {tx(site.address.postalCode)}, {tx(site.address.countryName)}
             </address>
             <div className="mt-4 space-y-1 text-[13px]">
               <a
@@ -68,15 +68,14 @@ export function SiteFooter() {
               >
                 {site.contact.email}
               </a>
-              <p className="text-ink-500">{site.contact.hours}</p>
+              <p className="text-ink-500">{tx(site.contact.hours)}</p>
             </div>
           </div>
 
           {/* Product columns */}
           <div className="lg:col-span-3">
             <h2 className="mb-4 font-mono text-[11px] uppercase tracking-[0.16em] text-white">
-              Products
-            </h2>
+              {tx("Products")} </h2>
             <ul className="grid gap-2 text-[13.5px]">
               {categories.slice(0, 6).map((c) => (
                 <li key={c.slug}>
@@ -84,22 +83,20 @@ export function SiteFooter() {
                     href={`/products/${c.slug}`}
                     className="text-ink-400 transition-colors hover:text-white"
                   >
-                    {c.shortName}
+                    {tx(c.shortName)}
                   </Link>
                 </li>
               ))}
               <li>
                 <Link href="/products" className="text-ink-400 transition-colors hover:text-white">
-                  All {categories.reduce((n, c) => n, 0) > 0 ? "" : ""}products →
-                </Link>
+                  {tx("All")} {tx(categories.reduce((n, c) => n, 0) > 0 ? "" : "")}{tx("products →")} </Link>
               </li>
             </ul>
           </div>
 
           <div className="lg:col-span-3">
             <h2 className="mb-4 font-mono text-[11px] uppercase tracking-[0.16em] text-white">
-              More ranges
-            </h2>
+              {tx("More ranges")} </h2>
             <ul className="grid gap-2 text-[13.5px]">
               {categories.slice(6).map((c) => (
                 <li key={c.slug}>
@@ -107,7 +104,7 @@ export function SiteFooter() {
                     href={`/products/${c.slug}`}
                     className="text-ink-400 transition-colors hover:text-white"
                   >
-                    {c.shortName}
+                    {tx(c.shortName)}
                   </Link>
                 </li>
               ))}
@@ -117,8 +114,7 @@ export function SiteFooter() {
           {/* Company + resources */}
           <div className="lg:col-span-2">
             <h2 className="mb-4 font-mono text-[11px] uppercase tracking-[0.16em] text-white">
-              Company
-            </h2>
+              {tx("Company")} </h2>
             <ul className="grid gap-2 text-[13.5px]">
               {mainNav
                 .filter((n) => !["/products", "/contact"].includes(n.href))
@@ -128,24 +124,22 @@ export function SiteFooter() {
                       href={item.href}
                       className="text-ink-400 transition-colors hover:text-white"
                     >
-                      {item.label}
+                      {tx(item.label)}
                     </Link>
                   </li>
                 ))}
               <li>
                 <Link href="/contact" className="text-ink-400 transition-colors hover:text-white">
-                  Contact
-                </Link>
+                  {tx("Contact")} </Link>
               </li>
             </ul>
             <h2 className="mb-3 mt-8 font-mono text-[11px] uppercase tracking-[0.16em] text-white">
-              Resources
-            </h2>
+              {tx("Resources")} </h2>
             <ul className="grid gap-2 text-[13.5px]">
               {resources.map((r) => (
                 <li key={r.href}>
                   <Link href={r.href} className="text-ink-400 transition-colors hover:text-white">
-                    {r.label}
+                    {tx(r.label)}
                   </Link>
                 </li>
               ))}
@@ -156,13 +150,12 @@ export function SiteFooter() {
         {/* Industry strip */}
         <div className="mt-12 border-t border-white/10 pt-8">
           <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.16em] text-white">
-            Industries served
-          </h2>
+            {tx("Industries served")} </h2>
           <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[13px]">
             {industries.map((i) => (
               <li key={i.href}>
                 <Link href={i.href} className="text-ink-400 transition-colors hover:text-white">
-                  {i.label}
+                  {tx(i.label)}
                 </Link>
               </li>
             ))}
@@ -171,17 +164,14 @@ export function SiteFooter() {
 
         <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-[12.5px] text-ink-500 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} {site.legalName}. All rights reserved.
-          </p>
+            © {tx(year)} {tx(site.legalName)}{tx(". All rights reserved.")} </p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <Link href="/privacy" className="transition-colors hover:text-white">
-              Privacy
-            </Link>
+              {tx("Privacy")} </Link>
             <Link href="/terms" className="transition-colors hover:text-white">
-              Terms
-            </Link>
+              {tx("Terms")} </Link>
             <span className="font-mono text-[11px] uppercase tracking-[0.12em]">
-              {site.chineseName}
+              {tx(site.chineseName)}
             </span>
           </div>
         </div>

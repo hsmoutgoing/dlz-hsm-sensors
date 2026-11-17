@@ -1,5 +1,7 @@
 "use client";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
+import { useTranslations } from "@/lib/i18n/client";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -9,6 +11,8 @@ import { categories } from "@/lib/categories";
 import { categoryCounts } from "@/lib/products";
 
 function ChevronIcon({ open }: { open: boolean }) {
+  const tx = useTranslations();
+
   return (
     <svg
       width="10"
@@ -29,6 +33,8 @@ function ChevronIcon({ open }: { open: boolean }) {
 }
 
 export function SiteHeader() {
+  const tx = useTranslations();
+
   const pathname = usePathname();
   const [productsOpen, setProductsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -77,8 +83,7 @@ export function SiteHeader() {
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-8 py-2 text-[13px]">
           <p className="flex items-center gap-2">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-500" />
-            Factory-direct manufacturer · Xiamen, China · Exporting worldwide
-          </p>
+            {tx("Factory-direct manufacturer · Xiamen, China · Exporting worldwide")} </p>
           <div className="flex items-center gap-6">
             <a href={site.contact.phoneHref} className="transition-colors hover:text-brand-600">
               {site.contact.phone}
@@ -93,7 +98,7 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-ink-200 bg-white/95 backdrop-blur-md">
+      <header className="site-header sticky top-0 z-50 bg-white/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1400px] items-center gap-6 px-4 py-3 sm:px-6 lg:px-8">
           <Link
             href="/"
@@ -110,16 +115,14 @@ export function SiteHeader() {
             />
             <span className="flex flex-col leading-none">
               <span className="text-[19px] font-semibold tracking-tight text-ink-900">
-                HSM Sensors
-              </span>
+                {tx("HSM Sensors")} </span>
               <span className="mt-0.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-ink-500">
-                Flow · Level · Pressure
-              </span>
+                {tx("Flow · Level · Pressure")} </span>
             </span>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="ml-auto hidden items-center gap-1 lg:flex" aria-label="Main">
+          <nav className="ml-auto hidden items-center gap-1 lg:flex" aria-label={tx("Main")} >
             <div
               className="relative"
               onMouseEnter={() => {
@@ -130,18 +133,17 @@ export function SiteHeader() {
             >
               <button
                 type="button"
-                className="flex items-center gap-1.5 px-3 py-2 text-[14px] font-medium text-ink-700 transition-colors hover:text-brand-600"
+                className="flex items-center gap-1.5 px-3 py-2 text-[14px] font-bold text-[#0066e6] transition-colors hover:text-[#004fc4]"
                 aria-expanded={productsOpen}
                 aria-haspopup="true"
                 onClick={() => setProductsOpen((v) => !v)}
               >
-                Products
-                <ChevronIcon open={productsOpen} />
+                {tx("Products")} <ChevronIcon open={productsOpen} />
               </button>
 
               {productsOpen && (
                 <div
-                  className="absolute left-0 top-full w-[640px] rounded-lg border border-ink-200 bg-white p-2 shadow-xl shadow-ink-900/5"
+                  className="absolute left-0 top-full w-[640px] max-w-[calc(100vw-2rem)] rounded-xl border border-ink-100 bg-white p-3 shadow-xl shadow-ink-900/5"
                   onMouseEnter={cancelClose}
                   onMouseLeave={scheduleClose}
                 >
@@ -154,28 +156,26 @@ export function SiteHeader() {
                       >
                         <span className="flex items-baseline justify-between gap-2">
                           <span className="text-[13.5px] font-medium text-ink-800 group-hover:text-brand-700">
-                            {c.name}
+                            {tx(c.name)}
                           </span>
                           <span className="font-mono text-[11px] text-ink-400">
-                            {counts[c.slug] ?? 0}
+                            {tx(counts[c.slug] ?? 0)}
                           </span>
                         </span>
                         <span className="mt-0.5 line-clamp-1 text-[11.5px] leading-snug text-ink-500">
-                          {c.tagline}
+                          {tx(c.tagline)}
                         </span>
                       </Link>
                     ))}
                   </div>
                   <div className="mt-1 flex items-center justify-between border-t border-ink-100 px-3 py-2.5">
                     <span className="text-[12px] text-ink-500">
-                      {totalProducts} models across {categories.length} families
-                    </span>
+                      {tx(totalProducts)} {tx("models across")} {tx(categories.length)} {tx("families")} </span>
                     <Link
                       href="/products"
                       className="text-[12.5px] font-medium text-brand-600 hover:text-brand-700"
                     >
-                      View all products →
-                    </Link>
+                      {tx("View all products →")} </Link>
                   </div>
                 </div>
               )}
@@ -189,26 +189,26 @@ export function SiteHeader() {
                   href={item.href}
                   className={`px-3 py-2 text-[14px] font-medium transition-colors ${
                     pathname.startsWith(item.href)
-                      ? "text-brand-600"
-                      : "text-ink-700 hover:text-brand-600"
+                      ? "rounded-full bg-brand-50 text-brand-600"
+                      : "rounded-full text-ink-700 hover:bg-ink-50 hover:text-brand-600"
                   }`}
                 >
-                  {item.label}
+                  {tx(item.label)}
                 </Link>
               ))}
           </nav>
 
           <div className="ml-auto flex items-center gap-2 lg:ml-0">
+            <LanguageSwitcher />
             <Link
               href="/contact?intent=quote"
               className="hidden rounded bg-brand-600 px-4 py-2.5 text-[13.5px] font-medium text-white transition-colors hover:bg-brand-700 sm:inline-block"
             >
-              Request a quote
-            </Link>
+              {tx("Request a quote")} </Link>
             <button
               type="button"
               className="rounded border border-ink-200 p-2.5 lg:hidden"
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-label={tx(mobileOpen ? "Close menu" : "Open menu")}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((v) => !v)}
             >
@@ -237,8 +237,8 @@ export function SiteHeader() {
       {/* Mobile drawer */}
       {mobileOpen && (
         <div className="fixed inset-0 top-[57px] z-40 overflow-y-auto bg-white lg:hidden">
-          <nav className="px-4 py-4" aria-label="Mobile">
-            <p className="eyebrow mb-2 px-2">Products</p>
+          <nav className="px-4 py-4" aria-label={tx("Mobile")} >
+            <p className="eyebrow mb-2 px-2">{tx("Products")} </p>
             <ul className="mb-6 grid gap-0.5">
               {categories.map((c) => (
                 <li key={c.slug}>
@@ -246,9 +246,9 @@ export function SiteHeader() {
                     href={`/products/${c.slug}`}
                     className="flex items-center justify-between rounded px-2 py-2.5 text-[15px] text-ink-800 active:bg-ink-100"
                   >
-                    {c.name}
+                    {tx(c.name)}
                     <span className="font-mono text-[11px] text-ink-400">
-                      {counts[c.slug] ?? 0}
+                      {tx(counts[c.slug] ?? 0)}
                     </span>
                   </Link>
                 </li>
@@ -258,11 +258,10 @@ export function SiteHeader() {
                   href="/products"
                   className="flex items-center px-2 py-2.5 text-[15px] font-medium text-brand-600"
                 >
-                  All products →
-                </Link>
+                  {tx("All products →")} </Link>
               </li>
             </ul>
-            <p className="eyebrow mb-2 px-2">Company</p>
+            <p className="eyebrow mb-2 px-2">{tx("Company")} </p>
             <ul className="grid gap-0.5 border-t border-ink-200 pt-2">
               {mainNav
                 .filter((n) => n.href !== "/products")
@@ -272,7 +271,7 @@ export function SiteHeader() {
                       href={item.href}
                       className="block rounded px-2 py-2.5 text-[15px] text-ink-800 active:bg-ink-100"
                     >
-                      {item.label}
+                      {tx(item.label)}
                     </Link>
                   </li>
                 ))}
@@ -282,8 +281,7 @@ export function SiteHeader() {
                 href="/contact?intent=quote"
                 className="rounded bg-brand-600 px-4 py-3 text-center text-[15px] font-medium text-white"
               >
-                Request a quote
-              </Link>
+                {tx("Request a quote")} </Link>
               <a
                 href={`mailto:${site.contact.email}`}
                 className="rounded border border-ink-200 px-4 py-3 text-center text-[15px] text-ink-800"

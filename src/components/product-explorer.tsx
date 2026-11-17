@@ -1,5 +1,5 @@
 "use client";
-
+import { useTranslations } from "@/lib/i18n/client";
 import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState } from "react";
@@ -38,6 +38,8 @@ interface ProductExplorerProps {
  * keystroke, which matters most on the connections these buyers use.
  */
 export function ProductExplorer({ items, categories }: ProductExplorerProps) {
+  const tx = useTranslations();
+
   const [query, setQuery] = useState("");
   const [active, setActive] = useState<CategorySlug | "all">("all");
 
@@ -50,10 +52,13 @@ export function ProductExplorer({ items, categories }: ProductExplorerProps) {
         item.model.toLowerCase().includes(q) ||
         item.name.toLowerCase().includes(q) ||
         item.summary.toLowerCase().includes(q) ||
+        tx(item.name).toLowerCase().includes(q) ||
+        tx(item.summary).toLowerCase().includes(q) ||
+        tx(item.categoryName).toLowerCase().includes(q) ||
         item.haystack.includes(q)
       );
     });
-  }, [items, query, active]);
+  }, [items, query, active, tx]);
 
   return (
     <div>
@@ -61,7 +66,7 @@ export function ProductExplorer({ items, categories }: ProductExplorerProps) {
       <div className="sticky top-[68px] z-20 -mx-4 border-b border-ink-200 bg-white/95 px-4 py-4 backdrop-blur sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:rounded-lg lg:border lg:px-5">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <label className="relative block lg:max-w-sm lg:flex-1">
-            <span className="sr-only">Search models, ranges or outputs</span>
+            <span className="sr-only">{tx("Search models, ranges or outputs")} </span>
             <svg
               width="15"
               height="15"
@@ -76,25 +81,24 @@ export function ProductExplorer({ items, categories }: ProductExplorerProps) {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Model, e.g. HSM10, 4-20 mA, 316L, IP68…"
+              placeholder={tx("Model, e.g. HSM10, 4-20 mA, 316L, IP68…")} 
               className="w-full rounded border border-ink-300 bg-white py-2.5 pl-9 pr-3 text-[13.5px] text-ink-900 placeholder:text-ink-400 focus:border-brand-500 focus:outline-none"
             />
           </label>
           <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-ink-500">
-            {filtered.length} of {items.length} models
-          </p>
+            {tx(filtered.length)} {tx("of")} {tx(items.length)} {tx("models")} </p>
         </div>
 
         <div className="mt-3 flex flex-wrap gap-1.5">
           <FilterChip
-            label={`All (${items.length})`}
+            label={`${tx("All")} (${items.length})`}
             active={active === "all"}
             onClick={() => setActive("all")}
           />
           {categories.map((c) => (
             <FilterChip
               key={c.slug}
-              label={`${c.shortName} (${c.count})`}
+              label={`${tx(c.shortName)} (${c.count})`}
               active={active === c.slug}
               onClick={() => setActive(c.slug)}
             />
@@ -105,36 +109,33 @@ export function ProductExplorer({ items, categories }: ProductExplorerProps) {
       {/* Results */}
       {filtered.length === 0 ? (
         <div className="mt-12 rounded-lg border border-dashed border-ink-300 bg-ink-50 px-6 py-14 text-center">
-          <p className="text-[15px] font-medium text-ink-900">No model matches that search.</p>
+          <p className="text-[15px] font-medium text-ink-900">{tx("No model matches that search.")} </p>
           <p className="mx-auto mt-2 max-w-md text-[13.5px] leading-relaxed text-ink-600">
-            The catalogue covers 66 models but the factory builds to order. Describe the
-            process conditions and we will specify something that does fit.
-          </p>
+            {tx("The catalogue covers 66 models but the factory builds to order. Describe the process conditions and we will specify something that does fit.")} </p>
           <Link
             href="/contact?intent=quote"
             className="mt-5 inline-block rounded bg-brand-600 px-5 py-3 text-[13.5px] font-medium text-white transition-colors hover:bg-brand-700"
           >
-            Ask an engineer
-          </Link>
+            {tx("Ask an engineer")} </Link>
         </div>
       ) : (
         <>
           <h2 className="sr-only">
-            {active === "all"
+            {tx(active === "all"
               ? "All models"
-              : `${items.find((i) => i.category === active)?.categoryName ?? "Filtered"} models`}
+              : `${tx(items.find((i) => i.category === active)?.categoryName ?? "Filtered")} ${tx("models")}`)}
           </h2>
           <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((item) => (
             <li key={item.slug}>
               <Link
                 href={`/products/${item.category}/${item.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-lg border border-ink-200 bg-white transition-all duration-200 hover:border-brand-300 hover:shadow-lg hover:shadow-ink-900/5"
+                className="product-surface group flex h-full flex-col overflow-hidden rounded-lg border border-ink-200 bg-white transition-all duration-200 hover:border-brand-300 hover:shadow-lg hover:shadow-ink-900/5"
               >
                 <div className="relative aspect-[4/3] overflow-hidden border-b border-ink-100 bg-ink-50">
                   <Image
                     src={item.image}
-                    alt={`${item.model} ${item.name}`}
+                    alt={`${item.model} ${tx(item.name)}`}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-contain p-6 transition-transform duration-300 group-hover:scale-[1.04]"
@@ -146,17 +147,17 @@ export function ProductExplorer({ items, categories }: ProductExplorerProps) {
                       {item.model}
                     </span>
                     <span className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-ink-400">
-                      {item.categoryShort}
+                      {tx(item.categoryShort)}
                     </span>
                   </div>
                   <h3 className="mt-2 text-[16px] font-semibold leading-snug tracking-tight text-ink-900 group-hover:text-brand-700">
-                    {item.name}
+                    {tx(item.name)}
                   </h3>
                   {item.variant && (
-                    <p className="mt-0.5 text-[12.5px] text-ink-500">{item.variant}</p>
+                    <p className="mt-0.5 text-[12.5px] text-ink-500">{tx(item.variant)}</p>
                   )}
                   <p className="mt-2 line-clamp-3 text-[13px] leading-relaxed text-ink-600">
-                    {item.summary}
+                    {tx(item.summary)}
                   </p>
                 </div>
               </Link>
@@ -178,6 +179,8 @@ function FilterChip({
   active: boolean;
   onClick: () => void;
 }) {
+  const tx = useTranslations();
+
   return (
     <button
       type="button"
@@ -189,7 +192,7 @@ function FilterChip({
           : "rounded border border-ink-300 bg-white px-2.5 py-1 text-[12px] text-ink-600 transition-colors hover:border-brand-400 hover:text-brand-700"
       }
     >
-      {label}
+      {tx(label)}
     </button>
   );
 }

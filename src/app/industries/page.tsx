@@ -1,14 +1,20 @@
+import { localizeMetadata } from "@/lib/i18n/metadata";
+import { useTranslations, getI18n } from "@/lib/i18n/server";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { PageHero, QuoteCta } from "@/components/page-hero";
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+ const {t, locale} = await getI18n();
+ const metadata: Metadata = {
   title: "Industries — Oil & Gas, Water, Chemical, Power, Food",
   description:
     "How HSM industrial sensors are specified for oil and gas, chemical, water treatment, power generation, food and beverage, and pharmaceutical duties — including hazardous area, sanitary and high-pressure variants.",
   alternates: { canonical: "/industries" },
 };
+ return localizeMetadata(metadata, t, locale);
+}
 
 interface Industry {
   readonly id: string;
@@ -180,12 +186,14 @@ const industries: readonly Industry[] = [
 ];
 
 export default function IndustriesPage() {
+  const tx = useTranslations();
+
   return (
     <>
       <PageHero
-        eyebrow="Applications"
-        title="Where these instruments run"
-        lede="Six industries take most of what leaves the factory. Each has its own failure modes — fouling, corrosion, vibration, hazardous area classification, washdown — and the instrument has to be specified for the one that applies, not for the catalogue photograph."
+        eyebrow={tx("Applications")} 
+        title={tx("Where these instruments run")} 
+        lede={tx("Six industries take most of what leaves the factory. Each has its own failure modes — fouling, corrosion, vibration, hazardous area classification, washdown — and the instrument has to be specified for the one that applies, not for the catalogue photograph.")} 
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Industries" }]}
         actions={[
           { label: "Request a quote", href: "/contact?intent=quote", primary: true },
@@ -194,7 +202,7 @@ export default function IndustriesPage() {
       />
 
       {/* Anchor navigation */}
-      <nav aria-label="Industries" className="border-b border-ink-200 bg-white">
+      <nav aria-label={tx("Industries")}  className="border-b border-ink-200 bg-white">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
           <ul className="flex snap-x gap-1 overflow-x-auto py-3">
             {industries.map((industry) => (
@@ -203,7 +211,7 @@ export default function IndustriesPage() {
                   href={`#${industry.id}`}
                   className="block whitespace-nowrap rounded px-3 py-1.5 text-[12.5px] text-ink-600 transition-colors hover:bg-ink-50 hover:text-brand-700"
                 >
-                  {industry.name}
+                  {tx(industry.name)}
                 </a>
               </li>
             ))}
@@ -223,12 +231,11 @@ export default function IndustriesPage() {
             <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
               <div className="lg:col-span-5">
                 <p className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-brand-600">
-                  {String(index + 1).padStart(2, "0")} — Application
-                </p>
+                  {tx(String(index + 1).padStart(2, "0"))} {tx("— Application")} </p>
                 <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900">
-                  {industry.name}
+                  {tx(industry.name)}
                 </h2>
-                <p className="mt-4 text-[15px] leading-relaxed text-ink-700">{industry.lede}</p>
+                <p className="mt-4 text-[15px] leading-relaxed text-ink-700">{tx(industry.lede)}</p>
 
                 <div className="relative mt-8 aspect-[4/3] overflow-hidden rounded-lg border border-ink-200 bg-white">
                   <Image
@@ -247,7 +254,7 @@ export default function IndustriesPage() {
                       href={p.href}
                       className="rounded border border-ink-300 bg-white px-3 py-1.5 text-[12.5px] font-medium text-ink-800 transition-colors hover:border-brand-400 hover:text-brand-700"
                     >
-                      {p.label}
+                      {tx(p.label)}
                     </Link>
                   ))}
                 </div>
@@ -258,10 +265,10 @@ export default function IndustriesPage() {
                   {industry.problems.map((problem) => (
                     <li key={problem.title} className="bg-white p-6">
                       <h3 className="text-[15px] font-semibold tracking-tight text-ink-900">
-                        {problem.title}
+                        {tx(problem.title)}
                       </h3>
                       <p className="mt-2 text-[13.5px] leading-relaxed text-ink-600">
-                        {problem.body}
+                        {tx(problem.body)}
                       </p>
                     </li>
                   ))}
@@ -273,7 +280,7 @@ export default function IndustriesPage() {
       ))}
 
       <QuoteCta
-        title="Working in an industry that is not listed?"
+        title={tx("Working in an industry that is not listed?")} 
         body="The catalogue covers the common duties; the engineering team covers the rest. Send the medium, temperature, pressure and area classification and we will say what will hold."
       />
     </>

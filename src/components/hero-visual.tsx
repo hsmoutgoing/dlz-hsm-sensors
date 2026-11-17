@@ -1,6 +1,7 @@
 "use client";
-
+import { useTranslations } from "@/lib/i18n/client";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 /**
@@ -16,6 +17,8 @@ const HeroScene = dynamic(() => import("@/components/hero-scene"), {
 });
 
 function HeroFallback() {
+  const tx = useTranslations();
+
   return (
     <div className="flex h-full w-full items-center justify-center">
       <div className="relative h-40 w-40 animate-pulse rounded-full bg-white/5" aria-hidden="true">
@@ -40,6 +43,8 @@ function supportsWebGL(): boolean {
 type Mode = "pending" | "3d" | "static";
 
 export function HeroVisual({ onModeChange }: { onModeChange?: (mode: Mode) => void }) {
+  const tx = useTranslations();
+
   const [mode, setMode] = useState<Mode>("pending");
 
   useEffect(() => {
@@ -68,14 +73,16 @@ export function HeroVisual({ onModeChange }: { onModeChange?: (mode: Mode) => vo
   // Static fallback: a real product photo, no motion, no JS payload.
   return (
     <div className="flex h-full w-full items-center justify-center px-6">
+      <Link href="/products/flow/hsm10-thermal-flow-switch" aria-label="查看产品？ HSM10" className="group relative flex h-full w-full items-center justify-center rounded-lg">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/images/products/hsm10-thermal-flow-switch.jpg"
-        alt="HSM10 thermal flow switch"
+        alt={tx("HSM10 thermal flow switch")} 
         className="max-h-[62%] w-auto rounded-lg object-contain shadow-2xl shadow-black/40"
         loading="eager"
         decoding="async"
       />
+      </Link>
     </div>
   );
 }

@@ -1,0 +1,636 @@
+0	About HSM Sensors — Sensor Manufacturer in Xiamen, China
+1	Factory-direct, not a trading desk
+2	Enquiries are answered by the engineering team that sets the production parameters. A non-standard thread, a longer probe or a 450 °C variant is a normal order rather than an exception, because the person quoting it is the person building it.
+3	Built to national and industry standards
+4	Every model is designed and manufactured to the applicable Chinese national and industry standards. Where a project calls for CE, ISO or RoHS documentation, the certificate is supplied with the quotation or the shipment.
+5	Developed with university research partners
+6	Several product lines were developed jointly with university research groups, which is how the fibre-optic and laser-absorption instruments entered the range alongside the conventional switches and transmitters.
+7	Documentation supplied per project
+8	Every unit is assembled and calibrated in our own facility. Test records, material certificates and CE or RoHS scans are supplied on request with the quotation, matched to the revision you are buying.
+9	Measurement families
+10	Catalogue models
+11	Wetted material standard
+12	Ingress protection
+13	Output signals
+14	Documentation
+15	About us
+16	A sensor factory in Jimei District, Xiamen
+17	HSM Sensors designs, assembles and calibrates industrial instrumentation under one roof. The catalogue covers ten measurement families and 66 models; the engineering team behind it covers the variants that are not in the catalogue.
+18	Home
+19	About
+20	Request a quote
+21	Browse the catalogue
+22	The company
+23	We are a sensor manufacturer based in Xiamen, Fujian. The product range spans flow, level, pressure, temperature, ultrasonic, gas, displacement, analytical, motion and wireless instrumentation — the instruments that sit between a process and the control system that has to know what the process is doing.
+24	A large part of the range was developed with university research partners and is manufactured under a documented management system, with every model designed and built to the applicable national and industry standards. That combination — conventional industrial instruments alongside laser-absorption and fibre-optic sensing — is what lets us answer both a standard pump-protection enquiry and a switchgear hotspot measurement from the same engineering desk.
+25	What that means for a buyer is narrow and practical: you are dealing with the factory. Ranges, threads, probe lengths, materials and output signals are set on the line, so a specification that does not match the catalogue is a conversation rather than a refusal.
+26	Registered address
+27	HSM300 wearable laser methane detector
+28	(max-width: 1024px) 100vw, 40vw
+29	How we work
+30	Four commitments a buyer can test
+31	Each of these is checkable on the first order rather than a claim to be taken on trust — which is why they are the four we put in writing.
+32	What we make
+33	Ten measurement families
+34	All
+35	models →
+36	Want to audit the factory before you order?
+37	Ask for a video walk-through of the assembly and calibration areas, or request the documentation relevant to your project — standards conformity, material certificates or the certificate scans you need for import.
+38	Contact — Request a Quote or Ask an Engineer
+39	Send your process conditions to the HSM Sensors engineering desk in Xiamen. Quotes, custom builds, datasheets and technical support — by form, email or phone.
+40	Contact
+41	Send the process conditions
+42	Medium, pressure, temperature, pipe or vessel size, and the signal your control system accepts — that is enough for us to come back with a model, a price and a lead time.
+43	Direct contact
+44	Email
+45	Phone
+46	WhatsApp
+47	noopener noreferrer
+48	Message us
+49	WeChat
+50	Hours
+51	Factory
+52	What speeds up a quote
+53	Medium and its concentration or viscosity
+54	Operating temperature and pressure
+55	Pipe size, thread standard or vessel depth
+56	Control-system input: relay, 4–20 mA, 0–10 V or RS485
+57	Quantity and required delivery date
+58	Already know the model?
+59	Find it in the catalogue
+60	and the form arrives pre-filled.
+61	Custom Sensor Engineering — Non-Standard Ranges, Threads, Materials
+62	Non-standard probe lengths, process threads, wetted materials, output signals and hazardous-area variants, built to order at the HSM factory in Xiamen. Send the process conditions for an engineering review.
+63	Process connection
+64	G1/2 and M20×1.5 are standard across most families. Other thread standards, flange and sanitary connections are machined to the drawing.
+65	Threads · flanges · vessel connections
+66	Probe length and diameter
+67	Level and temperature probes are cut and welded to the vessel depth you specify, in diameters from 3 mm upward depending on the family.
+68	3 mm – 5 m depending on principle
+69	Wetted material
+70	SUS 316L is the default. Where the medium attacks 316L, the probe, flange and seal material are selected against the medium rather than assumed.
+71	316L · PEEK · custom wetted parts
+72	Range and output
+73	Measuring ranges are set at calibration, and output type — relay, PNP/NPN, 4–20 mA, 0–10 V or RS485 — is selected at order.
+74	Relay · analogue · Modbus RTU
+75	Housing and protection
+76	Standard housings are IP65–IP67. Submersible assemblies are rated IP68, and explosion-proof housings are available for the gas and pressure ranges.
+77	IP65 – IP68 · Ex housings
+78	Temperature rating
+79	High-temperature versions extend the medium ceiling beyond the standard 80 °C — for example the HSM flow switches and the TPS/TPT probes rated to 450 °C and above.
+80	To 450 °C and higher on selected families
+81	Medium, temperature, pressure, pipe or vessel size, area classification, and the signal your control system accepts. A sketch or a photograph of the existing installation is more useful than a specification.
+82	Engineering review
+83	We come back with the nearest catalogue model, the changes needed, and any condition that the instrument cannot survive. If a catalogue item will do the job, we say so rather than quoting a special.
+84	Drawing and quotation
+85	For a non-standard build you receive a dimensioned drawing and a quotation before anything is cut. Changes to the drawing at this stage cost nothing.
+86	Build, calibrate, ship
+87	The unit is assembled and calibrated against the agreed specification, then supplied with its documentation. Repeat orders keep the same build parameters.
+88	Longer probe than the catalogue
+89	Level and temperature probes are made to vessel depth.
+90	Thread the plant already uses
+91	Other thread standards, flange and vessel connections machined to drawing.
+92	Aggressive medium
+93	Wetted material selected against the medium, not against the default.
+94	Signal the PLC accepts
+95	Relay, analogue or RS485 selected at order.
+96	Higher temperature
+97	High-temperature variants on selected flow and temperature families.
+98	Hazardous area
+99	Explosion-proof housings on the gas and pressure ranges.
+100	OEM marking
+101	Neutral or customer-branded labelling for machine builders.
+102	Repeat batch
+103	Build parameters held for reorders so a second batch matches the first.
+104	Custom engineering
+105	The catalogue is the starting point, not the limit
+106	A non-standard thread, a longer probe, a different wetted material or a signal your control system already speaks — these are normal orders when the people quoting them are the people building them. Describe the duty and we will tell you what it takes.
+107	Browse standard models
+108	What can change
+109	Six parameters, set on the line
+110	These are the variables the factory can move without becoming a different product. Anything outside them is a development project, and we will say so at the review stage rather than after the order.
+111	How it runs
+112	From process conditions to a unit on the bench
+113	Common requests
+114	What buyers usually ask for
+115	If your requirement is on this list, it has been built before and there is a known answer.
+116	Fastest route for a custom enquiry
+117	Email the process conditions and any drawing or photograph of the existing installation. That skips the form and puts the enquiry straight in front of an engineer.
+118	Custom sensor enquiry
+119	Not sure whether you need a custom build?
+120	Start from the catalogue
+121	— most enquiries are answered by a standard model.
+122	Industries — Oil & Gas, Water, Chemical, Power, Food
+123	How HSM industrial sensors are specified for oil and gas, chemical, water treatment, power generation, food and beverage, and pharmaceutical duties — including hazardous area, sanitary and high-pressure variants.
+124	Separators, storage tanks, gathering lines and tank farms. The recurring requirements are hazardous-area certification, methane detection at a distance, and level instruments that keep working when the medium coats the sensor.
+125	Leak detection on long lines
+126	A TDLAS methane detector measures absorption along the beam instead of at a point, so a patrol can sweep a flange stack or valve station from several metres away and find the leak without entering the hazard zone.
+127	Interface and product level in separators
+128	Magnetostrictive transmitters give continuous 4–20 mA or RS485 over 3–5 m of stroke with no moving parts in the vessel. A magnetic flip-column gauge alongside gives a local readout that needs no power at all.
+129	Pump protection on transfer duty
+130	A dry-running pump destroys itself in minutes. Thermal flow switches with no moving part in the flow path hold their set-point where a paddle switch would jam on wax or scale.
+131	Laser methane detectors
+132	Magnetostrictive level
+133	Differential pressure
+134	HSM laser methane detector
+135	Aggressive media, coating products, foam and exothermic reactions. Wetted material and the measuring principle matter more here than accuracy class — an instrument that survives the medium beats one that is precise for a month.
+136	Media that coats the sensor
+137	Capacitive level transmitters tolerate build-up better than contact switches, and the microwave switch detects through the vessel wall when even a coated probe is a liability.
+138	Corrosion on wetted parts
+139	SUS 316L is the default across the flow, level and pressure ranges. Where the medium attacks 316L, the probe material and process connection are specified at enquiry rather than assumed.
+140	Small skids without a PLC
+141	Pressure controllers with four or five relay outputs trip pumps, valves and alarms directly from the keypad — no separate control system on a dosing or transfer skid.
+142	Capacitive level
+143	Pressure controllers
+144	Flow switches
+145	PCC216 pressure controller with relay outputs
+146	Treatment works, pumping stations, reservoirs and distribution networks. Instruments here are bought in quantity, installed outdoors, and expected to run for years without attention.
+147	Wet wells and deep reservoirs
+148	Submersible hydrostatic transmitters convert head into 4–20 mA and are rated IP68, so the cable gland and body survive permanent immersion rather than a splash.
+149	Pump station flow confirmation
+150	Thermal flow switches confirm that a duty pump is actually moving water, and trip the standby when it is not — without a paddle to foul on rags and grit.
+151	Aeration basin dissolved oxygen
+152	The DOG-208FA electrode and DOG200 meter cover the aeration control loop, from the raw electrode to a panel-mounted instrument with relay outputs.
+153	Submersible level
+154	Dissolved oxygen
+155	HPS10 submersible level transmitter
+156	Boiler level, steam-side pressure, turbine and switchgear monitoring. The unusual requirement is measurement in places where a metal probe or a copper conductor is itself the hazard.
+157	Hotspots on high-voltage plant
+158	Fluorescent fibre-optic temperature sensing runs a purely dielectric path to the measurement point and withstands 100 kV at the fibre lead — used on switchgear, busbars and transformer windings.
+159	Boiler and feedwater level
+160	Magnetic flip-column gauges give a local indication that cannot fail electronically, with an optional 4–20 mA transmitter on the same column for the DCS.
+161	Steam-side pressure
+162	Differential and gauge pressure transmitters to 40 MPa with a 40:1 turndown, in stainless housings with G1/2 or M20×1.5 connections.
+163	Fibre-optic temperature
+164	Magnetic level gauges
+165	Pressure transmitters
+166	Fibre-optic temperature sensing system
+167	Hygienic duty where the instrument is cleaned in place, and where a crevice is a contamination risk. Smooth wetted surfaces, no threaded pockets, and materials that survive caustic washdown.
+168	Clean-in-place washdown
+169	Sealed stainless housings rated IP67 and IP68 survive the wash cycle, and the absence of a paddle or vane in a flow switch removes a crevice that product can collect in.
+170	Sanitary level and temperature
+171	PEEK and stainless level switches plus Pt100 probes in stainless sheaths, with probe length and thread made to order to suit the vessel connection.
+172	pH and dissolved oxygen in process
+173	The PHG-2091Pro controller and DOG200 meter bring the analytical loop into a panel with relay outputs for dosing.
+174	Sanitary level
+175	RTD probes
+176	pH & DO analysis
+177	HLS01 cable float level switch
+178	Repeatable batches, documented calibration, and equipment that has to be identical across every line. The purchasing driver is consistency, not the lowest unit price.
+179	Identical commissioning across lines
+180	The digital thermal flow switch is set with two front-panel keys and shows live velocity on an LED display, so every unit on every line trips at the same value rather than at whatever the screw position happened to be.
+181	Traceable calibration
+182	Each transmitter is pressure- and insulation-tested before dispatch, and the individual calibration record is supplied with the instrument.
+183	Filling and dispensing position
+184	The HSM41 laser displacement sensor resolves 50–400 mm on a 655 nm spot for dispensing and fill-height work, with a TOF variant reaching 2.5 m.
+185	Digital flow switches
+186	Laser displacement
+187	Temperature probes
+188	HSM30 digital thermal flow switch
+189	Applications
+190	Where these instruments run
+191	Six industries take most of what leaves the factory. Each has its own failure modes — fouling, corrosion, vibration, hazardous area classification, washdown — and the instrument has to be specified for the one that applies, not for the catalogue photograph.
+192	Industries
+193	— Application
+194	Working in an industry that is not listed?
+195	The catalogue covers the common duties; the engineering team covers the rest. Send the medium, temperature, pressure and area classification and we will say what will hold.
+196	en_US
+197	#0b4f8a
+198	Skip to content
+199	That page is not here
+200	The address may have changed, or the model may have been retired from the catalogue. If you followed a link from the old site, the product is probably still listed — try the family below, or tell us the model code and we will find it.
+201	Ask an engineer
+202	Product families
+203	Industrial Sensors — Flow, Level, Pressure, Temperature | HSM Sensors
+204	Factory-direct manufacturer of industrial flow switches, level transmitters, pressure transmitters, RTD sensors, ultrasonic and gas detectors. 4-20 mA, RS485 and relay outputs, custom ranges, worldwide shipping from Xiamen, China.
+205	Oil & gas
+206	Differential pressure, level and methane detection for separators, storage and gathering lines.
+207	ATEX-grade housings
+208	Water & wastewater
+209	Submersible level, thermal flow switches and dissolved oxygen for treatment and networks.
+210	IP68 submersible
+211	Chemical & petrochemical
+212	Capacitive and magnetic level plus pressure control for aggressive and coating media.
+213	316L wetted parts
+214	Power generation
+215	Fibre-optic hotspot sensing, steam-side pressure and boiler level instrumentation.
+216	100 kV rated
+217	Food & beverage
+218	Sanitary PEEK and stainless level switches, RTD probes and pH/DO analysis.
+219	Hygienic designs
+220	Machine building
+221	Ultrasonic, laser and encoder feedback for automation and packaging equipment.
+222	OEM quantities
+223	Manufacturer · Xiamen, China
+224	 · Factory-direct
+225	Industrial sensors,
+226	built in our own factory.
+227	Flow, level, pressure, temperature, ultrasonic and gas instrumentation for plant engineers and machine builders.
+228	models in ten families, with 4–20 mA, RS485 and relay outputs — and custom ranges built to order rather than refused.
+229	models in catalogue
+230	measurement families
+231	316L
+232	wetted stainless standard
+233	Find the measurement you need
+234	Ten families, each built around a specific measuring principle. Pick the quantity, then narrow by range, output and process connection.
+235	Need something not listed?
+236	Send the medium, range and thread. We build custom variants as a matter of course.
+237	Talk to an engineer →
+238	Widely specified
+239	Workhorse models
+240	See everything →
+241	Most of what we ship goes into six industries. Each has its own failure modes — fouling, corrosion, vibration, hazardous area classification — and the instrument has to be specified for the one that applies.
+242	Industry applications →
+243	You are dealing with the factory, not a trading desk
+244	Everything in this catalogue is assembled, calibrated and tested in Jimei District, Xiamen. The engineering team that answers your enquiry is the same team that sets the production parameters — which is why a non-standard thread or a 450 °C version is a normal order rather than an exception.
+245	About the company
+246	4-20 mA
+247	Industry-standard analogue output on the majority of models
+248	IP67/68
+249	Ingress protection on sealed field housings
+250	Wetted stainless on flow, level and pressure ranges
+251	Modbus
+252	RS485 available across controllers and transmitters
+253	Next step
+254	Send the process conditions and we will specify the instrument
+255	Medium, pressure, temperature, pipe or vessel size, and the signal your control system accepts — that is enough for us to come back with a model, a price and a lead time. If a catalogue item will not do, we say what will.
+256	HSM magnetic level transmitter
+257	Privacy Notice
+258	What data HSM Sensors collects when you submit an enquiry, why it is collected, how long it is kept, and how to have it removed.
+259	Legal
+260	Privacy notice
+261	This notice explains what happens to the information you send us through this website. It is written to be read, not to be survived.
+262	Privacy
+263	Last updated
+264	Who is responsible
+265	What we collect
+266	When you submit the enquiry form, we collect the fields you fill in:
+267	your name, company and email address;
+268	country, phone number and any model, quantity or product family you select;
+269	the message describing your application;
+270	technical data recorded automatically with the submission: the IP address the request came from, the browser user-agent string, and the time of submission.
+271	We do not ask for, and do not want, payment card details, identity documents or other sensitive personal data through this form.
+272	Why we hold it
+273	To answer your enquiry: to work out which instrument fits, to quote a price and a lead time, and to keep in contact about that order. The lawful basis is that processing is necessary to take steps at your request before entering a contract, and our legitimate interest in responding to business enquiries addressed to us.
+274	We do not use enquiry data for advertising, we do not build profiles, and we do not sell or rent it to anyone.
+275	Who sees it
+276	Our sales and engineering staff, and the service providers that operate this website on our behalf — a database host, an email delivery provider and a messaging provider used for internal notification. Those providers process the data only to deliver the service, under contract.
+277	Because we are based in China, your enquiry is transferred to and stored in China. If your organisation requires a data transfer agreement before sending personal data to us, tell us before you submit the form and we will put one in place.
+278	How long we keep it
+279	Enquiry records are kept for as long as needed to handle the enquiry and any resulting order, and for the period our accounting and warranty obligations require. Records with no commercial outcome are deleted when they are no longer useful.
+280	Your rights
+281	You can ask us for a copy of the data we hold about you, ask us to correct it, or ask us to delete it. Write to
+282	and we will respond. If you are in the EU or UK, you also have the right to complain to your local data protection authority.
+283	Cookies and tracking
+284	This site does not set advertising or analytics cookies. The only cookie we set is an access cookie for the internal enquiry list, which is set only after an administrator signs in and is never issued to ordinary visitors.
+285	Our hosting and database providers may keep standard server logs, including IP addresses, for security and troubleshooting.
+286	Changes
+287	If this notice changes, the revised version will be published on this page with a new date. Material changes affecting enquiries already received will be communicated directly where we hold a contact address for you.
+288	Products
+289	Breadcrumb
+290	currentColor
+291	Resources — Selection Guides, Output Signals, Datasheets
+292	How to specify an industrial sensor: choosing between relay, 4-20 mA, 0-10 V and RS485 outputs; picking a level principle; reading ingress protection ratings. Plus datasheet and certificate requests.
+293	Dry contact / relay
+294	Switching a pump, valve, alarm or interlock directly. No controller required.
+295	Relay contacts have a finite switching life; a contact rated 1 A will not start a 5 A motor without a contactor.
+296	HWS, HLS, HTS float and magnetic switches, flow switches, pressure controllers
+297	PNP / NPN
+298	Machine control — PLC digital input, conveyor logic, OEM equipment.
+299	Sinking versus sourcing is not interchangeable. Order the type the input card expects.
+300	HSM flow switches, UB ultrasonic sensors, HSM41 laser displacement
+301	4–20 mA (2-wire)
+302	Long cable runs into a PLC analogue card or DCS. Immune to volt-drop over distance.
+303	The loop needs a minimum supply voltage that rises with the total loop resistance.
+304	PDD pressure transmitters, HPS submersible level, TPT temperature transmitters
+305	0–10 V / 1–5 V
+306	Short runs inside a cabinet, or into a controller with voltage inputs.
+307	Voltage signals degrade over distance and pick up noise. Keep the run short.
+308	Selected transmitters and displacement transducers
+309	RS485 Modbus RTU
+310	Multiple instruments on one pair of wires into a PLC, gateway or SCADA.
+311	Every device needs a unique address on the bus, and the bus needs termination at both ends.
+312	HPS submersible level, TPT100, edge gateway, power meter
+313	Wireless — 4G / LoRa / NB-IoT
+314	Sites with no mains power and no cable route: pipelines, reservoirs, heating networks.
+315	Battery life depends on reporting interval and signal strength; confirm both before sizing.
+316	Wireless pressure, temperature, level and gas instruments
+317	Float switch
+318	A discrete point — pump start/stop, high alarm. No power needed for the switch itself.
+319	Continuous measurement. Sticky media that will not release a float.
+320	Magnetic flip-column gauge
+321	Local indication with no electronics at all, plus an optional 4–20 mA transmitter on the same column.
+322	Media that crystallise on the column, and narrow ranges where resolution is poor.
+323	Magnetostrictive transmitter
+324	Continuous 4–20 mA or RS485 over 3–5 m with no moving parts in the vessel.
+325	Foam and vapour that confuse the float, unless the float is specified for it.
+326	Hydrostatic (submersible)
+327	Deep wells and reservoirs. Rated IP68, so permanent immersion is fine.
+328	Vessels under pressure, and media with varying density — head is not level.
+329	Capacitive
+330	Viscous and coating media, and aggressive chemistry where a contact probe survives better.
+331	Build-up that changes the dielectric, unless the probe is specified for it.
+332	Microwave through-wall
+333	Foam, build-up or aggressive chemistry where even a coated probe is a liability.
+334	Thick or metallic vessel walls between sensor and medium.
+335	IP65
+336	Dust-tight; protected against water jets from any direction.
+337	IP67
+338	Dust-tight; protected against temporary immersion to 1 m for 30 minutes.
+339	IP68
+340	Dust-tight; protected against continuous immersion at a stated depth and duration.
+341	Resources
+342	Specifying an instrument without a sales call
+343	Three things decide most sensor orders: the measuring principle, the output signal your panel accepts, and the environmental rating. These pages cover all three, so an enquiry can start from a shortlist rather than a blank page.
+344	Request a datasheet
+345	Reference · Output signals
+346	Which output do you need?
+347	The output is usually the first thing to fix, because it decides what the control system has to do with the measurement — and whether you need a control system at all.
+348	Industrial sensor output signals, their typical use, and what to watch for
+349	Signal
+350	When to use it
+351	What to watch
+352	Where it appears
+353	Scroll the table sideways to read all four columns.
+354	Reference · Level measurement
+355	Six level principles, and when each one fails
+356	Level is the widest part of the catalogue because no single principle suits every tank. The column that matters is the second one — the conditions where each principle is the wrong choice.
+357	Good for
+358	Avoid when
+359	Level models →
+360	Reference · Environmental rating
+361	Reading an IP code
+362	The first digit is solids, the second is water. The catalogue ratings below are the ones that appear across the product range; a higher number is not automatically better if the installation never sees water.
+363	Note that IP68 requires a stated depth and duration — an IP68 claim without those two numbers is not meaningful.
+364	Datasheets, drawings and certificates
+365	The specification tables on every product page are the current published data. For a purchase, an installation or an import file you usually need the document underneath it — the PDF datasheet for the exact model, a dimensioned drawing, or the certificate scans. Those are issued per request rather than posted publicly, because the revision has to match the unit you are buying.
+366	Request documentation
+367	Datasheet request
+368	PDF datasheet
+369	The current revision for the model, in English.
+370	Dimensioned drawing
+371	For installation clearance and connection layout.
+372	Calibration / test record
+373	For the individual unit, where the project requires it.
+374	CE / ISO / RoHS scans
+375	For import and tender files.
+376	Material certificate
+377	Wetted-part material traceability on request.
+378	Selection shortlist
+379	Two or three candidate models against your process conditions.
+380	Browse by family
+381	Terms of Use
+382	Terms governing use of the HSM Sensors website, the status of catalogue information, and how quotations and orders are formed.
+383	Terms of use
+384	These terms cover the website. Quotations and orders are governed by the terms stated on the quotation and the sales contract, which take precedence over anything written here.
+385	Terms
+386	Using this site
+387	This website is operated by
+388	You may view, download and print pages for the purpose of evaluating and purchasing our products. You may not scrape the catalogue at volume, republish it as your own, or use the site in a way that interferes with its operation or with other visitors.
+389	Catalogue information is indicative
+390	Product specifications, dimensions, images and descriptions on this site are published for selection purposes. They describe the standard configuration and are subject to change without notice as products are revised.
+391	The specification that governs a purchase is the one stated on the quotation and, where one is issued, the datasheet for the specific model and revision. If a figure on this website and a figure on your quotation differ, the quotation governs.
+392	Product photographs are representative. Finish, labelling and minor fittings may differ from the image shown.
+393	No offer, and no reliance on the site alone
+394	Nothing on this website is an offer capable of acceptance. Prices, lead times and availability are confirmed only in a written quotation.
+395	Selection guidance on this site — including the output-signal and level-principle references — is general technical information. It is not a substitute for engineering judgement about your process, and we are not responsible for a specification chosen without reference to us. Where a wrong selection could cause injury, environmental release or significant loss, confirm the specification with our engineering team in writing before ordering.
+396	Intellectual property
+397	The HSM Sensors name, logo, product photography, catalogue text and page design are our property or are used by us under licence. Third-party trademarks mentioned on this site — including fitting standards and protocol names — belong to their respective owners and are used only to describe compatibility.
+398	Enquiries you send us
+399	By submitting an enquiry you confirm that the information is accurate and that you are entitled to share it, and you authorise us to reply to the address or number you provide. Do not send us confidential third-party information through the form.
+400	Availability
+401	We aim to keep the site available but do not guarantee uninterrupted access. We may suspend or change any part of it, including withdrawing a product from the catalogue, without notice.
+402	Liability
+403	To the extent permitted by law, we are not liable for indirect or consequential loss arising from use of this website or reliance on its content. Nothing in these terms excludes liability that cannot lawfully be excluded, including for death or personal injury caused by negligence.
+404	Governing law
+405	These terms are governed by the laws of the People&apos;s Republic of China. The courts of Xiamen, Fujian have jurisdiction over disputes arising from use of this website, without prejudice to any mandatory consumer protection rules that apply where you live.
+406	Questions about these terms:
+407	use client
+408	PATCH
+409	Content-Type
+410	application/json
+411	No inquiries yet.
+412	Submissions from the contact form will appear here.
+413	saving…
+414	en-GB
+415	Model:
+416	Family:
+417	Qty:
+418	POST
+419	Could not sign in.
+420	Network error. Try again.
+421	Internal
+422	Inbound inquiries
+423	Password
+424	Checking…
+425	Sign in
+426	Something went wrong. Please email us directly.
+427	We could not reach the server. Check your connection and try again, or email us directly.
+428	Enquiry received
+429	Thank you — your request is with our engineering team. We will reply to
+430	with a model recommendation and a price.
+431	Reference:
+432	Continue browsing
+433	Send another enquiry
+434	What do you need?
+435	Name
+436	Company
+437	Work email
+438	Phone / WhatsApp
+439	Country
+440	Quantity required
+441	e.g. 5 pcs, or 1 sample
+442	Model reference
+443	e.g. HSM10
+444	Product family
+445	Not sure / other
+446	Process conditions or message
+447	Medium, temperature, pressure, pipe or vessel size, and the signal your control system accepts. A drawing or photo of the existing installation helps.
+448	The more of this you can give, the more precise the answer.
+449	Website
+450	We use your details only to answer this enquiry. See the
+451	privacy notice
+452	Sending…
+453	Send enquiry
+454	(required)
+455	#c8d0d8
+456	#8f9aa6
+457	#2a323c
+458	#0f1a24
+459	#1a6fbc
+460	#79b4e9
+461	#ffffff
+462	#0a355c
+463	Drag to rotate · scroll to explore
+464	(prefers-reduced-motion: reduce)
+465	(min-width: 1024px)
+466	HSM10 thermal flow switch
+467	\u003c
+468	py-10 lg:py-12
+469	py-14 lg:py-20
+470	Need a model that is not in the catalogue?
+471	Send us the medium, range, thread and output you need. Most custom configurations are quoted from the factory engineering desk rather than handed to a trading partner.
+472	(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw
+473	View specifications
+474	Search models, ranges or outputs
+475	Model, e.g. HSM10, 4-20 mA, 316L, IP68…
+476	No model matches that search.
+477	The catalogue covers 66 models but the factory builds to order. Describe the process conditions and we will specify something that does fit.
+478	All models
+479	Filtered
+480	Pharmaceutical
+481	Selection guide
+482	Output signal guide
+483	Download catalogue
+484	HSM Sensors
+485	Xiamen · Factory-direct
+486	Manufacturer of industrial flow, level, pressure, temperature and gas instrumentation. Every unit is assembled and calibrated in our own facility, and custom ranges are built to order.
+487	products →
+488	More ranges
+489	Industries served
+490	Escape
+491	Factory-direct manufacturer · Xiamen, China · Exporting worldwide
+492	Flow · Level · Pressure
+493	Main
+494	models across
+495	View all products →
+496	Close menu
+497	Open menu
+498	Mobile
+499	All products →
+500	Detailed specifications for this model are supplied as a datasheet. Request a quote and we will send the current revision with the price.
+501	Flow
+502	Thermal flow switches and closed-loop flow controllers for pipe networks
+503	Thermal-dispersion flow switches detect whether liquid or gas in a pipe is moving above a set point, then switch a relay. There is no paddle, no vane and no moving part in the flow path, so debris and scale do not jam the instrument. Our range covers the standard single set-point switch, a dual set-point version for alarm-and-trip duty, and a digital model that shows live flow velocity on an LED display. All three are fully sealed and rated IP67, with a wetted probe in SUS 316L. Where you need regulation rather than detection, the S400 controller closes the loop with a proportional valve.
+504	Flow velocity
+505	Set-point crossing
+506	Volumetric flow (controller)
+507	Relay (SPDT)
+508	4–20 mA
+509	Level
+510	Float, magnetic, capacitive, submersible and magnetostrictive level measurement
+511	Liquid level is the widest part of our catalogue because no single principle suits every tank. Float switches give a dry contact at one or more discrete points and need no power. Magnetic level gauges read directly from a red-and-white flip column — no electronics at all — and can add a 4–20 mA transmitter for remote indication. Magnetic-induction and magnetostrictive transmitters give continuous 4–20 mA or RS485 output over 3 to 5 metres. Submersible transmitters convert hydrostatic head into a signal and suit deep wells and reservoirs. Capacitive models handle viscous and coating media. Where foam, build-up or aggressive chemistry rules out contact sensing, the microwave switch detects through the wall of the vessel.
+512	Point level
+513	Continuous level
+514	Interface
+515	Dry contact
+516	Relay
+517	0–10 V
+518	RS485 Modbus
+519	Pressure
+520	Differential pressure, gauge pressure and pressure-switching controllers
+521	Our pressure line splits into two jobs. For pure measurement, the PDD series covers differential pressure from ±100 Pa up to 40 MPa with 0.2 or 0.5 accuracy class, a 40:1 turndown and a two-wire 4–20 mA output. For measurement plus local control, the PCD and PCC controllers add a bright LED display, configurable alarm points set from the keypad, and four or five relay outputs that can trip pumps, valves or alarms directly — no separate PLC needed for a small skid. Both families share stainless-steel housings, IP65 protection and standard G1/2 or M20×1.5 process connections, with custom threads available.
+522	Gauge pressure
+523	Absolute pressure
+524	1–5 V (3-wire)
+525	Relay ×4–5
+526	RS485
+527	Temperature
+528	Pt100 probes, integrated transmitters and fibre-optic sensing for high voltage
+529	The TPS and TPT families are built around Pt100 and Pt1000 platinum elements in stainless-steel probes, covering −200 to +600 °C. You can take the bare resistance signal, or add an integrated transmitter for a two-wire 4–20 mA output; the TPT201 and TPT2088 add local display and up to five relay outputs, and the TPT100 adds RS485 Modbus. Probe length, diameter and thread are made to order. For switchgear, transformers and other locations where a metal probe would be a liability, the fluorescent fibre-optic system measures temperature on a purely dielectric path and withstands 100 kV at the fibre lead.
+530	Process temperature
+531	Surface temperature
+532	HV hotspot temperature
+533	Pt100 / Pt1000 resistance
+534	1–5 V
+535	USART
+536	Ultrasonic
+537	Non-contact distance sensing from 120 mm to 4 m, unaffected by colour or gloss
+538	Ultrasonic sensors time the echo of a sound pulse, so they detect clear glass, polished metal, black rubber and liquid surfaces that optical sensors miss. The UB series covers seven sensing ranges from 120 mm to 4000 mm in M12, M18 and M30 threaded barrels, all with PNP or NPN switching output and an adjustable window. Because the measurement is acoustic rather than optical, dust, mist and ambient light do not degrade it. Typical duty is presence detection on a conveyor, fill-level checking in a bin, loop control on a web, and collision avoidance on AGVs.
+539	Distance
+540	Presence
+541	Fill height
+542	PNP
+543	NPN
+544	Analogue (selected models)
+545	Gas
+546	TDLAS methane detectors for pipelines, confined spaces and unmanned inspection
+547	These instruments use tunable diode laser absorption spectroscopy (TDLAS) to measure methane along the line of sight rather than at a single point. A laser is aimed at the target surface and the reflected beam is analysed, so a leak several tens of metres away is detected without walking into the hazard. Response is 0.06 s on the wearable unit, which matters when a patrol is moving. The range includes a helmet-mounted detector for walk-around inspection, a long-range handheld, and an explosion-proof pan-tilt head for fixed installation on a gantry or tank farm.
+548	Methane concentration (path-integrated)
+549	Leak localisation
+550	Alarm
+551	Relay (pan-tilt)
+552	Displacement
+553	Rod, draw-wire and magnetostrictive position feedback for machine control
+554	Position feedback for hydraulics, presses, gates and test rigs. The MPS rod-type transducer couples directly to a moving member and delivers 4–20 mA or 0–10 V with 0.05 % linearity and a 100-million-cycle life. The MDS draw-wire unit measures up to 20 m from a compact housing where a rod will not fit. The MMS magnetostrictive unit is non-contact, so there is nothing to wear, and it reports position and velocity with 0.002 % FS repeatability. ER and ESC models cover the short-stroke, low-cost end of the range for general automation.
+555	Linear position
+556	Stroke
+557	Velocity (magnetostrictive)
+558	0–5 V
+559	Analytical
+560	Dissolved oxygen and pH measurement for water, fermentation and process plant
+561	Dissolved oxygen and pH are the two measurements that decide whether a biological process is healthy. The DOG-208FA polarographic electrode withstands 130 °C steam sterilisation and is built for small bioreactors; the DOG200 transmitter drives it with automatic temperature compensation, isolated 4–20 mA output and dual relay control. The PHG-2091Pro accepts a range of analogue pH electrodes through a built-in A/D stage and reports over Modbus RTU, with a solid-electrolyte reference that resists blocking in dirty service.
+562	pH
+563	Temperature (compensation)
+564	Industrial IoT
+565	Battery-powered sensors and edge gateways for unmanned remote monitoring
+566	For sites with no mains power and no cable route — oil and gas pipelines, heating networks, fire-water mains, reservoirs — the wireless series combines a low-power sensing element with 4G, LoRa or NB-IoT transport and battery or cyclic-supply operation. Pressure, temperature, level and gas variants share the same enclosure and cloud path, so one gateway brings a whole site online. The edge gateway handles 4G, Wi-Fi and broadband uplinks, protocol parsing, TLS-encrypted transport and local configuration, and is the piece that turns raw sensor traffic into data your SCADA or dashboard can use.
+567	Gas concentration
+568	4G
+569	LoRa
+570	NB-IoT
+571	I²C
+572	0.25–2.5 V
+573	Motion & Metering
+574	Encoders, laser displacement sensors, load cells and power meters
+575	The instruments that sit around a machine rather than inside the process. The HSM41 laser displacement sensor resolves 50 mm to 400 mm with a 655 nm spot, and a TOF variant reaches 2.5 m or 4 m on an infrared beam — used for dispensing, packaging, pharmaceutical filling and AGV guidance. The incremental encoder gives 2048 PPR on a hollow shaft for speed and position feedback. The HS101 and HS-201 load cells measure tension and compression from 5 kN to 5000 kg. The BDL50 power meter brings three-phase metering into the same DIN-rail cabinet.
+576	Position
+577	Speed
+578	Force / weight
+579	Electrical energy
+580	Push-pull / TTL
+581	mV/V
+582	Custom / non-standard build
+583	Datasheet or documentation
+584	Technical support
+585	Something else
+586	Please enter your name.
+587	Please keep the name under 80 characters.
+588	Please enter your company name.
+589	Please keep the company name under 120 characters.
+590	Please enter a valid email address.
+591	Please keep the email under 160 characters.
+592	Please keep the country under 60 characters.
+593	Please keep the phone number under 40 characters.
+594	Please keep the model reference under 60 characters.
+595	Please keep the quantity under 60 characters.
+596	Please keep the category under 40 characters.
+597	Please describe the application in a sentence or two.
+598	Please keep the message under 4000 characters.
+599	elapsedMs
+600	HSM Sensors Technology (Xiamen) Co., Ltd.
+601	Industrial Sensors, Engineered and Built in Xiamen
+602	Manufacturer of industrial flow, level, pressure, temperature, ultrasonic and gas sensors with 4-20 mA, RS485 and relay outputs. Factory-direct pricing, custom ranges, worldwide shipping from Xiamen, China.
+603	NEXT_PUBLIC_SALES_EMAIL
+604	157583564@qq.com
+605	tel:+8613003936813
+606	Mon–Fri, 09:00–18:00 (GMT+8)
+607	No. 582 Hengtian Road, Jimei District
+608	Xiamen
+609	Fujian
+610	CN
+611	China
+612	Flow Sensors
+613	Thermal flow switches, flow controllers
+614	Level Sensors
+615	Float, magnetic, capacitive, radar-free level
+616	Pressure Sensors
+617	Differential and gauge transmitters
+618	Temperature Sensors
+619	RTD probes and transmitters
+620	Ultrasonic Sensors
+621	Proximity and distance sensing
+622	Gas Detection
+623	Linear position transducers
+624	Dissolved oxygen instruments
+625	Wireless sensors and edge gateways
+626	Encoders, laser sensors, load cells
+627	Custom Engineering
+628	Factory-direct
+629	Every unit is assembled and calibrated in our own Xiamen facility — no trading company in between.
+630	Custom ranges
+631	Non-standard lengths, threads, materials and output ranges are built to order, not refused.
+632	Sample units
+633	Standard catalogue items are available as evaluation samples before you commit to a production order.
+634	Standards-based build
+635	Every model is designed and manufactured to the applicable national and industry standards.

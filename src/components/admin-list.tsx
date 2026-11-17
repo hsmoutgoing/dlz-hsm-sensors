@@ -1,5 +1,5 @@
 "use client";
-
+import { useTranslations } from "@/lib/i18n/client";
 import { useState, useTransition } from "react";
 import type { InquiryRecord, InquiryStatus } from "@/lib/inquiries/store";
 
@@ -12,6 +12,8 @@ const STATUS_STYLES: Record<InquiryStatus, string> = {
 };
 
 export function AdminList({ records }: { records: readonly InquiryRecord[] }) {
+  const tx = useTranslations();
+
   const [filter, setFilter] = useState<InquiryStatus | "all">("all");
   const [items, setItems] = useState(records);
   const [pending, startTransition] = useTransition();
@@ -40,10 +42,9 @@ export function AdminList({ records }: { records: readonly InquiryRecord[] }) {
   if (items.length === 0) {
     return (
       <div className="mt-8 rounded-lg border border-dashed border-ink-300 bg-ink-50 px-6 py-16 text-center">
-        <p className="text-[15px] font-medium text-ink-900">No inquiries yet.</p>
+        <p className="text-[15px] font-medium text-ink-900">{tx("No inquiries yet.")} </p>
         <p className="mt-2 text-[13px] text-ink-600">
-          Submissions from the contact form will appear here.
-        </p>
+          {tx("Submissions from the contact form will appear here.")} </p>
       </div>
     );
   }
@@ -65,14 +66,13 @@ export function AdminList({ records }: { records: readonly InquiryRecord[] }) {
                   : "rounded border border-ink-300 bg-white px-2.5 py-1 text-[12px] capitalize text-ink-600 transition-colors hover:border-brand-400"
               }
             >
-              {key} ({count})
+              {tx(key)} ({tx(count)})
             </button>
           );
         })}
         {pending && (
           <span className="self-center font-mono text-[10.5px] uppercase tracking-[0.1em] text-ink-400">
-            saving…
-          </span>
+            {tx("saving…")} </span>
         )}
       </div>
 
@@ -94,17 +94,17 @@ export function AdminList({ records }: { records: readonly InquiryRecord[] }) {
                     {record.intent}
                   </span>
                   <span className="text-[11.5px] text-ink-400">
-                    {new Date(record.createdAt).toLocaleString("en-GB", {
+                    {tx(new Date(record.createdAt).toLocaleString("en-GB", {
                       dateStyle: "medium",
                       timeStyle: "short",
-                    })}
+                    }))}
                   </span>
                 </div>
                 <h2 className="mt-2 text-[15px] font-semibold tracking-tight text-ink-900">
                   {record.company}
                 </h2>
                 <p className="mt-0.5 text-[12.5px] text-ink-600">
-                  {record.name} ·{" "}
+                  {record.name} ·{tx(" ")} 
                   <a
                     href={`mailto:${record.email}?subject=${encodeURIComponent(
                       `Re: your enquiry ${record.id.slice(0, 8)}`,
@@ -128,7 +128,7 @@ export function AdminList({ records }: { records: readonly InquiryRecord[] }) {
                       onClick={() => changeStatus(record.id, s)}
                       className="rounded border border-ink-300 px-2 py-1 text-[11.5px] capitalize text-ink-600 transition-colors hover:border-brand-400 hover:text-brand-700"
                     >
-                      {s}
+                      {tx(s)}
                     </button>
                   ))}
               </div>
@@ -136,9 +136,9 @@ export function AdminList({ records }: { records: readonly InquiryRecord[] }) {
 
             {(record.model || record.category || record.quantity) && (
               <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] text-ink-500">
-                {record.model && <span>Model: {record.model}</span>}
-                {record.category && <span>Family: {record.category}</span>}
-                {record.quantity && <span>Qty: {record.quantity}</span>}
+                {record.model && <span>{tx("Model:")} {record.model}</span>}
+                {record.category && <span>{tx("Family:")} {record.category}</span>}
+                {record.quantity && <span>{tx("Qty:")} {record.quantity}</span>}
               </p>
             )}
 
