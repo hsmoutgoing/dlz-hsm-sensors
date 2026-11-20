@@ -407,9 +407,8 @@ main section[aria-labelledby='technical-data-heading'] section h3 {
 .site-mega {
   position: absolute;
   top: 100%;
-  inset-inline-end: clamp(16px, 3vw, 40px);
+  inset-inline: clamp(16px, 3vw, 40px);
   z-index: 60;
-  width: min(920px, calc(100% - 80px));
   pointer-events: none;
   padding: 28px 30px 26px;
   background: #000;
@@ -421,7 +420,7 @@ main section[aria-labelledby='technical-data-heading'] section h3 {
   transition: opacity .22s ease, transform .26s var(--ease-out-expo), visibility .22s linear;
 }
 .site-mega.is-open { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
-.site-mega-inner { display: flex; gap: clamp(24px, 4vw, 56px); }
+.site-mega-inner { display: flex; max-width: 920px; margin-inline: auto; gap: clamp(24px, 4vw, 56px); }
 .site-mega-column { flex: 1 1 0; min-width: 0; }
 .site-mega-heading {
   margin: 0 0 14px;

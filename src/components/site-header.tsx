@@ -77,6 +77,12 @@ export function SiteHeader() {
     if (closeTimer.current) clearTimeout(closeTimer.current);
   }
 
+  function closeSelectedCategory(href: string): void {
+    cancelClose();
+    if (pathname === href) productsLinkRef.current?.focus();
+    setProductsOpen(false);
+  }
+
   const megaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -130,8 +136,8 @@ export function SiteHeader() {
                   cancelClose();
                   if (window.matchMedia("(hover: hover)").matches) setProductsOpen(true);
                 }}
-                onMouseLeave={(event) => {
-                  if (!event.currentTarget.contains(document.activeElement)) scheduleClose();
+                onMouseLeave={() => {
+                  if (!megaRef.current?.contains(document.activeElement)) scheduleClose();
                 }}
                 onBlur={(event) => {
                   if (event.currentTarget.contains(event.relatedTarget)) return;
@@ -175,7 +181,7 @@ export function SiteHeader() {
                             if (!category) return null;
                             return (
                               <li key={slug}>
-                                <Link href={`/products/${slug}`} tabIndex={productsOpen ? 0 : -1}>
+                                <Link href={`/products/${slug}`} tabIndex={productsOpen ? 0 : -1} onNavigate={() => closeSelectedCategory(`/products/${slug}`)}>
                                   {tx(category.name)}
                                 </Link>
                               </li>
@@ -185,7 +191,7 @@ export function SiteHeader() {
                         {groupIndex === productGroups.length - 1 && (
                           <ul className="site-mega-more">
                             <li>
-                              <Link href="/products" tabIndex={productsOpen ? 0 : -1}>
+                              <Link href="/products" tabIndex={productsOpen ? 0 : -1} onNavigate={() => closeSelectedCategory("/products")}>
                                 {tx("View all products →")}
                               </Link>
                             </li>

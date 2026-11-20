@@ -69,19 +69,13 @@ export function PageHero({
 
         {actions && actions.length > 0 && (
           <div className="mt-8 flex flex-wrap gap-3">
-            {actions.map((a) => (
-              <Link
-                key={a.href + a.label}
-                href={a.href}
-                className={
-                  a.primary
-                    ? "rounded bg-brand-500 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-brand-400"
-                    : "rounded border border-white/25 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:border-white/50 hover:bg-white/5"
-                }
-              >
-                {tx(a.label)}
-              </Link>
-            ))}
+            {actions.map(({ label, href, primary }) => {
+              const Action = href.startsWith("#") ? "a" : Link;
+              const className = primary
+                ? "rounded bg-brand-500 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-brand-400"
+                : "rounded border border-white/25 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:border-white/50 hover:bg-white/5";
+              return <Action key={href + label} href={href} className={className}>{tx(label)}</Action>;
+            })}
           </div>
         )}
       </div>
