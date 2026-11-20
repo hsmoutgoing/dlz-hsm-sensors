@@ -3,185 +3,83 @@ import { useTranslations, getI18n } from "@/lib/i18n/server";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { PageHero, QuoteCta } from "@/components/page-hero";
 import { categories } from "@/lib/categories";
 import { products } from "@/lib/products";
 import { site } from "@/lib/site";
+import styles from "./about.module.css";
 
 export async function generateMetadata(): Promise<Metadata> {
- const {t, locale} = await getI18n();
- const metadata: Metadata = {
-  title: "About HSM Sensors — Sensor Manufacturer in Xiamen, China",
-  description: `HSM Sensors Technology (Xiamen) Co., Ltd. designs, assembles and calibrates industrial flow, level, pressure, temperature and gas instrumentation at its facility in Jimei District, Xiamen. ${products.length} catalogue models plus custom builds.`,
-  alternates: { canonical: "/about" },
-};
- return localizeMetadata(metadata, t, locale);
+  const { t, locale } = await getI18n();
+  return localizeMetadata({
+    title: "About HSM Sensors — Sensor Manufacturer in Xiamen, China",
+    description: `HSM Sensors Technology (Xiamen) Co., Ltd. designs, assembles and calibrates industrial flow, level, pressure, temperature and gas instrumentation at its facility in Jimei District, Xiamen. ${products.length} catalogue models plus custom builds.`,
+    alternates: { canonical: "/about" },
+  }, t, locale);
 }
 
-const principles = [
-  {
-    title: "Factory-direct, not a trading desk",
-    body: "Enquiries are answered by the engineering team that sets the production parameters. A non-standard thread, a longer probe or a 450 °C variant is a normal order rather than an exception, because the person quoting it is the person building it.",
-  },
-  {
-    title: "Built to national and industry standards",
-    body: "Every model is designed and manufactured to the applicable Chinese national and industry standards. Where a project calls for CE, ISO or RoHS documentation, the certificate is supplied with the quotation or the shipment.",
-  },
-  {
-    title: "Developed with university research partners",
-    body: "Several product lines were developed jointly with university research groups, which is how the fibre-optic and laser-absorption instruments entered the range alongside the conventional switches and transmitters.",
-  },
-  {
-    title: "Documentation supplied per project",
-    body: "Every unit is assembled and calibrated in our own facility. Test records, material certificates and CE or RoHS scans are supplied on request with the quotation, matched to the revision you are buying.",
-  },
-];
-
-const capabilities = [
-  { label: "Measurement families", value: "10" },
-  { label: "Catalogue models", value: String(products.length) },
-  { label: "Wetted material standard", value: "SUS 316L" },
-  { label: "Ingress protection", value: "IP65–IP68" },
-  { label: "Output signals", value: "Relay · 4–20 mA · RS485" },
-  { label: "Documentation", value: "National & industry standards" },
+const gallery = [
+  { src: "/images/products/hsm10-thermal-flow-switch.jpg", alt: "HSM10 thermal flow switch" },
+  { src: "/images/products/hps10-submersible-level-transmitter.jpg", alt: "HPS10 submersible level transmitter" },
+  { src: "/images/products/pcc100-pressure-controller.jpg", alt: "PCC100 pressure controller" },
+  { src: "/images/products/hsm300-wearable-methane-detector.jpg", alt: "HSM300 wearable laser methane detector" },
 ];
 
 export default function AboutPage() {
   const tx = useTranslations();
-
   return (
-    <>
-      <PageHero
-        eyebrow={tx("About us")} 
-        title={tx("A sensor factory in Jimei District, Xiamen")} 
-        lede={tx("HSM Sensors designs, assembles and calibrates industrial instrumentation under one roof. The catalogue covers ten measurement families and 66 models; the engineering team behind it covers the variants that are not in the catalogue.")} 
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "About" }]}
-        actions={[
-          { label: "Request a quote", href: "/contact?intent=quote", primary: true },
-          { label: "Browse the catalogue", href: "/products" },
-        ]}
-      />
-
-      {/* Company + capability figures */}
-      <section className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-7">
-            <p className="eyebrow">{tx("The company")} </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900 sm:text-[2.2rem]">
-              {tx(site.legalName)}
-            </h2>
-            <p className="mt-2 font-mono text-[12px] uppercase tracking-[0.1em] text-ink-500">
-              {tx(site.chineseName)}
-            </p>
-
-            <div className="mt-6 space-y-4 text-[15px] leading-[1.75] text-ink-700">
-              <p>
-                {tx("We are a sensor manufacturer based in Xiamen, Fujian. The product range spans flow, level, pressure, temperature, ultrasonic, gas, displacement, analytical, motion and wireless instrumentation — the instruments that sit between a process and the control system that has to know what the process is doing.")} </p>
-              <p>
-                {tx("A large part of the range was developed with university research partners and is manufactured under a documented management system, with every model designed and built to the applicable national and industry standards. That combination — conventional industrial instruments alongside laser-absorption and fibre-optic sensing — is what lets us answer both a standard pump-protection enquiry and a switchgear hotspot measurement from the same engineering desk.")} </p>
-              <p>
-                {tx("What that means for a buyer is narrow and practical: you are dealing with the factory. Ranges, threads, probe lengths, materials and output signals are set on the line, so a specification that does not match the catalogue is a conversation rather than a refusal.")} </p>
-            </div>
-
-            <div className="mt-8 rounded-lg border border-ink-200 bg-ink-50 p-5">
-              <h3 className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-ink-500">
-                {tx("Registered address")} </h3>
-              <address className="mt-2 not-italic text-[14px] leading-relaxed text-ink-800">
-                {tx(site.address.street)}
-                <br />
-                {tx(site.address.city)} {tx(site.address.postalCode)}, {tx(site.address.region)},{tx(" ")} 
-                {tx(site.address.countryName)}
-              </address>
-            </div>
-          </div>
-
-          <div className="lg:col-span-5">
-            <dl className="grid gap-px overflow-hidden rounded-lg border border-ink-200 bg-ink-200 sm:grid-cols-2">
-              {capabilities.map((c) => (
-                <div key={c.label} className="bg-white p-5">
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-ink-500">
-                    {tx(c.label)}
-                  </dt>
-                  <dd className="mt-1.5 text-[15px] font-medium leading-snug text-ink-900 tnum">
-                    {tx(c.value)}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-
-            <div className="relative mt-6 aspect-[4/3] overflow-hidden rounded-lg border border-ink-200 bg-white">
-              <Image
-                src="/images/products/hsm300-wearable-methane-detector.jpg"
-                alt={tx("HSM300 wearable laser methane detector")} 
-                fill
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-contain p-10"
-              />
-            </div>
-          </div>
+    <div className={styles.about}>
+      <section className={styles.intro}>
+        <div className={styles.introImage}>
+          <Image src="/images/about-illustrations/hero.webp" alt="" fill priority sizes="(max-width: 767px) 100vw, 50vw" />
+          <span className="scene-label">{tx("Illustrative image")}</span>
+        </div>
+        <div className={styles.introCopy}>
+          <h1>{tx("A sensor factory in Jimei District, Xiamen")}</h1>
+          <p>{tx("We are a sensor manufacturer based in Xiamen, Fujian. The product range spans flow, level, pressure, temperature, ultrasonic, gas, displacement, analytical, motion and wireless instrumentation — the instruments that sit between a process and the control system that has to know what the process is doing.")}</p>
+          <Link href="/products">{tx("Browse the catalogue")}</Link>
         </div>
       </section>
 
-      {/* Principles */}
-      <section className="border-y border-ink-200 bg-ink-50">
-        <div className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-          <div className="max-w-2xl">
-            <p className="eyebrow">{tx("How we work")} </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900 sm:text-[2.2rem]">
-              {tx("Four commitments a buyer can test")} </h2>
-            <p className="mt-3 text-[15px] leading-relaxed text-ink-600">
-              {tx("Each of these is checkable on the first order rather than a claim to be taken on trust — which is why they are the four we put in writing.")} </p>
-          </div>
-
-          <div className="mt-10 grid gap-px overflow-hidden rounded-lg border border-ink-200 bg-ink-200 sm:grid-cols-2">
-            {principles.map((p) => (
-              <div key={p.title} className="bg-white p-6 lg:p-7">
-                <h3 className="text-[15.5px] font-semibold tracking-tight text-ink-900">
-                  {tx(p.title)}
-                </h3>
-                <p className="mt-2 text-[13.5px] leading-relaxed text-ink-600">{tx(p.body)}</p>
-              </div>
-            ))}
-          </div>
+      <section className={styles.story}>
+        <div className={styles.storyHeader}>
+          <h2>{tx("Factory-direct, not a trading desk")}</h2>
+          <p>{tx("What that means for a buyer is narrow and practical: you are dealing with the factory. Ranges, threads, probe lengths, materials and output signals are set on the line, so a specification that does not match the catalogue is a conversation rather than a refusal.")}</p>
+        </div>
+        <div className={styles.storyImages}>
+          <div className={styles.storyImage}><Image src="/images/about-illustrations/materials.webp" alt="" fill sizes="(max-width: 767px) 100vw, 35vw" /><span className="scene-label">{tx("Illustrative image")}</span></div>
+          <div className={styles.storyImage}><Image src="/images/about-illustrations/workbench.webp" alt="" fill sizes="(max-width: 767px) 100vw, 60vw" /><span className="scene-label">{tx("Illustrative image")}</span></div>
+        </div>
+        <div className={styles.storyEnd}>
+          <h2>{tx("Custom ranges")}</h2>
+          <p>{tx("Non-standard lengths, threads, materials and output ranges are built to order, not refused.")}</p>
+          <Link href="/custom">{tx("Talk to an engineer →")}</Link>
         </div>
       </section>
 
-      {/* What we make */}
-      <section className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p className="eyebrow">{tx("What we make")} </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900 sm:text-[2.2rem]">
-              {tx("Ten measurement families")} </h2>
-          </div>
-          <Link
-            href="/products"
-            className="text-[13.5px] font-medium text-brand-600 hover:text-brand-700"
-          >
-            {tx("All")} {tx(products.length)} {tx("models →")} </Link>
+      <section className={styles.location}>
+        <div className={styles.locationImage}><Image src="/images/about-illustrations/wide.webp" alt="" fill sizes="100vw" /><span className="scene-label">{tx("Illustrative image")}</span></div>
+        <div className={styles.locationCopy}>
+          <h2>{tx("A sensor factory in Jimei District, Xiamen")}</h2>
+          <p>{tx(site.legalName)}</p>
+          <address>{tx(site.address.street)}<br />{tx(site.address.city)}, {tx(site.address.region)}, {tx(site.address.countryName)}</address>
         </div>
-
-        <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.map((c) => (
-            <li key={c.slug}>
-              <Link
-                href={`/products/${c.slug}`}
-                className="group flex h-full flex-col rounded-lg border border-ink-200 bg-white p-5 transition-colors hover:border-brand-300 hover:bg-brand-50"
-              >
-                <h3 className="text-[14.5px] font-semibold tracking-tight text-ink-900 group-hover:text-brand-700">
-                  {tx(c.name)}
-                </h3>
-                <p className="mt-1.5 text-[12.5px] leading-relaxed text-ink-600">{tx(c.tagline)}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
       </section>
 
-      <QuoteCta
-        title={tx("Want to audit the factory before you order?")} 
-        body="Ask for a video walk-through of the assembly and calibration areas, or request the documentation relevant to your project — standards conformity, material certificates or the certificate scans you need for import."
-      />
-    </>
+      <section className={styles.products}>
+        <div className={styles.sectionHeading}>
+          <h2>{tx("Ten measurement families")}</h2>
+          <Link href="/products">{tx("View all products →")}</Link>
+        </div>
+        <div className={styles.gallery}>
+          {gallery.map((image) => <div key={image.src} className={styles.productImage}><Image src={image.src} alt={tx(image.alt)} fill sizes="(max-width: 767px) 50vw, 25vw" /></div>)}
+        </div>
+        <div className={styles.categoryLinks}>{categories.map((category) => <Link key={category.slug} href={`/products/${category.slug}`}>{tx(category.name)} <span aria-hidden="true">↗</span></Link>)}</div>
+      </section>
+
+      <section className={styles.trust}>
+        <div><h2>{tx("Documentation supplied per project")}</h2><p>{tx("Every unit is assembled and calibrated in our own facility. Test records, material certificates and CE or RoHS scans are supplied on request with the quotation, matched to the revision you are buying.")}</p></div>
+        <div><h2>{tx("Want to audit the factory before you order?")}</h2><p>{tx("Ask for a video walk-through of the assembly and calibration areas, or request the documentation relevant to your project — standards conformity, material certificates or the certificate scans you need for import.")}</p><Link href="/contact?intent=quote">{tx("Request a quote")}</Link></div>
+      </section>
+    </div>
   );
 }
