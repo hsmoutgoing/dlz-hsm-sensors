@@ -23,7 +23,7 @@ export function PageHero({
   const tx = useTranslations();
 
   return (
-    <section className="relative overflow-hidden border-b border-ink-200 bg-ink-900">
+    <section className="p3-page-hero relative overflow-hidden border-b border-ink-200 bg-ink-900">
       <div className="absolute inset-0 grid-backdrop opacity-40" aria-hidden="true" />
       <div
         className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-400/50 to-transparent"
@@ -53,7 +53,7 @@ export function PageHero({
           </nav>
         )}
 
-        <p className="eyebrow !text-brand-300">{tx(eyebrow)}</p>
+
         <h1
           className={`mt-3 max-w-4xl font-semibold tracking-tight text-white ${
             compact ? "text-3xl sm:text-4xl" : "text-4xl sm:text-5xl lg:text-[3.4rem]"

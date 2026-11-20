@@ -78,27 +78,9 @@ export function SiteHeader() {
 
   return (
     <>
-      {/* Utility bar */}
-      <div className="hidden border-b border-ink-200 bg-ink-50 text-ink-600 lg:block">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-8 py-2 text-[13px]">
-          <p className="flex items-center gap-2">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-500" />
-            {tx("Factory-direct manufacturer · Xiamen, China · Exporting worldwide")} </p>
-          <div className="flex items-center gap-6">
-            <a href={site.contact.phoneHref} className="transition-colors hover:text-brand-600">
-              {site.contact.phone}
-            </a>
-            <a
-              href={`mailto:${site.contact.email}`}
-              className="transition-colors hover:text-brand-600"
-            >
-              {site.contact.email}
-            </a>
-          </div>
-        </div>
-      </div>
+      <div className="p0-announcement">{tx("Factory-direct manufacturer · Xiamen, China · Exporting worldwide")}</div>
 
-      <header className="site-header sticky top-0 z-50 bg-white/95 backdrop-blur-md">
+      <header className="site-header sticky top-0 z-50">
         <div className="mx-auto flex max-w-[1400px] items-center gap-6 px-4 py-3 sm:px-6 lg:px-8">
           <Link
             href="/"
@@ -236,7 +218,7 @@ export function SiteHeader() {
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="fixed inset-0 top-[57px] z-40 overflow-y-auto bg-white lg:hidden">
+        <div className="p0-mobile-drawer fixed inset-0 top-0 z-40 overflow-y-auto bg-white pt-20 lg:hidden">
           <nav className="px-4 py-4" aria-label={tx("Mobile")} >
             <p className="eyebrow mb-2 px-2">{tx("Products")} </p>
             <ul className="mb-6 grid gap-0.5">

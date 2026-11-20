@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import type { CategorySlug } from "@/lib/content-types";
+import { generatedProductImage } from "@/lib/generated-product-images";
 
 export interface ExplorerItem {
   readonly slug: string;
@@ -63,7 +64,7 @@ export function ProductExplorer({ items, categories }: ProductExplorerProps) {
   return (
     <div>
       {/* Controls */}
-      <div className="sticky top-[68px] z-20 -mx-4 border-b border-ink-200 bg-white/95 px-4 py-4 backdrop-blur sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:rounded-lg lg:border lg:px-5">
+      <div className="p3-filters -mx-4 border-b border-ink-200 bg-white/95 px-4 py-4 backdrop-blur sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:rounded-lg lg:border lg:px-5">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <label className="relative block lg:max-w-sm lg:flex-1">
             <span className="sr-only">{tx("Search models, ranges or outputs")} </span>
@@ -134,12 +135,13 @@ export function ProductExplorer({ items, categories }: ProductExplorerProps) {
               >
                 <div className="relative aspect-[4/3] overflow-hidden border-b border-ink-100 bg-ink-50">
                   <Image
-                    src={item.image}
+                    src={generatedProductImage(item.model) ?? item.image}
                     alt={`${item.model} ${tx(item.name)}`}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-contain p-6 transition-transform duration-300 group-hover:scale-[1.04]"
+                    className={generatedProductImage(item.model) ? "object-cover" : "object-contain p-6"}
                   />
+                  {generatedProductImage(item.model) && <span className="scene-label">{tx("Illustrative image")}</span>}
                 </div>
                 <div className="flex flex-1 flex-col p-5">
                   <div className="flex items-center justify-between gap-2">
