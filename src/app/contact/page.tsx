@@ -57,7 +57,7 @@ export default async function ContactPage({ searchParams }: PageProps) {
       <section className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           {/* Form */}
-          <div id="enquiry" className="scroll-mt-24 lg:col-span-8">
+          <div id="enquiry" tabIndex={-1} className="scroll-mt-24 lg:col-span-8">
             <ContactForm
               initialIntent={intent}
               initialModel={modelCode}
@@ -66,7 +66,7 @@ export default async function ContactPage({ searchParams }: PageProps) {
           </div>
 
           {/* Sidebar */}
-          <aside id="direct-contact" className="scroll-mt-24 lg:col-span-4">
+          <aside id="direct-contact" tabIndex={-1} className="scroll-mt-24 lg:col-span-4">
             <div className="rounded-lg border border-ink-200 bg-ink-50 p-6">
               <h2 className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-ink-500">
                 {tx("Direct contact")} </h2>

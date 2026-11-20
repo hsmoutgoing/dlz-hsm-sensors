@@ -94,7 +94,7 @@ export default async function CategoryPage({ params }: PageProps) {
       </section>
 
       {/* Model list */}
-      <section id="models" className="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+      <section id="models" tabIndex={-1} className="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h2 className="text-2xl font-semibold tracking-tight text-ink-900 sm:text-[1.9rem]">
             {tx(items.length)} {tx(items.length === 1 ? "model" : "models")} {tx("in this family")} </h2>
