@@ -1,7 +1,7 @@
 "use client";
 import { useTranslations } from "@/lib/i18n/client";
 import Link from "next/link";
-import Image from "next/image";
+import { MediaFrame } from "@/components/media-frame";
 import { useMemo, useState } from "react";
 import type { CategorySlug } from "@/lib/content-types";
 import { generatedProductImage } from "@/lib/generated-product-images";
@@ -133,16 +133,13 @@ export function ProductExplorer({ items, categories }: ProductExplorerProps) {
                 href={`/products/${item.category}/${item.slug}`}
                 className="product-surface group flex h-full flex-col overflow-hidden rounded-lg border border-ink-200 bg-white transition-all duration-200 hover:border-brand-300 hover:shadow-lg hover:shadow-ink-900/5"
               >
-                <div className="relative aspect-[4/3] overflow-hidden border-b border-ink-100 bg-ink-50">
-                  <Image
-                    src={generatedProductImage(item.model) ?? item.image}
-                    alt={`${item.model} ${tx(item.name)}`}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className={generatedProductImage(item.model) ? "object-cover" : "object-contain p-6"}
-                  />
-                  {generatedProductImage(item.model) && <span className="scene-label">{tx("Illustrative image")}</span>}
-                </div>
+                <MediaFrame
+                  className="product-card-media"
+                  src={generatedProductImage(item.model) ?? item.image}
+                  alt={`${item.model} ${tx(item.name)}`}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  label={generatedProductImage(item.model) ? tx("Illustrative image") : undefined}
+                />
                 <div className="flex flex-1 flex-col p-5">
                   <div className="flex items-center justify-between gap-2">
                     <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-brand-600">

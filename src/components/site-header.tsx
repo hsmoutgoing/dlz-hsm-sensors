@@ -5,32 +5,23 @@ import { useTranslations } from "@/lib/i18n/client";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { mainNav, site } from "@/lib/site";
 import { categories } from "@/lib/categories";
 import { categoryCounts } from "@/lib/products";
 
-function ChevronIcon({ open }: { open: boolean }) {
-  const tx = useTranslations();
-
-  return (
-    <svg
-      width="10"
-      height="6"
-      viewBox="0 0 10 6"
-      aria-hidden="true"
-      className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-    >
-      <path
-        d="M1 1l4 4 4-4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
+/**
+ * Mega-menu column layout. Grouping mirrors the reference site: each column is
+ * a blue uppercase heading with plain white links underneath, laid out as
+ * equal-width flex columns rather than a card grid.
+ */
+const productGroups: readonly { title: string; slugs: readonly string[] }[] = [
+  { title: "Process measurement", slugs: ["flow", "level", "pressure"] },
+  { title: "Instrumentation", slugs: ["temperature", "ultrasonic", "gas"] },
+  { title: "Analysis & monitoring", slugs: ["displacement", "analytical"] },
+  { title: "Automation", slugs: ["iot", "motion"] },
+];
 
 export function SiteHeader() {
   const tx = useTranslations();
@@ -40,7 +31,7 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const counts = categoryCounts();
-  const totalProducts = Object.values(counts).reduce((a, b) => a + b, 0);
+  const productsActive = pathname.startsWith("/products");
 
   // Close menus on route change
   useEffect(() => {
@@ -70,21 +61,43 @@ export function SiteHeader() {
 
   function scheduleClose() {
     if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setProductsOpen(false), 140);
+    closeTimer.current = setTimeout(() => setProductsOpen(false), 160);
   }
   function cancelClose() {
     if (closeTimer.current) clearTimeout(closeTimer.current);
   }
+
+  // Keep the mega panel inside the viewport: translated language labels make
+  // the first nav item sit further right, so a fixed left:0 panel can overflow.
+  const megaRef = useRef<HTMLDivElement | null>(null);
+  const [megaShift, setMegaShift] = useState(0);
+
+  useLayoutEffect(() => {
+    if (!productsOpen) return;
+    function align() {
+      const panel = megaRef.current;
+      if (!panel) return;
+      const { left, right } = panel.parentElement!.getBoundingClientRect();
+      const width = panel.offsetWidth;
+      const margin = 16;
+      const overflowRight = left + width - (window.innerWidth - margin);
+      const overflowLeft = margin - left;
+      setMegaShift(overflowRight > 0 ? -overflowRight : overflowLeft > 0 ? overflowLeft : 0);
+    }
+    align();
+    window.addEventListener("resize", align);
+    return () => window.removeEventListener("resize", align);
+  }, [productsOpen]);
 
   return (
     <>
       <div className="p0-announcement">{tx("Factory-direct manufacturer · Xiamen, China · Exporting worldwide")}</div>
 
       <header className="site-header sticky top-0 z-50">
-        <div className="mx-auto flex max-w-[1400px] items-center gap-6 px-4 py-3 sm:px-6 lg:px-8">
+        <div className="site-header-bar">
           <Link
             href="/"
-            className="flex shrink-0 items-center gap-2.5"
+            className="site-header-brand"
             aria-label={`${site.name} home`}
           >
             <Image
@@ -96,100 +109,110 @@ export function SiteHeader() {
               priority
             />
             <span className="flex flex-col leading-none">
-              <span className="text-[19px] font-semibold tracking-tight text-ink-900">
-                {tx("HSM Sensors")} </span>
-              <span className="mt-0.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-ink-500">
-                {tx("Flow · Level · Pressure")} </span>
+              <span className="text-[19px] font-semibold tracking-tight">{tx("HSM Sensors")}</span>
+              <span className="mt-0.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-white/55">
+                {tx("Flow · Level · Pressure")}
+              </span>
             </span>
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="ml-auto hidden items-center gap-1 lg:flex" aria-label={tx("Main")} >
-            <div
-              className="relative"
-              onMouseEnter={() => {
-                cancelClose();
-                setProductsOpen(true);
-              }}
-              onMouseLeave={scheduleClose}
-            >
-              <button
-                type="button"
-                className="flex items-center gap-1.5 px-3 py-2 text-[14px] font-bold text-[#0066e6] transition-colors hover:text-[#004fc4]"
-                aria-expanded={productsOpen}
-                aria-haspopup="true"
-                onClick={() => setProductsOpen((v) => !v)}
+          {/* Desktop navigation — full-height items, blue fill on hover */}
+          <div className="site-nav" onMouseLeave={scheduleClose}>
+            <nav className="site-nav-list" aria-label={tx("Main")}>
+              <div
+                className="site-nav-item"
+                onMouseEnter={() => {
+                  cancelClose();
+                  setProductsOpen(true);
+                }}
               >
-                {tx("Products")} <ChevronIcon open={productsOpen} />
-              </button>
-
-              {productsOpen && (
-                <div
-                  className="absolute left-0 top-full w-[640px] max-w-[calc(100vw-2rem)] rounded-xl border border-ink-100 bg-white p-3 shadow-xl shadow-ink-900/5"
-                  onMouseEnter={cancelClose}
-                  onMouseLeave={scheduleClose}
-                >
-                  <div className="grid grid-cols-2 gap-1">
-                    {categories.map((c) => (
-                      <Link
-                        key={c.slug}
-                        href={`/products/${c.slug}`}
-                        className="group flex flex-col rounded-md px-3 py-2.5 transition-colors hover:bg-brand-50"
-                      >
-                        <span className="flex items-baseline justify-between gap-2">
-                          <span className="text-[13.5px] font-medium text-ink-800 group-hover:text-brand-700">
-                            {tx(c.name)}
-                          </span>
-                          <span className="font-mono text-[11px] text-ink-400">
-                            {tx(counts[c.slug] ?? 0)}
-                          </span>
-                        </span>
-                        <span className="mt-0.5 line-clamp-1 text-[11.5px] leading-snug text-ink-500">
-                          {tx(c.tagline)}
-                        </span>
-                      </Link>
-                    ))}
-                  </div>
-                  <div className="mt-1 flex items-center justify-between border-t border-ink-100 px-3 py-2.5">
-                    <span className="text-[12px] text-ink-500">
-                      {tx(totalProducts)} {tx("models across")} {tx(categories.length)} {tx("families")} </span>
-                    <Link
-                      href="/products"
-                      className="text-[12.5px] font-medium text-brand-600 hover:text-brand-700"
-                    >
-                      {tx("View all products →")} </Link>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {mainNav
-              .filter((n) => n.href !== "/products")
-              .map((item) => (
                 <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`px-3 py-2 text-[14px] font-medium transition-colors ${
-                    pathname.startsWith(item.href)
-                      ? "rounded-full bg-brand-50 text-brand-600"
-                      : "rounded-full text-ink-700 hover:bg-ink-50 hover:text-brand-600"
-                  }`}
+                  href="/products"
+                  className={`site-nav-link${productsOpen || productsActive ? " is-active" : ""}`}
+                  aria-expanded={productsOpen}
+                  aria-haspopup="true"
+                  aria-controls="products-mega"
+                  onFocus={() => {
+                    cancelClose();
+                    setProductsOpen(true);
+                  }}
                 >
-                  {tx(item.label)}
+                  {tx("Products")}
                 </Link>
-              ))}
-          </nav>
+              </div>
 
-          <div className="ml-auto flex items-center gap-2 lg:ml-0">
+              {mainNav
+                .filter((n) => n.href !== "/products")
+                .map((item) => (
+                  <div key={item.href} className="site-nav-item">
+                    <Link
+                      href={item.href}
+                      className={`site-nav-link${pathname.startsWith(item.href) ? " is-active" : ""}`}
+                      onMouseEnter={scheduleClose}
+                      onFocus={scheduleClose}
+                    >
+                      {tx(item.label)}
+                    </Link>
+                  </div>
+                ))}
+
+              {/* Mega panel is anchored to the nav, not the item: the reference
+                  panel starts at the left edge of the menu group. */}
+              <div
+                id="products-mega"
+                ref={megaRef}
+                className={`site-mega${productsOpen ? " is-open" : ""}`}
+                style={{ "--mega-shift": `${megaShift}px` } as CSSProperties}
+                aria-hidden={!productsOpen}
+                onMouseEnter={cancelClose}
+                onMouseLeave={scheduleClose}
+              >
+                <div className="site-mega-inner">
+                  {productGroups.map((group, groupIndex) => (
+                    <div key={group.title} className="site-mega-column">
+                      <p className="site-mega-heading">{tx(group.title)}</p>
+                      <ul>
+                        {group.slugs.map((slug) => {
+                          const category = categories.find((c) => c.slug === slug);
+                          if (!category) return null;
+                          return (
+                            <li key={slug}>
+                              <Link href={`/products/${slug}`} tabIndex={productsOpen ? 0 : -1}>
+                                {tx(category.name)}
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                      {groupIndex === productGroups.length - 1 && (
+                        <ul className="site-mega-more">
+                          <li>
+                            <Link href="/products" tabIndex={productsOpen ? 0 : -1}>
+                              {tx("View all products →")}
+                            </Link>
+                          </li>
+                          <li>
+                            <Link href="/custom" tabIndex={productsOpen ? 0 : -1}>
+                              {tx("Custom Engineering")}
+                            </Link>
+                          </li>
+                        </ul>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </nav>
+          </div>
+
+          <div className="site-header-actions">
             <LanguageSwitcher />
-            <Link
-              href="/contact?intent=quote"
-              className="hidden rounded bg-brand-600 px-4 py-2.5 text-[13.5px] font-medium text-white transition-colors hover:bg-brand-700 sm:inline-block"
-            >
-              {tx("Request a quote")} </Link>
+            <Link href="/contact?intent=quote" className="site-header-cta">
+              {tx("Request a quote")}
+            </Link>
             <button
               type="button"
-              className="rounded border border-ink-200 p-2.5 lg:hidden"
+              className="site-header-burger rounded border border-white/25 p-2.5 lg:hidden"
               aria-label={tx(mobileOpen ? "Close menu" : "Open menu")}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((v) => !v)}
@@ -219,8 +242,8 @@ export function SiteHeader() {
       {/* Mobile drawer */}
       {mobileOpen && (
         <div className="p0-mobile-drawer fixed inset-0 top-0 z-40 overflow-y-auto bg-white pt-20 lg:hidden">
-          <nav className="px-4 py-4" aria-label={tx("Mobile")} >
-            <p className="eyebrow mb-2 px-2">{tx("Products")} </p>
+          <nav className="px-4 py-4" aria-label={tx("Mobile")}>
+            <p className="eyebrow mb-2 px-2">{tx("Products")}</p>
             <ul className="mb-6 grid gap-0.5">
               {categories.map((c) => (
                 <li key={c.slug}>
@@ -240,10 +263,11 @@ export function SiteHeader() {
                   href="/products"
                   className="flex items-center px-2 py-2.5 text-[15px] font-medium text-brand-600"
                 >
-                  {tx("All products →")} </Link>
+                  {tx("All products →")}
+                </Link>
               </li>
             </ul>
-            <p className="eyebrow mb-2 px-2">{tx("Company")} </p>
+            <p className="eyebrow mb-2 px-2">{tx("Company")}</p>
             <ul className="grid gap-0.5 border-t border-ink-200 pt-2">
               {mainNav
                 .filter((n) => n.href !== "/products")
@@ -263,7 +287,8 @@ export function SiteHeader() {
                 href="/contact?intent=quote"
                 className="rounded bg-brand-600 px-4 py-3 text-center text-[15px] font-medium text-white"
               >
-                {tx("Request a quote")} </Link>
+                {tx("Request a quote")}
+              </Link>
               <a
                 href={`mailto:${site.contact.email}`}
                 className="rounded border border-ink-200 px-4 py-3 text-center text-[15px] text-ink-800"

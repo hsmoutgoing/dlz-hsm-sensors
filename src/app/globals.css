@@ -284,14 +284,6 @@
   background-image: radial-gradient(ellipse at 85% 15%, rgb(53 115 185 / .24), transparent 65%);
   box-shadow: 0 14px 44px rgb(8 42 72 / .13);
 }
-.site-header { box-shadow: 0 5px 28px rgb(17 55 91 / .035); }
-.site-header > div { gap: 16px; }
-.site-header nav[aria-label] > div > button {
-  border-radius: 999px;
-  background: #edf5ff;
-  padding-inline: 16px;
-}
-.site-header nav > a { border-radius: 999px; }
 .site-header select { background-color: #f5f7fb; border-color: transparent; }
 /* Pill actions; rectangular product cards explicitly stay rounded rectangles. */
 :where(a, button):is(.rounded, .rounded-full):not(.product-surface) {
@@ -344,16 +336,112 @@ main section[aria-labelledby='technical-data-heading'] section h3 {
 
 
 /* P0: reference-inspired announcement, navigation and homepage hero. */
-.p0-announcement { min-height: 43px; display: flex; align-items: center; justify-content: center; padding: 8px 20px; background: #0794ca; color: #fff; text-align: center; font-size: 14px; font-weight: 600; }
-.site-header { background: #050505; color: white; box-shadow: none; }
-.site-header > div { min-height: 110px; }
-.site-header > div > a:first-child span { color: white; }
-.site-header nav[aria-label] > div > button { background: transparent; color: white; border-radius: 0; }
-.site-header nav > a { color: white; background: transparent; border-radius: 0; }
-.site-header nav > a:hover, .site-header nav[aria-label] > div > button:hover { background: transparent; color: #41afe5; }
-.site-header select { background-color: #20252b; color: #fff; }
-.site-header > div > div:last-child > a { background: #2da1db; }
-.site-header > div > div:last-child > button { color: white; border-color: #777; }
+.p0-announcement { min-height: 43px; display: flex; align-items: center; justify-content: center; padding: 8px 20px; background: #009fdc; color: #fff; text-align: center; font-size: 15px; font-weight: 600; letter-spacing: .01em; }
+
+/* Header: black bar, full-height nav items that fill blue on hover, and a
+   left-anchored mega panel — measured from the reference site. */
+.site-header { background: #000; color: #fff; box-shadow: none; }
+.site-header-bar {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(12px, 1.4vw, 24px);
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 3vw, 40px);
+  min-height: 96px;
+}
+.site-header-bar > .site-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding-block: 16px;
+}
+.site-nav { display: none; align-items: stretch; margin-left: auto; }
+@media (min-width: 1024px) { .site-nav { display: flex; } }
+.site-nav-list { position: relative; display: flex; align-items: stretch; }
+.site-nav-item { display: flex; }
+.site-nav-link {
+  display: flex;
+  align-items: center;
+  padding-inline: clamp(10px, 1.35vw, 30px);
+  font-size: clamp(14px, 1.05vw, 16px);
+  font-weight: 500;
+  line-height: 1.25;
+  color: #fff;
+  white-space: nowrap;
+  transition: background-color .18s ease, color .18s ease;
+}
+.site-nav-link:hover,
+.site-nav-link:focus-visible,
+.site-nav-link.is-active { background: #238dc2; color: #fff; }
+.site-header-actions { display: flex; align-items: center; gap: 10px; padding-block: 16px; flex-shrink: 0; }
+/* Below 1280 the language picker collapses to its icon to keep the nav on one line. */
+@media (max-width: 1279px) {
+  .site-header-actions select { max-width: 44px; padding-inline: 26px 6px; text-indent: -999px; }
+}
+.site-header select { background-color: #14181d; color: #fff; border-color: #2b3138; }
+/* Display is set here rather than with a `hidden sm:inline-block` utility: this
+   block is unlayered, so it beats the utility layer either way. */
+.site-header-cta {
+  display: none;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 22px;
+  border-radius: 999px;
+  background: #2da1db;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color .18s ease;
+}
+.site-header-cta:hover { background: #238dc2; }
+@media (min-width: 640px) { .site-header-cta { display: inline-flex; } }
+
+/* Mega panel — anchored to the nav group so it starts at the left edge of the
+   first item, exactly as the reference does. */
+.site-mega {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 60;
+  width: min(980px, calc(100vw - 32px));
+  translate: var(--mega-shift, 0px) 0;
+  padding: 28px 30px 26px;
+  background: #000;
+  border-top: 1px solid #1d2329;
+  box-shadow: 0 28px 60px rgb(0 0 0 / .45);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity .22s ease, translate .26s var(--ease-out-expo), transform .26s var(--ease-out-expo), visibility .22s linear;
+}
+.site-mega.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
+.site-mega-inner { display: flex; gap: clamp(24px, 4vw, 56px); }
+.site-mega-column { flex: 1 1 0; min-width: 0; }
+.site-mega-heading {
+  margin: 0 0 14px;
+  color: #2fa3dc;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.site-mega ul { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.site-mega li a {
+  display: block;
+  padding-block: 6px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+  transition: color .16s ease;
+}
+.site-mega li a:hover, .site-mega li a:focus-visible { color: #2fa3dc; }
+.site-mega .site-mega-more { margin-top: 14px; padding-top: 12px; border-top: 1px solid #22282e; }
+.site-mega .site-mega-more a { color: #2fa3dc; font-weight: 600; }
+
 .p0-hero { display: grid; grid-template-columns: 61% 39%; min-height: 560px; background: #111923; color: white; }
 .p0-hero-copy { display: flex; flex-direction: column; justify-content: center; position: relative; padding: 64px clamp(32px, 6vw, 90px) 55px; }
 .p0-hero-content { max-width: 710px; }
@@ -364,17 +452,22 @@ main section[aria-labelledby='technical-data-heading'] section h3 {
 .p0-hero-actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 12px 32px; border: 1px solid #59616b; border-radius: 999px; font-size: 14px; font-weight: 600; transition: background .2s, transform .2s; }
 .p0-hero-actions a:first-child { background: #2da1db; border-color: #2da1db; }
 .p0-hero-actions a:hover { background: #147fb5; transform: translateY(-2px); }
-.p0-hero-image { position: relative; min-height: 400px; background: #f5f5f5; }
-.p0-hero-image img { object-fit: cover; padding: 0; }
+.p0-hero-image { position: relative; min-height: 400px; min-width: 0; overflow: hidden; }
+/* Square renders, wide frames: contain keeps the instrument whole at every
+   breakpoint; the frame behind it takes the photograph's own edge tones. */
+.p0-hero-image img, .p1-feature-image img, .p2-story-image img, .p2-banner-image img,
+.p2-guide-image img, .p2-product-image img { object-fit: contain; padding: 0; }
 .p0-carousel-controls { display: flex; align-items: center; gap: 1px; position: absolute; right: 11%; bottom: 22px; }
 .p0-carousel-controls button { display: grid; place-items: center; width: 30px; height: 34px; color: white; cursor: pointer; }
 .p0-carousel-controls button span { width: 9px; height: 9px; border: 1px solid #fff; border-radius: 99px; }
 .p0-carousel-controls button.is-active span { width: 25px; background: #2da1db; border-color: #2da1db; }
 .p0-carousel-controls .p0-play svg { width: 15px; height: 15px; }
-.p0-trust { background: #fff; border-bottom: 1px solid #e3e7eb; }
-.p0-trust-inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; max-width: 1300px; margin: auto; padding: 55px 32px; text-align: center; }
-.p0-trust h2 { font-size: 16px; font-weight: 700; }
-.p0-trust p { margin-top: 9px; color: #4d5c6d; font-size: 13px; line-height: 1.5; }
+/* Brand strip directly under the hero, matching the reference "trusted by" bar. */
+.p0-partners { background: #fff; padding: 34px 32px 46px; border-bottom: 1px solid #e3e7eb; }
+.p0-partners-heading { color: #64748b; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; text-align: center; }
+.p0-partners-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: clamp(28px, 5vw, 84px); max-width: 1240px; margin: 26px auto 0; padding: 0; list-style: none; }
+.p0-partner-logo { height: clamp(26px, 2.6vw, 38px); width: auto; max-width: 100%; object-fit: contain; }
+@media (max-width: 767px) { .p0-partners { padding: 26px 20px 32px; } .p0-partners-row { gap: 24px 32px; } .p0-partner-logo { height: 24px; } }
 @media(max-width: 1023px) { .site-header > div { min-height: 70px; } }
 @media(max-width: 767px) { .p0-announcement { font-size: 12px; } .p0-hero { display: flex; flex-direction: column; } .p0-hero-copy { min-height: 420px; padding: 55px 24px 80px; } .p0-hero h1 { font-size: clamp(39px, 10vw, 58px); } .p0-hero p { margin-top: 24px; } .p0-hero-actions { margin-top: 30px; } .p0-carousel-controls { right: 20px; bottom: 20px; } .p0-hero-image { min-height: 320px; } .p0-trust-inner { grid-template-columns: repeat(2, 1fr); gap: 30px 20px; padding: 40px 24px; } }
 
@@ -382,9 +475,7 @@ main section[aria-labelledby='technical-data-heading'] section h3 {
 
 /* P1 homepage: alternating features and application stories. */
 .p1-feature { display: grid; grid-template-columns: 58% 42%; min-height: 570px; }
-.p1-feature-image { min-height: 500px; position: relative; background: #f1f3f5; }
-.p1-feature-image img { object-fit: cover; padding: 0; }
-.p1-feature-dark .p1-feature-image img { object-fit: cover; padding: 0; }
+.p1-feature-image { min-height: 500px; position: relative; overflow: hidden; }
 .p1-feature-copy { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: clamp(42px, 6vw, 92px); }
 .p1-feature-light { background: #f1f3f8; color: #111923; }
 .p1-feature-dark { grid-template-columns: 42% 58%; background: #101620; color: #fff; }
@@ -417,8 +508,7 @@ main section[aria-labelledby='technical-data-heading'] section h3 {
 .p2-wrap { max-width: 1300px; margin-inline: auto; padding-inline: 32px; }
 .p2-stories { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; padding-block: 95px; }
 .p2-stories article { display: flex; flex-direction: column; background: #111923; color: white; }
-.p2-story-image { position: relative; aspect-ratio: 1.9 / 1; }
-.p2-story-image img { object-fit: cover; }
+.p2-story-image { position: relative; aspect-ratio: 1.9 / 1; overflow: hidden; }
 .p2-story-copy { min-height: 260px; display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 40px; }
 .p2-stories h2, .p2-banner h2, .p2-guides > h2, .p2-products h2 { font-size: clamp(30px,3vw,44px); line-height: 1.06; font-weight: 750; }
 .p2-stories p, .p2-banner p { margin-top: 20px; line-height: 1.6; max-width: 55ch; }
@@ -427,20 +517,18 @@ main section[aria-labelledby='technical-data-heading'] section h3 {
 .p2-banner { display: grid; grid-template-columns: 1fr 1fr; background: #111923; color: white; }
 .p2-banner > div:first-child { padding: clamp(45px,7vw,100px); display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
 .p2-banner > div:first-child > a, .p2-product-copy a { display: inline-flex; margin-top: 28px; padding: 13px 26px; border-radius: 999px; background: #2da1db; color: white; font-weight: 600; font-size: 14px; }
-.p2-banner-image { position: relative; min-height: 440px; background: #f0f2f4; }
-.p2-banner-image img { object-fit: cover; padding: 0; }
-.p2-guide-image img, .p2-product-image img { object-fit: cover; padding: 0; }
+.p2-banner-image { position: relative; min-height: 440px; overflow: hidden; }
 .p2-guides { padding-block: 95px; }
 .p2-guide-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; margin-top: 32px; }
 .p2-guide-grid article { background: #f1f3f8; display: flex; flex-direction: column; }
-.p2-guide-image { position: relative; aspect-ratio: 1.9 / 1; background: white; }
+.p2-guide-image { position: relative; aspect-ratio: 1.9 / 1; overflow: hidden; }
 .p2-guide-grid article > div:last-child { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 26px; }
 .p2-guide-grid h3, .p2-product-grid h3 { font-size: 21px; font-weight: 700; line-height: 1.2; }
 .p2-guide-grid p, .p2-product-grid p { margin-top: 16px; color: #35424f; font-size: 14px; line-height: 1.6; }
 .p2-products { padding-block: 90px; background: #f1f3f8; }
 .p2-product-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; margin-top: 32px; }
 .p2-product-grid article { background: white; }
-.p2-product-image { position: relative; aspect-ratio: 16 / 10; background: white; }
+.p2-product-image { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
 .p2-product-copy { padding: 30px; }
 .p2-footer { background: #050505; color: #d9e0e6; padding: 80px 0 35px; }
 .p2-footer-grid { display: grid; grid-template-columns: 2fr repeat(3,1fr); gap: 50px; }
@@ -474,5 +562,38 @@ main section[aria-labelledby='technical-data-heading'] section h3 {
 .p3-gallery-thumbnails button[aria-pressed='true'] { border-color: #168cc5; }
 @media(max-width: 767px) { .p3-page-hero h1 { font-size: 38px; } .p3-product-detail { padding-top: 28px; } .p3-gallery-main { aspect-ratio: 1 / 1; } }
 
-.p2-product-image.p2-scene img { object-fit: cover; padding: 0; }
-.scene-label { position: absolute; bottom: 10px; right: 10px; z-index: 1; padding: 4px 8px; background: #111923; color: white; font-size: 10px; line-height: 1.3; }
+.scene-label { position: absolute; bottom: 10px; right: 10px; z-index: 2; padding: 4px 8px; background: #111923; color: white; font-size: 10px; line-height: 1.3; }
+
+/* Media frame: the photograph stays whole, and a blurred copy of the same file
+   behind it continues its own colours into the margins of a wider box. */
+.media-frame { position: relative; overflow: hidden; isolation: isolate; }
+.media-frame .media-frame-backdrop {
+  object-fit: cover;
+  filter: blur(64px) saturate(1.1) brightness(1.02);
+  transform: scale(1.4);
+  z-index: -1;
+}
+/* The sharp copy keeps its whole frame; only its vertical edges feather out,
+   so the join to the blurred backdrop reads as depth of field. */
+.media-frame .media-frame-image {
+  object-fit: contain;
+  padding: 0;
+  mask-image: linear-gradient(to right, transparent 0, #000 2.2%, #000 97.8%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 2.2%, #000 97.8%, transparent 100%);
+}
+/* A 2:1 companion exists: fill the box outright. Its own side margins take
+   whatever the box crops, so the instrument is never touched. */
+.media-frame.media-frame-wide .media-frame-image {
+  object-fit: cover;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+/* Catalogue photography: white cut-outs and line drawings on their own field. */
+.media-frame.media-frame-plain { background: var(--color-ink-50); }
+.media-frame.media-frame-plain .media-frame-image {
+  object-fit: contain;
+  padding: 6%;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+.product-card-media { aspect-ratio: 4 / 3; border-bottom: 1px solid var(--color-ink-100); }
