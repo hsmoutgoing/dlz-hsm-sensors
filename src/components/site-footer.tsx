@@ -13,7 +13,7 @@ export function SiteFooter() {
       <div className="p2-wrap">
         <div className="p2-footer-grid">
           <div className="p2-footer-brand">
-            <Link href="/" aria-label={`${site.name} home`}><Image src="/brand/logo-white.png" alt="" width={52} height={41} /><strong>{tx("HSM Sensors")}</strong></Link>
+            <Link href="/" aria-label={tx("HSM Sensors home")}><Image src="/brand/logo-white.png" alt="" width={52} height={41} /><strong>{tx("HSM Sensors")}</strong></Link>
             <p>{tx("Manufacturer of industrial flow, level, pressure, temperature and gas instrumentation. Every unit is assembled and calibrated in our own facility, and custom ranges are built to order.")}</p>
             <address>{tx(site.address.street)}<br />{tx(site.address.city)} {site.address.postalCode}, {tx(site.address.countryName)}</address>
             <a href={site.contact.phoneHref}>{site.contact.phone}</a><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a><p>{tx(site.contact.hours)}</p>

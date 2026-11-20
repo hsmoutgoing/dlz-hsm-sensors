@@ -240,7 +240,7 @@ export default function IndustriesPage() {
                 <div className="relative mt-8 aspect-[4/3] overflow-hidden rounded-lg border border-ink-200 bg-white">
                   <Image
                     src={industry.image}
-                    alt={industry.imageAlt}
+                    alt={tx(industry.imageAlt)}
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"
                     className="object-contain p-10"

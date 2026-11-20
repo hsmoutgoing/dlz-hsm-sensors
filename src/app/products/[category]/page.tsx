@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: t(category.name),
-    description: `${t(category.tagline)}. ${count} models, factory-direct from Xiamen with 4-20 mA, RS485 and relay outputs.`,
+    description: `${t(category.tagline)}. ${t("{count} models, factory-direct from Xiamen.", { count })}`,
     alternates: { canonical: `/products/${category.slug}` },
   };
 }
@@ -54,6 +54,7 @@ export default async function CategoryPage({ params }: PageProps) {
           { label: "Products", href: "/products" },
           { label: category.shortName },
         ]}
+        actions={[{ label: "All models", href: "#models", primary: true }]}
       />
 
       {/* Measured quantities and outputs */}
@@ -93,7 +94,7 @@ export default async function CategoryPage({ params }: PageProps) {
       </section>
 
       {/* Model list */}
-      <section className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+      <section id="models" className="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h2 className="text-2xl font-semibold tracking-tight text-ink-900 sm:text-[1.9rem]">
             {tx(items.length)} {tx(items.length === 1 ? "model" : "models")} {tx("in this family")} </h2>

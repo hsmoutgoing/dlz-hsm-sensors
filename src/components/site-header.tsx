@@ -5,9 +5,8 @@ import { useTranslations } from "@/lib/i18n/client";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import type { CSSProperties } from "react";
-import { mainNav, site } from "@/lib/site";
+import { useEffect, useRef, useState } from "react";
+import { mainNav } from "@/lib/site";
 import { categories } from "@/lib/categories";
 import { categoryCounts } from "@/lib/products";
 
@@ -29,6 +28,9 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [productsOpen, setProductsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileDialogRef = useRef<HTMLDialogElement>(null);
+  const mobileTriggerRef = useRef<HTMLButtonElement>(null);
+  const productsLinkRef = useRef<HTMLAnchorElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const counts = categoryCounts();
   const productsActive = pathname.startsWith("/products");
@@ -39,25 +41,33 @@ export function SiteHeader() {
     setMobileOpen(false);
   }, [pathname]);
 
-  // Lock body scroll while the mobile drawer is open
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    const desktop = window.matchMedia("(min-width: 1280px) and (hover: hover)");
+    function resetMenus() {
+      setMobileOpen(false);
+      setProductsOpen(false);
+    }
+    desktop.addEventListener("change", resetMenus);
     return () => {
-      document.body.style.overflow = "";
+      desktop.removeEventListener("change", resetMenus);
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const dialog = mobileDialogRef.current;
+    if (!dialog || !mobileOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const trigger = mobileTriggerRef.current;
+    dialog.showModal();
+    document.body.style.overflow = "hidden";
+    return () => {
+      dialog.close();
+      document.body.style.overflow = previousOverflow;
+      if (trigger?.getClientRects().length) trigger.focus();
+      else if (productsLinkRef.current?.getClientRects().length) productsLinkRef.current.focus();
     };
   }, [mobileOpen]);
-
-  // Close on Escape
-  useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") {
-        setProductsOpen(false);
-        setMobileOpen(false);
-      }
-    }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
 
   function scheduleClose() {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -67,26 +77,21 @@ export function SiteHeader() {
     if (closeTimer.current) clearTimeout(closeTimer.current);
   }
 
-  // Keep the mega panel inside the viewport: translated language labels make
-  // the first nav item sit further right, so a fixed left:0 panel can overflow.
-  const megaRef = useRef<HTMLDivElement | null>(null);
-  const [megaShift, setMegaShift] = useState(0);
+  const megaRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!productsOpen) return;
-    function align() {
-      const panel = megaRef.current;
-      if (!panel) return;
-      const { left, right } = panel.parentElement!.getBoundingClientRect();
-      const width = panel.offsetWidth;
-      const margin = 16;
-      const overflowRight = left + width - (window.innerWidth - margin);
-      const overflowLeft = margin - left;
-      setMegaShift(overflowRight > 0 ? -overflowRight : overflowLeft > 0 ? overflowLeft : 0);
+    function dismiss(event: KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      if (megaRef.current?.contains(document.activeElement)) {
+        event.preventDefault();
+        productsLinkRef.current?.focus();
+      }
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+      setProductsOpen(false);
     }
-    align();
-    window.addEventListener("resize", align);
-    return () => window.removeEventListener("resize", align);
+    window.addEventListener("keydown", dismiss);
+    return () => window.removeEventListener("keydown", dismiss);
   }, [productsOpen]);
 
   return (
@@ -98,7 +103,7 @@ export function SiteHeader() {
           <Link
             href="/"
             className="site-header-brand"
-            aria-label={`${site.name} home`}
+            aria-label={tx("HSM Sensors home")}
           >
             <Image
               src="/brand/logo.png"
@@ -117,28 +122,84 @@ export function SiteHeader() {
           </Link>
 
           {/* Desktop navigation — full-height items, blue fill on hover */}
-          <div className="site-nav" onMouseLeave={scheduleClose}>
+          <div className="site-nav">
             <nav className="site-nav-list" aria-label={tx("Main")}>
               <div
                 className="site-nav-item"
                 onMouseEnter={() => {
                   cancelClose();
-                  setProductsOpen(true);
+                  if (window.matchMedia("(hover: hover)").matches) setProductsOpen(true);
+                }}
+                onMouseLeave={(event) => {
+                  if (!event.currentTarget.contains(document.activeElement)) scheduleClose();
+                }}
+                onBlur={(event) => {
+                  if (event.currentTarget.contains(event.relatedTarget)) return;
+                  cancelClose();
+                  setProductsOpen(false);
                 }}
               >
                 <Link
                   href="/products"
+                  ref={productsLinkRef}
                   className={`site-nav-link${productsOpen || productsActive ? " is-active" : ""}`}
                   aria-expanded={productsOpen}
-                  aria-haspopup="true"
                   aria-controls="products-mega"
                   onFocus={() => {
                     cancelClose();
                     setProductsOpen(true);
                   }}
+                  onKeyDown={(event) => {
+                    if (event.key === "ArrowDown") {
+                      event.preventDefault();
+                      setProductsOpen(true);
+                      requestAnimationFrame(() => megaRef.current?.querySelector("a")?.focus());
+                    }
+                  }}
                 >
                   {tx("Products")}
                 </Link>
+                <div
+                  id="products-mega"
+                  ref={megaRef}
+                  className={`site-mega${productsOpen ? " is-open" : ""}`}
+                  aria-hidden={!productsOpen}
+                >
+                  <div className="site-mega-inner">
+                    {productGroups.map((group, groupIndex) => (
+                      <div key={group.title} className="site-mega-column">
+                        <p className="site-mega-heading">{tx(group.title)}</p>
+                        <ul>
+                          {group.slugs.map((slug) => {
+                            const category = categories.find((c) => c.slug === slug);
+                            if (!category) return null;
+                            return (
+                              <li key={slug}>
+                                <Link href={`/products/${slug}`} tabIndex={productsOpen ? 0 : -1}>
+                                  {tx(category.name)}
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                        {groupIndex === productGroups.length - 1 && (
+                          <ul className="site-mega-more">
+                            <li>
+                              <Link href="/products" tabIndex={productsOpen ? 0 : -1}>
+                                {tx("View all products →")}
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/custom" tabIndex={productsOpen ? 0 : -1}>
+                                {tx("Custom Engineering")}
+                              </Link>
+                            </li>
+                          </ul>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {mainNav
@@ -148,60 +209,12 @@ export function SiteHeader() {
                     <Link
                       href={item.href}
                       className={`site-nav-link${pathname.startsWith(item.href) ? " is-active" : ""}`}
-                      onMouseEnter={scheduleClose}
-                      onFocus={scheduleClose}
                     >
                       {tx(item.label)}
                     </Link>
                   </div>
                 ))}
 
-              {/* Mega panel is anchored to the nav, not the item: the reference
-                  panel starts at the left edge of the menu group. */}
-              <div
-                id="products-mega"
-                ref={megaRef}
-                className={`site-mega${productsOpen ? " is-open" : ""}`}
-                style={{ "--mega-shift": `${megaShift}px` } as CSSProperties}
-                aria-hidden={!productsOpen}
-                onMouseEnter={cancelClose}
-                onMouseLeave={scheduleClose}
-              >
-                <div className="site-mega-inner">
-                  {productGroups.map((group, groupIndex) => (
-                    <div key={group.title} className="site-mega-column">
-                      <p className="site-mega-heading">{tx(group.title)}</p>
-                      <ul>
-                        {group.slugs.map((slug) => {
-                          const category = categories.find((c) => c.slug === slug);
-                          if (!category) return null;
-                          return (
-                            <li key={slug}>
-                              <Link href={`/products/${slug}`} tabIndex={productsOpen ? 0 : -1}>
-                                {tx(category.name)}
-                              </Link>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                      {groupIndex === productGroups.length - 1 && (
-                        <ul className="site-mega-more">
-                          <li>
-                            <Link href="/products" tabIndex={productsOpen ? 0 : -1}>
-                              {tx("View all products →")}
-                            </Link>
-                          </li>
-                          <li>
-                            <Link href="/custom" tabIndex={productsOpen ? 0 : -1}>
-                              {tx("Custom Engineering")}
-                            </Link>
-                          </li>
-                        </ul>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
             </nav>
           </div>
 
@@ -212,9 +225,12 @@ export function SiteHeader() {
             </Link>
             <button
               type="button"
-              className="site-header-burger rounded border border-white/25 p-2.5 lg:hidden"
+              ref={mobileTriggerRef}
+              className="site-header-burger rounded border border-white/25 p-2.5"
               aria-label={tx(mobileOpen ? "Close menu" : "Open menu")}
               aria-expanded={mobileOpen}
+              aria-haspopup="dialog"
+              aria-controls="mobile-navigation"
               onClick={() => setMobileOpen((v) => !v)}
             >
               <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
@@ -239,65 +255,65 @@ export function SiteHeader() {
         </div>
       </header>
 
-      {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="p0-mobile-drawer fixed inset-0 top-0 z-40 overflow-y-auto bg-white pt-20 lg:hidden">
-          <nav className="px-4 py-4" aria-label={tx("Mobile")}>
-            <p className="eyebrow mb-2 px-2">{tx("Products")}</p>
-            <ul className="mb-6 grid gap-0.5">
-              {categories.map((c) => (
-                <li key={c.slug}>
-                  <Link
-                    href={`/products/${c.slug}`}
-                    className="flex items-center justify-between rounded px-2 py-2.5 text-[15px] text-ink-800 active:bg-ink-100"
-                  >
-                    {tx(c.name)}
-                    <span className="font-mono text-[11px] text-ink-400">
-                      {tx(counts[c.slug] ?? 0)}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link
-                  href="/products"
-                  className="flex items-center px-2 py-2.5 text-[15px] font-medium text-brand-600"
-                >
-                  {tx("All products →")}
+        <dialog
+          id="mobile-navigation"
+          ref={mobileDialogRef}
+          className="site-mobile-dialog"
+          aria-label={tx("Main")}
+          onCancel={(event) => {
+            event.preventDefault();
+            setMobileOpen(false);
+          }}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) setMobileOpen(false);
+          }}
+        >
+          <div className="site-mobile-sheet">
+            <div className="site-mobile-heading">
+              <strong>{tx("HSM Sensors")}</strong>
+              <button type="button" aria-label={tx("Close menu")} onClick={() => setMobileOpen(false)}>
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <nav className="site-mobile-nav" aria-label={tx("Mobile")}>
+              <details>
+                <summary>{tx("Products")}</summary>
+                <div className="site-mobile-groups">
+                  <Link href="/products" onNavigate={() => setMobileOpen(false)}>{tx("All products →")}</Link>
+                  {productGroups.map((group) => (
+                    <details key={group.title}>
+                      <summary>{tx(group.title)}</summary>
+                      <ul>
+                        {group.slugs.map((slug) => {
+                          const category = categories.find((entry) => entry.slug === slug);
+                          if (!category) return null;
+                          return (
+                            <li key={slug}>
+                              <Link href={`/products/${slug}`} onNavigate={() => setMobileOpen(false)}>
+                                {tx(category.name)}<span>{counts[category.slug]}</span>
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </details>
+                  ))}
+                </div>
+              </details>
+              {mainNav.filter((item) => item.href !== "/products").map((item) => (
+                <Link key={item.href} href={item.href} onNavigate={() => setMobileOpen(false)}>
+                  {tx(item.label)}
                 </Link>
-              </li>
-            </ul>
-            <p className="eyebrow mb-2 px-2">{tx("Company")}</p>
-            <ul className="grid gap-0.5 border-t border-ink-200 pt-2">
-              {mainNav
-                .filter((n) => n.href !== "/products")
-                .map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="block rounded px-2 py-2.5 text-[15px] text-ink-800 active:bg-ink-100"
-                    >
-                      {tx(item.label)}
-                    </Link>
-                  </li>
-                ))}
-            </ul>
-            <div className="mt-6 grid gap-2 border-t border-ink-200 pt-4">
-              <Link
-                href="/contact?intent=quote"
-                className="rounded bg-brand-600 px-4 py-3 text-center text-[15px] font-medium text-white"
-              >
+              ))}
+            </nav>
+            <div className="site-mobile-actions">
+              <Link href="/contact?intent=quote" onNavigate={() => setMobileOpen(false)}>
                 {tx("Request a quote")}
               </Link>
-              <a
-                href={`mailto:${site.contact.email}`}
-                className="rounded border border-ink-200 px-4 py-3 text-center text-[15px] text-ink-800"
-              >
-                {site.contact.email}
-              </a>
             </div>
-          </nav>
-        </div>
+          </div>
+        </dialog>
       )}
     </>
   );

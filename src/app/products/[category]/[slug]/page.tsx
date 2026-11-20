@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `${title} | ${site.name}`,
       description: t(product.summary),
       url,
-      images: [{ url: product.image, alt: `${product.model} ${product.name}` }],
+      images: [{ url: product.image, alt: `${product.model} ${t(product.name)}` }],
     },
   };
 }
@@ -100,94 +100,75 @@ export default async function ProductPage({ params }: PageProps) {
         </div>
       </nav>
 
-      {/* Parameters come first on every product page, without collapsed groups. */}
-      <section aria-labelledby="technical-data-heading" className="p3-product-detail mx-auto max-w-[1400px] px-4 py-6 sm:px-6 lg:px-8">
-        <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p className="text-xs font-medium text-brand-600">{tx(category.name)}</p>
-            <h1 className="mt-2 text-2xl font-semibold tracking-tight text-ink-900 sm:text-3xl">{product.model} <span className="font-medium text-ink-600">{tx(product.name)}</span></h1>
-            {product.variant && <p className="mt-2 text-sm text-ink-500">{tx(product.variant)}</p>}
+      <section aria-labelledby="product-heading" className="p3-product-detail mx-auto grid max-w-[1400px] items-start gap-8 px-4 pb-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14 lg:px-8 lg:pb-16">
+        <div className="min-w-0 lg:col-start-1 lg:row-start-1">
+          <h1 id="product-heading" className="text-balance font-semibold tracking-tight text-ink-900">
+            {product.model} <span className="font-medium text-ink-600">{tx(product.name)}</span>
+          </h1>
+          {product.variant && <p className="mt-3 text-sm text-ink-600">{tx(product.variant)}</p>}
+          <p className="mt-5 max-w-prose text-base leading-relaxed text-ink-700">{tx(product.summary)}</p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              href={{ pathname: "/contact", query: { intent: "quote", model: product.model }, hash: "enquiry" }}
+              className="rounded bg-brand-600 px-5 py-3 text-sm font-medium text-white hover:bg-brand-700"
+            >
+              {tx("Request a quote")}
+            </Link>
+            <a href="#technical-data" className="rounded border border-ink-300 px-5 py-3 text-sm font-medium text-ink-800 hover:bg-ink-50">
+              {tx("{model} technical data", { model: product.model })}
+            </a>
           </div>
-          <Link href={`/contact?intent=quote&model=${product.model}`} className="rounded bg-brand-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-700">{tx("Request a quote")}</Link>
         </div>
-        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-8">
-          <div className="min-w-0 lg:sticky lg:top-24 lg:self-start"><ProductGallery images={gallery} name={product.model + " " + tx(product.name)} /></div>
-
-          <div className="min-w-0">
-        <h2 id="technical-data-heading" className="mb-3 text-lg font-semibold text-ink-900">{product.model} {tx("technical data")}</h2>
-        <SpecTable groups={product.specs} />
-        <p className="mt-3 text-xs leading-relaxed text-ink-500">{tx("Values are for the standard configuration. Ranges, threads, probe lengths and output types outside this table are available on request — the datasheet revision for a custom build is issued with the quotation.")}</p>
-        <a href={`mailto:${site.contact.email}?subject=${encodeURIComponent(`Datasheet request — ${product.model}`)}`} className="mt-2 inline-block text-sm font-medium text-brand-600 hover:text-brand-700">{tx("Request the PDF datasheet →")}</a>
-          </div>
+        <div className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+          <ProductGallery images={gallery} name={`${product.model} ${tx(product.name)}`} />
+        </div>
+        <div className="min-w-0 lg:col-start-1 lg:row-start-2">
+          {product.highlights.length > 0 && (
+            <ul className="space-y-2.5 border-t border-ink-200 pt-6">
+              {product.highlights.map((h) => (
+                <li key={h} className="flex gap-3 text-[13.5px] leading-relaxed text-ink-700">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 15 15"
+                    aria-hidden="true"
+                    className="mt-0.5 shrink-0 text-brand-600"
+                  >
+                    <path
+                      d="M3 8l3 3 6-7"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span>{tx(h)}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          <p className="mt-5 text-sm leading-relaxed text-ink-600">
+            {tx("Engineering reply · Evaluation samples available · Custom ranges built to order")}
+          </p>
+          <a href={`mailto:${site.contact.email}?subject=${encodeURIComponent(`Enquiry — ${product.model} ${product.name}`)}`} className="mt-3 inline-block text-sm font-medium text-brand-700 underline underline-offset-4">
+            {tx("Email an engineer")}
+          </a>
         </div>
       </section>
 
-      {/* ========================== OVERVIEW ========================== */}
-      <section className="mx-auto max-w-[1400px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
-          {/* Product introduction follows the image and full specification section. */}
-          <div className="lg:col-span-12">
-            <p className="font-mono text-[11.5px] uppercase tracking-[0.14em] text-brand-600">
-              {tx(category.name)}
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-tight text-ink-900 sm:text-[2.6rem]">
-              {product.model}
-              <span className="mt-1 block text-[1.45rem] font-medium text-ink-600 sm:text-[1.6rem]">
-                {tx(product.name)}
-              </span>
-            </h2>
-            {product.variant && (
-              <p className="mt-2 font-mono text-[12.5px] uppercase tracking-[0.1em] text-ink-500">
-                {tx(product.variant)}
-              </p>
-            )}
-
-            <p className="mt-5 text-[15px] leading-relaxed text-ink-700">{tx(product.summary)}</p>
-
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link
-                href={`/contact?intent=quote&model=${product.model}`}
-                className="rounded bg-brand-600 px-6 py-3.5 text-[14.5px] font-medium text-white transition-colors hover:bg-brand-700"
-              >
-                {tx("Request a quote")} </Link>
-              <a
-                href={`mailto:${site.contact.email}?subject=${encodeURIComponent(
-                  `Enquiry — ${product.model} ${product.name}`,
-                )}`}
-                className="rounded border border-ink-300 px-6 py-3.5 text-[14.5px] font-medium text-ink-800 transition-colors hover:border-ink-400 hover:bg-ink-50"
-              >
-                {tx("Email an engineer")} </a>
-            </div>
-
-            <p className="mt-4 text-[12.5px] leading-relaxed text-ink-500">
-              {tx("Engineering reply · Evaluation samples available · Custom ranges built to order")} </p>
-
-            {product.highlights.length > 0 && (
-              <ul className="mt-8 space-y-2.5 border-t border-ink-200 pt-6">
-                {product.highlights.map((h) => (
-                  <li key={h} className="flex gap-3 text-[13.5px] leading-relaxed text-ink-700">
-                    <svg
-                      width="15"
-                      height="15"
-                      viewBox="0 0 15 15"
-                      aria-hidden="true"
-                      className="mt-0.5 shrink-0 text-brand-600"
-                    >
-                      <path
-                        d="M3 8l3 3 6-7"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    <span>{tx(h)}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+      <section id="technical-data" aria-labelledby="technical-data-heading" className="scroll-mt-24 border-t border-ink-200">
+        <div className="mx-auto max-w-[1400px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+          <h2 id="technical-data-heading" className="mb-6 scroll-mt-24 text-2xl font-semibold tracking-tight text-ink-900 sm:text-3xl">
+            {tx("{model} technical data", { model: product.model })}
+          </h2>
+          <SpecTable groups={product.specs} />
+          <p className="mt-4 max-w-prose text-sm leading-relaxed text-ink-600">
+            {tx("Values are for the standard configuration. Ranges, threads, probe lengths and output types outside this table are available on request — the datasheet revision for a custom build is issued with the quotation.")}
+          </p>
+          <a href={`mailto:${site.contact.email}?subject=${encodeURIComponent(`Datasheet request — ${product.model}`)}`} className="mt-3 inline-block text-sm font-medium text-brand-700 underline underline-offset-4">
+            {tx("Request the PDF datasheet →")}
+          </a>
         </div>
       </section>
 
@@ -248,7 +229,7 @@ export default async function ProductPage({ params }: PageProps) {
         <div className="mx-auto flex max-w-[1400px] flex-col gap-5 px-4 py-10 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <div className="max-w-2xl">
             <h2 className="text-[1.35rem] font-semibold tracking-tight text-ink-900">
-              {tx("Not certain")} {product.model} {tx("is the right unit?")} </h2>
+              {tx("Not certain {model} is the right unit?", { model: product.model })} </h2>
             <p className="mt-2 text-[14px] leading-relaxed text-ink-600">
               {tx("Send the medium, range, process connection and the signal your control system accepts. We will confirm the model — or tell you which one fits better — before you commit to an order.")} </p>
           </div>
@@ -257,7 +238,7 @@ export default async function ProductPage({ params }: PageProps) {
               href={`/products/${category.slug}`}
               className="rounded border border-ink-300 px-5 py-3 text-[14px] font-medium text-ink-800 transition-colors hover:border-ink-400 hover:bg-ink-50"
             >
-              {tx("All")} {tx(category.shortName.toLowerCase())} {tx("models")} </Link>
+              {tx("All {category} models", { category: tx(category.shortName) })} </Link>
             <Link
               href="/custom"
               className="rounded bg-brand-600 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-brand-700"
@@ -274,7 +255,7 @@ export default async function ProductPage({ params }: PageProps) {
             <div>
               <p className="eyebrow">{tx("Same family")} </p>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-ink-900 sm:text-[1.9rem]">
-                {tx("Other")} {tx(category.shortName.toLowerCase())} {tx("instruments")} </h2>
+                {tx("Other {category} instruments", { category: tx(category.shortName) })} </h2>
             </div>
             <Link
               href={`/products/${category.slug}`}

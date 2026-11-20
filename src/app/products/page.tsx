@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
  const {t, locale} = await getI18n();
  const metadata: Metadata = {
   title: "Product Catalogue — Flow, Level, Pressure, Temperature Sensors",
-  description: `All ${products.length} industrial sensor models from HSM Sensors: flow switches, level transmitters, pressure transmitters, RTD probes, ultrasonic sensors, laser methane detectors and wireless IoT instruments. Filter by model, output or material.`,
+  description: t("All {count} industrial sensor models from HSM Sensors: flow switches, level transmitters, pressure transmitters, RTD probes, ultrasonic sensors, laser methane detectors and wireless IoT instruments. Filter by model, output or material.", { count: products.length }),
   alternates: { canonical: "/products" },
 };
  return localizeMetadata(metadata, t, locale);
@@ -56,12 +56,12 @@ export default function ProductsIndexPage() {
         lede={tx("Every instrument is assembled, calibrated and pressure-tested in our own facility in Jimei District, Xiamen. Filter by model code, measured quantity, wetted material or output signal — then send the process conditions for a price and a lead time.")} 
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Products" }]}
         actions={[
-          { label: "Request a quote", href: "/contact?intent=quote", primary: true },
-          { label: "Custom engineering", href: "/custom" },
+          { label: "Browse the catalogue", href: "#catalogue", primary: true },
+          { label: "Request a quote", href: "/contact?intent=quote#enquiry" },
         ]}
       />
 
-      <section className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+      <section id="catalogue" className="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
         <ProductExplorer items={items} categories={explorerCategories} />
       </section>
 

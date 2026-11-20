@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const { t, locale } = await getI18n();
   return localizeMetadata({
     title: "About HSM Sensors — Sensor Manufacturer in Xiamen, China",
-    description: `HSM Sensors Technology (Xiamen) Co., Ltd. designs, assembles and calibrates industrial flow, level, pressure, temperature and gas instrumentation at its facility in Jimei District, Xiamen. ${products.length} catalogue models plus custom builds.`,
+    description: t("HSM Sensors Technology (Xiamen) Co., Ltd. designs, assembles and calibrates industrial flow, level, pressure, temperature and gas instrumentation at its facility in Jimei District, Xiamen. {count} catalogue models plus custom builds.", { count: products.length }),
     alternates: { canonical: "/about" },
   }, t, locale);
 }

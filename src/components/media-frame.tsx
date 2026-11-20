@@ -6,6 +6,8 @@ interface MediaFrameProps {
   alt: string;
   sizes: string;
   priority?: boolean;
+  /** Use the original framing in slots that may be taller than they are wide. */
+  preserveFraming?: boolean;
   /** Layout classes for the positioning box (aspect ratio / min-height). */
   className?: string;
   /** Caption shown in the corner, e.g. the "Illustrative image" marker. */
@@ -31,8 +33,9 @@ export function MediaFrame({
   priority = false,
   className = "",
   label,
+  preserveFraming = false,
 }: MediaFrameProps) {
-  const wideSrc = wideImageFor(src);
+  const wideSrc = preserveFraming ? undefined : wideImageFor(src);
   if (wideSrc) {
     return (
       <div className={`media-frame media-frame-wide ${className}`.trim()}>
