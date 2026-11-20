@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useTranslations } from "@/lib/i18n/client";
+import { MediaFrame } from "@/components/media-frame";
 
 const slides = [
   { title: "Industrial sensors,", second: "built in our own factory.", description: "Flow, level, pressure, temperature, ultrasonic and gas instrumentation for plant engineers and machine builders.", image: "/images/reference-style/hero-flow.webp", alt: "HSM10 thermal flow switch", href: "/products/flow" },
@@ -46,7 +46,7 @@ export function HomeHero() {
           <button type="button" className="p0-play" aria-label={playing ? "Pause slideshow" : "Play slideshow"} onClick={() => setPlaying(!playing)}>{playing ? <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3h3v10H4zm5 0h3v10H9z" fill="currentColor" /></svg> : <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" fill="currentColor" /></svg>}</button>
         </div>
       </div>
-      <div className="p0-hero-image"><Image src={slide.image} alt={t(slide.alt)} fill priority={active === 0} sizes="(max-width: 767px) 100vw, 40vw" /><span className="scene-label">{t("Illustrative image")}</span></div>
+      <MediaFrame className="p0-hero-image" src={slide.image} alt={t(slide.alt)} priority={active === 0} sizes="(max-width: 767px) 100vw, 40vw" label={t("Illustrative image")} />
     </section>
   );
 }

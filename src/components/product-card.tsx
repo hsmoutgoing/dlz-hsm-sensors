@@ -1,7 +1,7 @@
 "use client";
 import { useTranslations } from "@/lib/i18n/client";
 import Link from "next/link";
-import Image from "next/image";
+import { MediaFrame } from "@/components/media-frame";
 import type { Product } from "@/lib/content-types";
 import { getCategory } from "@/lib/categories";
 import { generatedProductImage } from "@/lib/generated-product-images";
@@ -12,8 +12,9 @@ interface ProductCardProps {
 }
 
 /**
- * Catalogue card. The image sits on a light instrument-panel field so
- * transparent product PNGs and white-background JPGs sit consistently.
+ * Catalogue card. Every photograph is drawn whole inside a 4:3 field, with
+ * the frame taking its colours from the photograph itself, so a square render
+ * and a tall cut-out sit consistently side by side.
  */
 export function ProductCard({ product, priority = false }: ProductCardProps) {
   const tx = useTranslations();
@@ -25,17 +26,14 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       href={`/products/${product.category}/${product.slug}`}
       className="product-surface group flex flex-col overflow-hidden rounded-lg border border-ink-200 bg-white transition-all duration-200 hover:border-brand-300 hover:shadow-lg hover:shadow-ink-900/5"
     >
-      <div className="relative aspect-[4/3] overflow-hidden border-b border-ink-100 bg-ink-50">
-        <Image
-          src={generatedProductImage(product.model) ?? product.image}
-          alt={`${product.model} ${tx(product.name)}`}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className={generatedProductImage(product.model) ? "object-cover" : "object-contain p-6"}
-          priority={priority}
-        />
-        {generatedProductImage(product.model) && <span className="scene-label">{tx("Illustrative image")}</span>}
-      </div>
+      <MediaFrame
+        className="product-card-media"
+        src={generatedProductImage(product.model) ?? product.image}
+        alt={`${product.model} ${tx(product.name)}`}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        priority={priority}
+        label={generatedProductImage(product.model) ? tx("Illustrative image") : undefined}
+      />
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center justify-between gap-2">
           <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-brand-600">
