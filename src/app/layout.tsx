@@ -10,6 +10,7 @@ import "./globals.css";
 import { InteractionEffects } from "@/components/interaction-effects";
 import { getI18n } from "@/lib/i18n/server";
 import { I18nProvider } from "@/lib/i18n/client";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -98,6 +99,7 @@ export default async function RootLayout({
         <SiteFooter />
         <InteractionEffects />
         </I18nProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
