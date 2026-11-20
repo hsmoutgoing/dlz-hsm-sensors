@@ -136,8 +136,8 @@ export function SiteHeader() {
                   cancelClose();
                   if (window.matchMedia("(hover: hover)").matches) setProductsOpen(true);
                 }}
-                onMouseLeave={(event) => {
-                  if (!event.currentTarget.contains(document.activeElement)) scheduleClose();
+                onMouseLeave={() => {
+                  if (!megaRef.current?.contains(document.activeElement)) scheduleClose();
                 }}
                 onBlur={(event) => {
                   if (event.currentTarget.contains(event.relatedTarget)) return;
