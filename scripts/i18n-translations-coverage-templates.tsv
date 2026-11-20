@@ -1,0 +1,8 @@
+{model} technical data	{model} 技术参数	Datos técnicos del {model}	Technische Daten für {model}	Caractéristiques techniques du {model}	{model}の技術仕様
+Not certain {model} is the right unit?	不确定 {model} 是否适合您的工况？	¿No sabe si {model} es el equipo adecuado?	Sind Sie unsicher, ob {model} das richtige Gerät ist?	Vous vous demandez si le modèle {model} est adapté ?	お使いの用途に{model}が適しているかお悩みですか？
+All {category} models	全部{category}型号	Todos los modelos de la categoría {category}	Alle Modelle der Kategorie {category}	Tous les modèles de la catégorie {category}	{category}の全モデル
+Other {category} instruments	其他{category}仪表	Otros instrumentos de la categoría {category}	Weitere Messgeräte der Kategorie {category}	Autres instruments de la catégorie {category}	{category}のその他の計測機器
+View {name} {index}	查看 {name} 的第 {index} 张图片	Ver la imagen {index} de {name}	Bild {index} von {name} anzeigen	Afficher l’image {index} de {name}	{name}の画像{index}を表示
+{visible} of {total} models	共 {total} 个型号，显示 {visible} 个	{visible} de {total} modelos	{visible} von {total} Modellen	{visible} modèles sur {total}	全{total}モデル中{visible}モデルを表示
+Models in {category}	{category}类别下的型号	Modelos de la categoría {category}	Modelle der Kategorie {category}	Modèles de la catégorie {category}	{category}のモデル
+{count} models, factory-direct from Xiamen.	{count} 个型号，厦门工厂直供。	{count} modelos directos de fábrica desde Xiamen.	{count} Modelle direkt ab Werk in Xiamen.	{count} modèles en direct de l’usine de Xiamen.	厦門の工場から直接供給される全{count}モデル。

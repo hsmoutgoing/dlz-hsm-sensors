@@ -87,7 +87,7 @@ export function ProductExplorer({ items, categories }: ProductExplorerProps) {
             />
           </label>
           <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-ink-500">
-            {tx(filtered.length)} {tx("of")} {tx(items.length)} {tx("models")} </p>
+            {tx("{visible} of {total} models", { visible: filtered.length, total: items.length })} </p>
         </div>
 
         <div className="mt-3 flex flex-wrap gap-1.5">
@@ -122,9 +122,9 @@ export function ProductExplorer({ items, categories }: ProductExplorerProps) {
       ) : (
         <>
           <h2 className="sr-only">
-            {tx(active === "all"
-              ? "All models"
-              : `${tx(items.find((i) => i.category === active)?.categoryName ?? "Filtered")} ${tx("models")}`)}
+            {active === "all"
+              ? tx("All models")
+              : tx("Models in {category}", { category: tx(filtered[0].categoryName) })}
           </h2>
           <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((item) => (

@@ -29,7 +29,7 @@ export function HomeHero() {
 
   const slide = slides[active];
   return (
-    <section className="p0-hero" aria-roledescription="carousel" aria-label={t("Industrial sensors,")}>
+    <section className="p0-hero" aria-roledescription={t("carousel")} aria-label={t("Industrial sensors,")}>
       <div className="p0-hero-copy">
         <div className="p0-hero-content">
           <h1>{t(slide.title)} <span>{t(slide.second)}</span></h1>
@@ -39,14 +39,14 @@ export function HomeHero() {
             <Link href="/contact?intent=quote">{t("Request a quote")}</Link>
           </div>
         </div>
-        <div className="p0-carousel-controls" aria-label="Carousel controls">
+        <div className="p0-carousel-controls" aria-label={t("Carousel controls")}>
           {slides.map((item, index) => (
             <button key={item.image} type="button" className={index === active ? "is-active" : ""} aria-label={`${index + 1} / ${slides.length}: ${t(item.title)}`} aria-current={index === active ? "true" : undefined} onClick={() => setActive(index)}><span /></button>
           ))}
-          <button type="button" className="p0-play" aria-label={playing ? "Pause slideshow" : "Play slideshow"} onClick={() => setPlaying(!playing)}>{playing ? <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3h3v10H4zm5 0h3v10H9z" fill="currentColor" /></svg> : <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" fill="currentColor" /></svg>}</button>
+          <button type="button" className="p0-play" aria-label={t(playing ? "Pause slideshow" : "Play slideshow")} onClick={() => setPlaying(!playing)}>{playing ? <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3h3v10H4zm5 0h3v10H9z" fill="currentColor" /></svg> : <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" fill="currentColor" /></svg>}</button>
         </div>
       </div>
-      <MediaFrame className="p0-hero-image" src={slide.image} alt={t(slide.alt)} priority={active === 0} sizes="(max-width: 767px) 100vw, 40vw" label={t("Illustrative image")} />
+      <MediaFrame preserveFraming className="p0-hero-image" src={slide.image} alt={t(slide.alt)} priority={active === 0} sizes="(max-width: 767px) 100vw, 40vw" label={t("Illustrative image")} />
     </section>
   );
 }

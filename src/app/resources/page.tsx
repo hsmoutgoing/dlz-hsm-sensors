@@ -113,10 +113,27 @@ export default function ResourcesPage() {
         lede={tx("Three things decide most sensor orders: the measuring principle, the output signal your panel accepts, and the environmental rating. These pages cover all three, so an enquiry can start from a shortlist rather than a blank page.")} 
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Resources" }]}
         actions={[
-          { label: "Request a datasheet", href: "/contact?intent=datasheet", primary: true },
+          { label: "Request a datasheet", href: "/contact?intent=datasheet#enquiry", primary: true },
           { label: "Browse the catalogue", href: "/products" },
         ]}
       />
+
+      <nav aria-label={tx("Resources")} className="border-b border-ink-200 bg-white">
+        <ul className="mx-auto flex max-w-[1400px] flex-wrap gap-x-7 gap-y-1 px-4 py-3 sm:px-6 lg:px-8">
+          {[
+            { id: "outputs", label: "Output signals" },
+            { id: "level-principles", label: "Six level principles, and when each one fails" },
+            { id: "ingress-protection", label: "Ingress protection" },
+            { id: "catalogue", label: "Datasheets, drawings and certificates" },
+          ].map(({ id, label }) => (
+            <li key={id}>
+              <a href={`#${id}`} className="inline-block py-2 text-sm font-medium text-brand-700 underline underline-offset-4 hover:text-ink-900">
+                {tx(label)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
       {/* Output signals */}
       <section id="outputs" className="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
@@ -173,7 +190,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Level principles */}
-      <section className="border-y border-ink-200 bg-ink-50">
+      <section id="level-principles" className="scroll-mt-24 border-y border-ink-200 bg-ink-50">
         <div className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
           <div className="max-w-2xl">
             <p className="eyebrow">{tx("Reference · Level measurement")} </p>
@@ -213,7 +230,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* IP ratings */}
-      <section className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+      <section id="ingress-protection" className="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <p className="eyebrow">{tx("Reference · Environmental rating")} </p>
@@ -249,7 +266,7 @@ export default function ResourcesPage() {
                 {tx("The specification tables on every product page are the current published data. For a purchase, an installation or an import file you usually need the document underneath it — the PDF datasheet for the exact model, a dimensioned drawing, or the certificate scans. Those are issued per request rather than posted publicly, because the revision has to match the unit you are buying.")} </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link
-                  href="/contact?intent=datasheet"
+                  href="/contact?intent=datasheet#enquiry"
                   className="rounded bg-brand-500 px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-brand-400"
                 >
                   {tx("Request documentation")} </Link>

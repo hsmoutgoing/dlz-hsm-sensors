@@ -94,7 +94,7 @@ export default function CustomPage() {
         lede={tx("A non-standard thread, a longer probe, a different wetted material or a signal your control system already speaks — these are normal orders when the people quoting them are the people building them. Describe the duty and we will tell you what it takes.")} 
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Custom engineering" }]}
         actions={[
-          { label: "Send the process conditions", href: "/contact?intent=custom", primary: true },
+          { label: "Send the process conditions", href: "/contact?intent=custom#enquiry", primary: true },
           { label: "Browse standard models", href: "/products" },
         ]}
       />
