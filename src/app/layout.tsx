@@ -1,6 +1,6 @@
 import { localizeMetadata } from "@/lib/i18n/metadata";
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Poppins, Work_Sans, JetBrains_Mono } from "next/font/google";
 import { JsonLd } from "@/components/json-ld";
 import { organizationSchema } from "@/lib/structured-data";
 import { site } from "@/lib/site";
@@ -11,11 +11,17 @@ import { InteractionEffects } from "@/components/interaction-effects";
 import { getI18n } from "@/lib/i18n/server";
 import { I18nProvider } from "@/lib/i18n/client";
 
-const inter = Inter({
+const poppins = Poppins({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
-  axes: ["opsz"],
+  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700"],
+});
+
+const workSans = Work_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-work-sans",
 });
 
 const mono = JetBrains_Mono({
@@ -80,7 +86,7 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const { locale, messages, t } = await getI18n();
   return (
-    <html lang={locale} className={`${inter.variable} ${mono.variable}`}>
+    <html lang={locale} className={`${poppins.variable} ${workSans.variable} ${mono.variable}`}>
       <body className="min-h-screen bg-white text-ink-900 antialiased">
         <I18nProvider locale={locale} messages={messages}>
         <JsonLd data={organizationSchema()} />

@@ -1,6 +1,7 @@
 import { useTranslations, getI18n } from "@/lib/i18n/server";
 import Link from "next/link";
-import Image from "next/image";
+import { ProductGallery } from "@/components/product-gallery";
+import { generatedProductGallery } from "@/lib/generated-product-images";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SpecTable } from "@/components/spec-table";
@@ -55,7 +56,7 @@ export default async function ProductPage({ params }: PageProps) {
 
   const siblings = getProductsByCategory(category.slug).filter((p) => p.slug !== product.slug);
   const related = pickRelated(product, siblings);
-  const gallery = [product.image, ...(product.gallery ?? [])];
+  const gallery = [product.image, ...(product.gallery ?? []), ...generatedProductGallery(product.model)];
 
   return (
     <>
@@ -100,7 +101,7 @@ export default async function ProductPage({ params }: PageProps) {
       </nav>
 
       {/* Parameters come first on every product page, without collapsed groups. */}
-      <section aria-labelledby="technical-data-heading" className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 lg:px-8">
+      <section aria-labelledby="technical-data-heading" className="p3-product-detail mx-auto max-w-[1400px] px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-xs font-medium text-brand-600">{tx(category.name)}</p>
@@ -110,39 +111,7 @@ export default async function ProductPage({ params }: PageProps) {
           <Link href={`/contact?intent=quote&model=${product.model}`} className="rounded bg-brand-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-700">{tx("Request a quote")}</Link>
         </div>
         <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-8">
-          {/* Gallery */}
-          <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
-            <div className="overflow-hidden rounded-lg border border-ink-200 bg-ink-50">
-              <div className="relative aspect-[4/3]">
-                <Image
-                  src={product.image}
-                  alt={`${product.model} ${tx(product.name)}`}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 36vw"
-                  className="object-contain p-6 sm:p-8"
-                />
-              </div>
-            </div>
-            {gallery.length > 1 && (
-              <div className="mt-3 grid grid-cols-4 gap-3">
-                {gallery.slice(1, 5).map((src, i) => (
-                  <div
-                    key={src}
-                    className="relative aspect-square overflow-hidden rounded border border-ink-200 bg-ink-50"
-                  >
-                    <Image
-                      src={src}
-                      alt={`${product.model} ${product.name} — view ${i + 2}`}
-                      fill
-                      sizes="120px"
-                      className="object-contain p-3"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <div className="min-w-0 lg:sticky lg:top-24 lg:self-start"><ProductGallery images={gallery} name={product.model + " " + tx(product.name)} /></div>
 
           <div className="min-w-0">
         <h2 id="technical-data-heading" className="mb-3 text-lg font-semibold text-ink-900">{product.model} {tx("technical data")}</h2>

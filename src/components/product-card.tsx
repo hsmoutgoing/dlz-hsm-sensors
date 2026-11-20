@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Product } from "@/lib/content-types";
 import { getCategory } from "@/lib/categories";
+import { generatedProductImage } from "@/lib/generated-product-images";
 
 interface ProductCardProps {
   product: Product;
@@ -26,13 +27,14 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
     >
       <div className="relative aspect-[4/3] overflow-hidden border-b border-ink-100 bg-ink-50">
         <Image
-          src={product.image}
+          src={generatedProductImage(product.model) ?? product.image}
           alt={`${product.model} ${tx(product.name)}`}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-contain p-6 transition-transform duration-300 group-hover:scale-[1.04]"
+          className={generatedProductImage(product.model) ? "object-cover" : "object-contain p-6"}
           priority={priority}
         />
+        {generatedProductImage(product.model) && <span className="scene-label">{tx("Illustrative image")}</span>}
       </div>
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center justify-between gap-2">
