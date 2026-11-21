@@ -31,7 +31,6 @@ export default function AboutPage() {
       <section className={styles.intro}>
         <div className={styles.introImage}>
           <Image src="/images/about-illustrations/hero.webp" alt="" fill priority sizes="(max-width: 767px) 100vw, 50vw" />
-          <span className="scene-label">{tx("Illustrative image")}</span>
         </div>
         <div className={styles.introCopy}>
           <h1>{tx("A sensor factory in Jimei District, Xiamen")}</h1>
@@ -42,22 +41,22 @@ export default function AboutPage() {
 
       <section className={styles.story}>
         <div className={styles.storyHeader}>
-          <h2>{tx("Factory-direct, not a trading desk")}</h2>
-          <p>{tx("What that means for a buyer is narrow and practical: you are dealing with the factory. Ranges, threads, probe lengths, materials and output signals are set on the line, so a specification that does not match the catalogue is a conversation rather than a refusal.")}</p>
+          <h2>{tx("Factory-direct")}</h2>
+          <p>{tx("Our factory configures measuring ranges, threads, probe lengths, materials and output signals to suit each application.")}</p>
         </div>
         <div className={styles.storyImages}>
-          <div className={styles.storyImage}><Image src="/images/about-illustrations/materials.webp" alt="" fill sizes="(max-width: 767px) 100vw, 35vw" /><span className="scene-label">{tx("Illustrative image")}</span></div>
-          <div className={styles.storyImage}><Image src="/images/about-illustrations/workbench.webp" alt="" fill sizes="(max-width: 767px) 100vw, 60vw" /><span className="scene-label">{tx("Illustrative image")}</span></div>
+          <div className={styles.storyImage}><Image src="/images/about-illustrations/materials.webp" alt="" fill sizes="(max-width: 767px) 100vw, 35vw" /></div>
+          <div className={styles.storyImage}><Image src="/images/about-illustrations/workbench.webp" alt="" fill sizes="(max-width: 767px) 100vw, 60vw" /></div>
         </div>
         <div className={styles.storyEnd}>
           <h2>{tx("Custom ranges")}</h2>
-          <p>{tx("Non-standard lengths, threads, materials and output ranges are built to order, not refused.")}</p>
+          <p>{tx("We build to order with custom lengths, threads, materials and output ranges.")}</p>
           <Link href="/custom">{tx("Talk to an engineer →")}</Link>
         </div>
       </section>
 
       <section className={styles.location}>
-        <div className={styles.locationImage}><Image src="/images/about-illustrations/wide.webp" alt="" fill sizes="100vw" /><span className="scene-label">{tx("Illustrative image")}</span></div>
+        <div className={styles.locationImage}><Image src="/images/about-illustrations/wide.webp" alt="" fill sizes="100vw" /></div>
         <div className={styles.locationCopy}>
           <h2>{tx("A sensor factory in Jimei District, Xiamen")}</h2>
           <p>{tx(site.legalName)}</p>
@@ -78,7 +77,7 @@ export default function AboutPage() {
 
       <section className={styles.trust}>
         <div><h2>{tx("Documentation supplied per project")}</h2><p>{tx("Every unit is assembled and calibrated in our own facility. Test records, material certificates and CE or RoHS scans are supplied on request with the quotation, matched to the revision you are buying.")}</p></div>
-        <div><h2>{tx("Want to audit the factory before you order?")}</h2><p>{tx("Ask for a video walk-through of the assembly and calibration areas, or request the documentation relevant to your project — standards conformity, material certificates or the certificate scans you need for import.")}</p><Link href="/contact?intent=quote">{tx("Request a quote")}</Link></div>
+        <div><h2>{tx("Factory tour and project documents")}</h2><p>{tx("Ask for a video walk-through of the assembly and calibration areas, or request the documentation relevant to your project — standards conformity, material certificates or the certificate scans you need for import.")}</p><Link href="/contact?intent=quote">{tx("Request a quote")}</Link></div>
       </section>
     </div>
   );

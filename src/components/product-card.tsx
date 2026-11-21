@@ -32,7 +32,6 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         alt={`${product.model} ${tx(product.name)}`}
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         priority={priority}
-        label={generatedProductImage(product.model) ? tx("Illustrative image") : undefined}
       />
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center justify-between gap-2">

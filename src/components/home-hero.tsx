@@ -7,8 +7,8 @@ import { MediaFrame } from "@/components/media-frame";
 
 const slides = [
   { title: "Industrial sensors,", second: "built in our own factory.", description: "Flow, level, pressure, temperature, ultrasonic and gas instrumentation for plant engineers and machine builders.", image: "/images/reference-style/hero-flow.webp", alt: "HSM10 thermal flow switch", href: "/products/flow" },
-  { title: "Level Sensors", second: "Custom ranges", description: "Non-standard lengths, threads, materials and output ranges are built to order, not refused.", image: "/images/reference-style/hero-level.webp", alt: "HPS10 submersible level transmitter", href: "/products/level" },
-  { title: "Pressure Sensors", second: "Factory-direct", description: "Every unit is assembled and calibrated in our own Xiamen facility — no trading company in between.", image: "/images/reference-style/story-custom.webp", alt: "PCC100 pressure controller", href: "/products/pressure" },
+  { title: "Level Sensors", second: "Custom ranges", description: "We build to order with custom lengths, threads, materials and output ranges.", image: "/images/reference-style/hero-level.webp", alt: "HPS10 submersible level transmitter", href: "/products/level" },
+  { title: "Pressure Sensors", second: "Factory-direct", description: "We assemble and calibrate every unit at our factory in Xiamen.", image: "/images/reference-style/story-custom.webp", alt: "PCC100 pressure controller", href: "/products/pressure" },
 ];
 
 export function HomeHero() {
@@ -46,7 +46,7 @@ export function HomeHero() {
           <button type="button" className="p0-play" aria-label={t(playing ? "Pause slideshow" : "Play slideshow")} onClick={() => setPlaying(!playing)}>{playing ? <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3h3v10H4zm5 0h3v10H9z" fill="currentColor" /></svg> : <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" fill="currentColor" /></svg>}</button>
         </div>
       </div>
-      <MediaFrame preserveFraming className="p0-hero-image" src={slide.image} alt={t(slide.alt)} priority={active === 0} sizes="(max-width: 767px) 100vw, 40vw" label={t("Illustrative image")} />
+      <MediaFrame preserveFraming className="p0-hero-image" src={slide.image} alt={t(slide.alt)} priority={active === 0} sizes="(max-width: 767px) 100vw, 40vw" />
     </section>
   );
 }

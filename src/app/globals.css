@@ -621,7 +621,6 @@ main section[aria-labelledby='technical-data-heading'] section h3 {
 .p3-gallery-thumbnails button[aria-pressed='true'] { border-color: #168cc5; }
 @media(max-width: 767px) { .p3-page-hero h1 { font-size: 38px; } .p3-product-detail { padding-top: 28px; } .p3-gallery-main { aspect-ratio: 1 / 1; } }
 
-.scene-label { position: absolute; bottom: 10px; right: 10px; z-index: 2; padding: 4px 8px; background: #111923; color: white; font-size: 10px; line-height: 1.3; }
 
 /* Media frame: the photograph stays whole, and a blurred copy of the same file
    behind it continues its own colours into the margins of a wider box. */
