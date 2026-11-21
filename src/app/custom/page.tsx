@@ -58,7 +58,7 @@ const steps = [
   {
     n: "02",
     title: "Engineering review",
-    body: "We come back with the nearest catalogue model, the changes needed, and any condition that the instrument cannot survive. If a catalogue item will do the job, we say so rather than quoting a special.",
+    body: "We recommend a model, identify any changes needed and confirm its operating limits.",
   },
   {
     n: "03",
@@ -106,7 +106,7 @@ export default function CustomPage() {
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900 sm:text-[2.2rem]">
             {tx("Six parameters, set on the line")} </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-ink-600">
-            {tx("These are the variables the factory can move without becoming a different product. Anything outside them is a development project, and we will say so at the review stage rather than after the order.")} </p>
+            {tx("The factory can tailor these parameters. Our engineers review requests for new designs during the enquiry.")} </p>
         </div>
 
         <div className="mt-10 grid gap-px overflow-hidden rounded-lg border border-ink-200 bg-ink-200 sm:grid-cols-2 lg:grid-cols-3">

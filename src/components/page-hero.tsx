@@ -85,7 +85,7 @@ export function PageHero({
 
 export function QuoteCta({
   title = "Need a model that is not in the catalogue?",
-  body = "Send us the medium, range, thread and output you need. Most custom configurations are quoted from the factory engineering desk rather than handed to a trading partner.",
+  body = "Send us the medium, range, thread and output you need.",
 }: {
   title?: string;
   body?: string;

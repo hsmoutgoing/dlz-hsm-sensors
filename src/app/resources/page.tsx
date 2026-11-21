@@ -109,8 +109,8 @@ export default function ResourcesPage() {
     <>
       <PageHero
         eyebrow={tx("Resources")} 
-        title={tx("Specifying an instrument without a sales call")} 
-        lede={tx("Three things decide most sensor orders: the measuring principle, the output signal your panel accepts, and the environmental rating. These pages cover all three, so an enquiry can start from a shortlist rather than a blank page.")} 
+        title={tx("Selection guide")}
+        lede={tx("Compare measuring principles, output signals and environmental ratings to find a sensor for your application.")}
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Resources" }]}
         actions={[
           { label: "Request a datasheet", href: "/contact?intent=datasheet#enquiry", primary: true },
@@ -263,7 +263,7 @@ export default function ResourcesPage() {
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-[2.2rem]">
                 {tx("Datasheets, drawings and certificates")} </h2>
               <p className="mt-4 text-[15px] leading-relaxed text-ink-300">
-                {tx("The specification tables on every product page are the current published data. For a purchase, an installation or an import file you usually need the document underneath it — the PDF datasheet for the exact model, a dimensioned drawing, or the certificate scans. Those are issued per request rather than posted publicly, because the revision has to match the unit you are buying.")} </p>
+                {tx("Request the datasheet, dimensioned drawing or certificates for the exact model and revision you need.")} </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link
                   href="/contact?intent=datasheet#enquiry"

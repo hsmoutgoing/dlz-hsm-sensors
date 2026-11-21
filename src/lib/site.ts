@@ -120,11 +120,11 @@ export const mainNav: readonly NavGroup[] = [
 export const trustPoints = [
   {
     title: "Factory-direct",
-    body: "Every unit is assembled and calibrated in our own Xiamen facility — no trading company in between.",
+    body: "We assemble and calibrate every unit at our factory in Xiamen.",
   },
   {
     title: "Custom ranges",
-    body: "Non-standard lengths, threads, materials and output ranges are built to order, not refused.",
+    body: "We build to order with custom lengths, threads, materials and output ranges.",
   },
   {
     title: "Sample units",

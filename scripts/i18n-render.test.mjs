@@ -16,9 +16,11 @@ const normalize = (text) => text.replace(/&(#x[\da-f]+|#\d+|amp|quot|apos|lt|gt|
 }).replace(/\s+/g, ' ').trim();
 
 const cases = {
-  '/': ['Three things decide most sensor orders', 'Dust-tight; protected against temporary immersion', 'Carousel controls', 'Play slideshow', 'carousel', 'HSM Sensors home'],
+  '/': ['Compare measuring principles, output signals and environmental ratings', 'Dust-tight; protected against temporary immersion', 'Carousel controls', 'Play slideshow', 'carousel', 'HSM Sensors home'],
   '/industries': ['Leak detection on long lines', 'HSM laser methane detector'],
-  '/resources': ['Industrial sensor output signals, their typical use'],
+  '/about': ['Factory tour and project documents', 'Our factory configures measuring ranges'],
+  '/resources': ['Industrial sensor output signals, their typical use', 'Request the datasheet, dimensioned drawing or certificates'],
+  '/custom': ['We recommend a model, identify any changes needed'],
   '/products': ['The full catalogue'],
   '/products/flow': ['What it measures', 'Available outputs'],
   '/products/flow/hsm20-thermal-flow-switch-dual': [
@@ -64,6 +66,22 @@ test('the language switch sets the locale used on the next page request', async 
   assert.ok(cookie);
   const page = await render('/', 'ja', cookie);
   assert.ok(page.includes(dictionaries.ja['Request a quote']));
+});
+
+test('image surfaces omit captions in all supported languages', async () => {
+  const paths = ['/', '/about', '/products', '/products/flow', '/products/flow/hsm10-thermal-flow-switch'];
+  await Promise.all(['en', ...locales].map(async (locale) => {
+    for (const path of paths) {
+      const response = await fetch(new URL(path, origin), {
+        headers: { Cookie: `hsm-locale=${locale}` },
+        signal: AbortSignal.timeout(30_000),
+      });
+      assert.equal(response.status, 200);
+      const markup = (await response.text()).replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+      assert.ok(markup.includes(`<html lang="${locale}"`), `${path} did not render ${locale}`);
+      assert.equal(/\bscene-label\b/.test(markup), false, `${locale} ${path} renders an image caption`);
+    }
+  }));
 });
 
 test('Japanese product copy orders the model and category naturally', async () => {

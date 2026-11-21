@@ -10,8 +10,6 @@ interface MediaFrameProps {
   preserveFraming?: boolean;
   /** Layout classes for the positioning box (aspect ratio / min-height). */
   className?: string;
-  /** Caption shown in the corner, e.g. the "Illustrative image" marker. */
-  label?: string;
 }
 
 /**
@@ -32,7 +30,6 @@ export function MediaFrame({
   sizes,
   priority = false,
   className = "",
-  label,
   preserveFraming = false,
 }: MediaFrameProps) {
   const wideSrc = preserveFraming ? undefined : wideImageFor(src);
@@ -47,7 +44,6 @@ export function MediaFrame({
           priority={priority}
           className="media-frame-image"
         />
-        {label && <span className="scene-label">{label}</span>}
       </div>
     );
   }
@@ -77,7 +73,6 @@ export function MediaFrame({
         priority={priority}
         className="media-frame-image"
       />
-      {label && <span className="scene-label">{label}</span>}
     </div>
   );
 }
