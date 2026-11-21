@@ -23,6 +23,7 @@ export default function PrivacyPage() {
   return (
     <>
       <PageHero
+        reading
         compact
         eyebrow={tx("Legal")} 
         title={tx("Privacy notice")} 

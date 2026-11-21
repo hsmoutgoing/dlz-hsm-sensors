@@ -48,6 +48,7 @@ export default async function CategoryPage({ params }: PageProps) {
       <PageHero
         eyebrow={`${tx("Product family")} · ${items.length} ${tx("models")}`}
         title={category.name}
+        image={items[0] ? { src: items[0].image, preserveFraming: true } : undefined}
         lede={category.intro}
         breadcrumbs={[
           { label: "Home", href: "/" },
@@ -56,6 +57,22 @@ export default async function CategoryPage({ params }: PageProps) {
         ]}
         actions={[{ label: "All models", href: "#models", primary: true }]}
       />
+
+      {/* Model list */}
+      <section id="models" tabIndex={-1} className="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h2 className="text-2xl font-semibold tracking-tight text-ink-900 sm:text-[1.9rem]">
+            {tx(items.length)} {tx(items.length === 1 ? "model" : "models")} {tx("in this family")} </h2>
+          <p className="text-[13px] text-ink-500">
+            {tx("Sorted by typical duty — workhorse models first")} </p>
+        </div>
+
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {items.map((p, i) => (
+            <ProductCard key={p.slug} product={p} priority={i < 4} />
+          ))}
+        </div>
+      </section>
 
       {/* Measured quantities and outputs */}
       <section className="border-b border-ink-200 bg-white">
@@ -90,22 +107,6 @@ export default async function CategoryPage({ params }: PageProps) {
               </ul>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Model list */}
-      <section id="models" tabIndex={-1} className="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="text-2xl font-semibold tracking-tight text-ink-900 sm:text-[1.9rem]">
-            {tx(items.length)} {tx(items.length === 1 ? "model" : "models")} {tx("in this family")} </h2>
-          <p className="text-[13px] text-ink-500">
-            {tx("Sorted by typical duty — workhorse models first")} </p>
-        </div>
-
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {items.map((p, i) => (
-            <ProductCard key={p.slug} product={p} priority={i < 4} />
-          ))}
         </div>
       </section>
 

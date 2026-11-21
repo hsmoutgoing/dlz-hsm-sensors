@@ -30,7 +30,7 @@ export default function AboutPage() {
     <div className={styles.about}>
       <section className={styles.intro}>
         <div className={styles.introImage}>
-          <Image src="/images/about-illustrations/hero.webp" alt="" fill priority sizes="(max-width: 767px) 100vw, 50vw" />
+          <Image src="/images/about-illustrations/hero.webp" alt="" fill priority sizes="100vw" />
         </div>
         <div className={styles.introCopy}>
           <h1>{tx("A sensor factory in Jimei District, Xiamen")}</h1>
@@ -58,7 +58,7 @@ export default function AboutPage() {
       <section className={styles.location}>
         <div className={styles.locationImage}><Image src="/images/about-illustrations/wide.webp" alt="" fill sizes="100vw" /></div>
         <div className={styles.locationCopy}>
-          <h2>{tx("A sensor factory in Jimei District, Xiamen")}</h2>
+          <h2>{tx("Factory")}</h2>
           <p>{tx(site.legalName)}</p>
           <address>{tx(site.address.street)}<br />{tx(site.address.city)}, {tx(site.address.region)}, {tx(site.address.countryName)}</address>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 import { useTranslations } from "@/lib/i18n/client";
 import Link from "next/link";
+import { MediaFrame } from "@/components/media-frame";
 import { site } from "@/lib/site";
 
 interface PageHeroProps {
@@ -10,6 +11,8 @@ interface PageHeroProps {
   breadcrumbs?: readonly { label: string; href?: string }[];
   actions?: readonly { label: string; href: string; primary?: boolean }[];
   compact?: boolean;
+  image?: { src: string; alt?: string; preserveFraming?: boolean };
+  reading?: boolean;
 }
 
 export function PageHero({
@@ -19,21 +22,24 @@ export function PageHero({
   breadcrumbs,
   actions,
   compact = false,
+  image,
+  reading = false,
 }: PageHeroProps) {
   const tx = useTranslations();
 
   return (
-    <section className="p3-page-hero relative overflow-hidden border-b border-ink-200 bg-ink-900">
-      <div className="absolute inset-0 grid-backdrop opacity-40" aria-hidden="true" />
-      <div
-        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-400/50 to-transparent"
-        aria-hidden="true"
-      />
-      <div
-        className={`relative mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 ${
-          compact ? "py-10 lg:py-12" : "py-14 lg:py-20"
-        }`}
-      >
+    <section className={`p3-page-hero${image ? " p3-page-hero-media" : ""}${reading ? " p3-page-hero-reading" : ""}`}>
+      {image && (
+        <MediaFrame
+          className="p3-page-hero-image"
+          src={image.src}
+          alt={image.alt ? tx(image.alt) : ""}
+          sizes="(max-width: 767px) 100vw, 50vw"
+          priority
+          preserveFraming={image.preserveFraming}
+        />
+      )}
+      <div className={`p3-page-hero-copy ${compact ? "p3-page-hero-compact" : ""}`}>
         {breadcrumbs && breadcrumbs.length > 0 && (
           <nav aria-label={tx("Breadcrumb")}  className="mb-5">
             <ol className="flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-400">
@@ -45,7 +51,7 @@ export function PageHero({
                       {tx(b.label)}
                     </Link>
                   ) : (
-                    <span className="text-ink-300">{tx(b.label)}</span>
+                    <span aria-current="page">{tx(b.label)}</span>
                   )}
                 </li>
               ))}

@@ -3,7 +3,10 @@
 .about h1 { font-size: clamp(38px, 4.1vw, 64px); }
 .about h2 { font-size: clamp(32px, 3.2vw, 48px); }
 .about p { font-size: 16px; line-height: 1.7; }
-.intro { display: grid; grid-template-columns: 1fr 1fr; min-height: 650px; background: #f0f3f7; }
+.intro { display: grid; isolation: isolate; align-items: end; min-height: clamp(440px, 46vw, 660px); background: #111923; color: white; }
+.introImage, .introCopy { grid-area: 1 / 1; }
+.introImage { align-self: stretch; z-index: -2; }
+.intro::before { content: ""; grid-area: 1 / 1; align-self: stretch; z-index: -1; background: linear-gradient(0deg, rgb(10 18 28 / .96), rgb(10 18 28 / .22) 100%); }
 .introImage, .storyImage, .locationImage, .productImage { position: relative; overflow: hidden; }
 .introImage img, .storyImage img, .locationImage img { object-fit: cover; }
 .introCopy { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: clamp(48px, 7vw, 110px); }
@@ -38,7 +41,7 @@
 .trust p { margin-top: 25px; color: #e2e9ef; max-width: 58ch; }
 @media (max-width: 767px) {
   .intro, .storyHeader, .storyImages, .trust { grid-template-columns: 1fr; }
-  .introImage { min-height: 390px; }
+  .introImage { min-height: 0; }
   .introCopy { padding: 52px 24px 60px; }
   .story, .products { padding: 70px 24px; }
   .storyHeader { gap: 24px; margin-bottom: 38px; }

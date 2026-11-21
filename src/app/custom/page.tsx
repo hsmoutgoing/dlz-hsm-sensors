@@ -2,7 +2,8 @@ import { localizeMetadata } from "@/lib/i18n/metadata";
 import { useTranslations, getI18n } from "@/lib/i18n/server";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { PageHero, QuoteCta } from "@/components/page-hero";
+import { ContactForm } from "@/components/contact-form";
+import { PageHero } from "@/components/page-hero";
 import { site } from "@/lib/site";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -90,11 +91,12 @@ export default function CustomPage() {
     <>
       <PageHero
         eyebrow={tx("Custom engineering")} 
-        title={tx("The catalogue is the starting point, not the limit")} 
+        title="Custom engineering"
+        image={{ src: "/images/reference-style/story-custom.webp" }}
         lede={tx("A non-standard thread, a longer probe, a different wetted material or a signal your control system already speaks — these are normal orders when the people quoting them are the people building them. Describe the duty and we will tell you what it takes.")} 
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Custom engineering" }]}
         actions={[
-          { label: "Send the process conditions", href: "/contact?intent=custom#enquiry", primary: true },
+          { label: "Send the process conditions", href: "#custom-enquiry", primary: true },
           { label: "Browse standard models", href: "/products" },
         ]}
       />
@@ -200,7 +202,10 @@ export default function CustomPage() {
         </div>
       </section>
 
-      <QuoteCta />
+      <section id="custom-enquiry" tabIndex={-1} className="mx-auto max-w-4xl scroll-mt-24 px-4 py-14 sm:px-8">
+        <h2 className="mb-6 text-3xl font-semibold tracking-tight">{tx("Send the process conditions")}</h2>
+        <ContactForm initialIntent="custom" />
+      </section>
     </>
   );
 }

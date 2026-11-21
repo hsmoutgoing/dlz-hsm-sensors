@@ -16,8 +16,9 @@ const normalize = (text) => text.replace(/&(#x[\da-f]+|#\d+|amp|quot|apos|lt|gt|
 }).replace(/\s+/g, ' ').trim();
 
 const cases = {
-  '/': ['Compare measuring principles, output signals and environmental ratings', 'Dust-tight; protected against temporary immersion', 'Carousel controls', 'Play slideshow', 'carousel', 'HSM Sensors home'],
-  '/industries': ['Leak detection on long lines', 'HSM laser methane detector'],
+  '/': ['Compare measuring principles, output signals and environmental ratings', 'Carousel controls', 'Play slideshow', 'carousel', 'HSM Sensors home'],
+  '/industries': ['Choose an industry to explore typical measurement tasks', 'HSM laser methane detector'],
+  '/industries/oil-gas': ['Leak detection on long lines', 'HSM laser methane detector'],
   '/about': ['Factory tour and project documents', 'Our factory configures measuring ranges'],
   '/resources': ['Industrial sensor output signals, their typical use', 'Request the datasheet, dimensioned drawing or certificates'],
   '/custom': ['We recommend a model, identify any changes needed'],
@@ -78,7 +79,7 @@ test('image surfaces omit captions in all supported languages', async () => {
       });
       assert.equal(response.status, 200);
       const markup = (await response.text()).replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-      assert.ok(markup.includes(`<html lang="${locale}"`), `${path} did not render ${locale}`);
+      assert.match(markup, new RegExp(`<html\\b[^>]*\\blang="${locale}"`), `${path} did not render ${locale}`);
       assert.equal(/\bscene-label\b/.test(markup), false, `${locale} ${path} renders an image caption`);
     }
   }));

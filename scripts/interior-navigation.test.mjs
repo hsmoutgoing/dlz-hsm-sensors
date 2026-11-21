@@ -25,6 +25,48 @@ test('product overview and model-specific quote precede the technical data', asy
   assertJump(html, 'technical-data');
 });
 
+test('model gallery precedes the product heading and links to related applications', async () => {
+  const html = await page('/products/flow/hsm10-thermal-flow-switch');
+  const gallery = html.indexOf('class="p3-gallery-main"');
+  assert.ok(gallery >= 0 && gallery < html.indexOf('id="product-heading"'));
+  assertJump(html, 'applications');
+});
+
+test('industry hub links to six standalone guides with a direct enquiry path', async () => {
+  const html = await page('/industries');
+  const routes = [...new Set([...html.matchAll(/href="(\/industries\/[a-z-]+)"/g)].map((m) => m[1]))];
+  assert.equal(routes.length, 6);
+  for (const route of routes) {
+    const guide = await page(route);
+    assert.equal(guide.match(/<h1\b/g)?.length, 1);
+    assert.ok(guide.includes('href="/contact?intent=quote#enquiry"'));
+  }
+});
+
+test('model enquiries keep the model across contact shortcuts', async () => {
+  const product = await page('/products/flow/hsm10-thermal-flow-switch');
+  assert.ok(product.includes('href="/contact?intent=datasheet&amp;model=HSM10#enquiry"'));
+  assert.ok(/href="mailto:[^"]+\?subject=Datasheet%20request[^"]+HSM10"/.test(product));
+
+  const contact = await page('/contact?intent=datasheet&model=HSM10');
+  for (const intent of ['quote', 'custom', 'datasheet', 'support']) {
+    assert.ok(contact.includes(`href="/contact?intent=${intent}&amp;model=HSM10#enquiry"`));
+  }
+});
+
+test('enquiry pages offer email while the client form loads', async () => {
+  for (const path of ['/contact', '/custom']) {
+    const html = await page(path);
+    assert.ok(/<form\b[^>]*\bhidden(?:="")?(?:\s|>)/.test(html));
+    assert.ok(/<a\b[^>]*\bhref="mailto:[^"]+"[^>]*>Email an engineer/.test(html));
+  }
+});
+
+test('pharmaceutical guide links to the HSM41 model', async () => {
+  const html = await page('/industries/pharma');
+  assert.ok(html.includes('href="/products/motion/hsm41-laser-displacement-sensor"'));
+});
+
 test('resource links jump to each guide', async () => {
   const html = await page('/resources');
   for (const id of ['outputs', 'level-principles', 'ingress-protection', 'catalogue']) {

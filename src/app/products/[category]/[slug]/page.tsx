@@ -32,16 +32,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = `${product.model} ${t(product.name)}${product.variant ? ` — ${t(product.variant)}` : ""}`;
   const url = `/products/${product.category}/${product.slug}`;
 
+  const description = t(product.summary);
+  const social = {
+    title: `${title} | ${site.name}`,
+    description,
+    images: [{ url: product.image, alt: `${product.model} ${t(product.name)}` }],
+  };
   return {
     title,
-    description: t(product.summary),
+    description,
     alternates: { canonical: url },
-    openGraph: {
-      title: `${title} | ${site.name}`,
-      description: t(product.summary),
-      url,
-      images: [{ url: product.image, alt: `${product.model} ${t(product.name)}` }],
-    },
+    openGraph: { ...social, url },
+    twitter: { ...social, card: "summary_large_image" },
   };
 }
 
@@ -101,7 +103,10 @@ export default async function ProductPage({ params }: PageProps) {
       </nav>
 
       <section aria-labelledby="product-heading" className="p3-product-detail mx-auto grid max-w-[1400px] items-start gap-8 px-4 pb-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14 lg:px-8 lg:pb-16">
-        <div className="min-w-0 lg:col-start-1 lg:row-start-1">
+        <div className="min-w-0 lg:col-start-1 lg:row-span-2 lg:row-start-1">
+          <ProductGallery images={gallery} name={`${product.model} ${tx(product.name)}`} />
+        </div>
+        <div className="min-w-0 lg:col-start-2 lg:row-start-1">
           <h1 id="product-heading" className="text-balance font-semibold tracking-tight text-ink-900">
             {product.model} <span className="font-medium text-ink-600">{tx(product.name)}</span>
           </h1>
@@ -119,10 +124,7 @@ export default async function ProductPage({ params }: PageProps) {
             </a>
           </div>
         </div>
-        <div className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1">
-          <ProductGallery images={gallery} name={`${product.model} ${tx(product.name)}`} />
-        </div>
-        <div className="min-w-0 lg:col-start-1 lg:row-start-2">
+        <div className="min-w-0 lg:col-start-2 lg:row-start-2">
           {product.highlights.length > 0 && (
             <ul className="space-y-2.5 border-t border-ink-200 pt-6">
               {product.highlights.map((h) => (
@@ -157,7 +159,12 @@ export default async function ProductPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section id="technical-data" aria-labelledby="technical-data-heading" className="scroll-mt-24 border-t border-ink-200">
+      <nav aria-label={tx("View specifications")} className="interior-jump-links">
+        <a href="#technical-data">{tx("{model} technical data", { model: product.model })}</a>
+        <a href="#working-principle">{tx("How it works")}</a>
+        <a href="#applications">{tx("Typical applications")}</a>
+      </nav>
+      <section id="technical-data" tabIndex={-1} aria-labelledby="technical-data-heading" className="scroll-mt-24 border-t border-ink-200">
         <div className="mx-auto max-w-[1400px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <h2 id="technical-data-heading" className="mb-6 scroll-mt-24 text-2xl font-semibold tracking-tight text-ink-900 sm:text-3xl">
             {tx("{model} technical data", { model: product.model })}
@@ -166,9 +173,14 @@ export default async function ProductPage({ params }: PageProps) {
           <p className="mt-4 max-w-prose text-sm leading-relaxed text-ink-600">
             {tx("Values are for the standard configuration. Ranges, threads, probe lengths and output types outside this table are available on request — the datasheet revision for a custom build is issued with the quotation.")}
           </p>
-          <a href={`mailto:${site.contact.email}?subject=${encodeURIComponent(`Datasheet request — ${product.model}`)}`} className="mt-3 inline-block text-sm font-medium text-brand-700 underline underline-offset-4">
-            {tx("Request the PDF datasheet →")}
-          </a>
+          <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-brand-700 underline-offset-4">
+            <Link href={{ pathname: "/contact", query: { intent: "datasheet", model: product.model }, hash: "enquiry" }} className="underline">
+              {tx("Request the PDF datasheet →")}
+            </Link>
+            <a href={`mailto:${site.contact.email}?subject=${encodeURIComponent(`Datasheet request — ${product.model}`)}`} className="underline">
+              {tx("Email an engineer")}
+            </a>
+          </div>
         </div>
       </section>
 
@@ -177,7 +189,7 @@ export default async function ProductPage({ params }: PageProps) {
         <div className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
-              <h2 className="text-xl font-semibold tracking-tight text-ink-900">
+              <h2 id="working-principle" tabIndex={-1} className="scroll-mt-24 text-xl font-semibold tracking-tight text-ink-900">
                 {tx("How it works")} </h2>
               <p className="mt-4 text-[14.5px] leading-[1.75] text-ink-700">{tx(product.intro)}</p>
 
@@ -201,7 +213,7 @@ export default async function ProductPage({ params }: PageProps) {
             </div>
 
             <div className="lg:col-span-5">
-              <h2 className="text-xl font-semibold tracking-tight text-ink-900">
+              <h2 id="applications" tabIndex={-1} className="scroll-mt-24 text-xl font-semibold tracking-tight text-ink-900">
                 {tx("Typical applications")} </h2>
               {product.applications && product.applications.length > 0 ? (
                 <ul className="mt-4 divide-y divide-ink-200 rounded-lg border border-ink-200 bg-white">

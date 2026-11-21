@@ -1770,6 +1770,7 @@
   "Metre-range M18 ultrasonic sensor: 60–1000 mm, 60 mm dead zone, 0.17 mm resolution, 52 ms response. PNP/NPN switching, teach-in, IP67, 38 g.": "メートル級M18超音波センサー。60–1000 mm、不感帯60 mm、分解能0.17 mm、応答52 ms。PNP/NPN、ティーチイン、IP67、38 g。",
   "Two-metre range in an M30 barrel with a 100 mm dead zone. 0.17 mm resolution, 82 ms response, PNP/NPN output, teach-in, IP67, 105 g. For warehouse and vehicle-scale distances.": "2 m検出のM30超音波センサー。不感帯100 mm、分解能0.17 mm、応答82 ms。PNP/NPN、ティーチイン、IP67、105 g。倉庫や車両規模の距離向け。",
   "Four-metre ultrasonic range in an M30 barrel: 200–4000 mm, 200 mm dead zone, 0.17–1.5 mm resolution, 162 ms response, PNP/NPN switching. For silos, large vessels and AGV obstacle detection.": "M30超音波センサー。200–4000 mm、不感帯200 mm、分解能0.17–1.5 mm、応答162 ms、PNP/NPN。サイロ、大型容器、AGV障害物検出向け。",
+  "Choose an industry to explore typical measurement tasks and the instruments used for them.": "業界を選んで、代表的な測定用途と使用する機器を確認できます。",
   "Home": "ホーム",
   "Products": "製品",
   "About": "会社案内",

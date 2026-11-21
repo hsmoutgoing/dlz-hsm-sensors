@@ -109,11 +109,13 @@ export default function ResourcesPage() {
     <>
       <PageHero
         eyebrow={tx("Resources")} 
+        image={{ src: "/images/reference-style/resource-banner.webp" }}
         title={tx("Selection guide")}
         lede={tx("Compare measuring principles, output signals and environmental ratings to find a sensor for your application.")}
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Resources" }]}
         actions={[
           { label: "Request a datasheet", href: "/contact?intent=datasheet#enquiry", primary: true },
+          { label: "Technical support", href: "/contact?intent=support#enquiry" },
           { label: "Browse the catalogue", href: "/products" },
         ]}
       />
@@ -136,7 +138,7 @@ export default function ResourcesPage() {
       </nav>
 
       {/* Output signals */}
-      <section id="outputs" className="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+      <section id="outputs" tabIndex={-1} className="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="max-w-2xl">
           <p className="eyebrow">{tx("Reference · Output signals")} </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900 sm:text-[2.2rem]">
@@ -190,7 +192,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Level principles */}
-      <section id="level-principles" className="scroll-mt-24 border-y border-ink-200 bg-ink-50">
+      <section id="level-principles" tabIndex={-1} className="scroll-mt-24 border-y border-ink-200 bg-ink-50">
         <div className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
           <div className="max-w-2xl">
             <p className="eyebrow">{tx("Reference · Level measurement")} </p>
@@ -230,7 +232,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* IP ratings */}
-      <section id="ingress-protection" className="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+      <section id="ingress-protection" tabIndex={-1} className="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <p className="eyebrow">{tx("Reference · Environmental rating")} </p>
@@ -255,7 +257,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Datasheets and certificates */}
-      <section id="catalogue" className="scroll-mt-24 border-y border-ink-200 bg-ink-900">
+      <section id="catalogue" tabIndex={-1} className="scroll-mt-24 border-y border-ink-200 bg-ink-900">
         <div className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-6">
