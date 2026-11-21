@@ -52,7 +52,8 @@ export default function ProductsIndexPage() {
     <>
       <PageHero
         eyebrow={`${products.length} models · 10 families`}
-        title={tx("The full catalogue")} 
+        title="The full catalogue"
+        image={{ src: "/images/reference-style/feature-flow.webp" }}
         lede={tx("Every instrument is assembled, calibrated and pressure-tested in our own facility in Jimei District, Xiamen. Filter by model code, measured quantity, wetted material or output signal — then send the process conditions for a price and a lead time.")} 
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Products" }]}
         actions={[

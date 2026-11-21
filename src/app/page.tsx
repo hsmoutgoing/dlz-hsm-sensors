@@ -3,9 +3,9 @@ import { useTranslations, getI18n } from "@/lib/i18n/server";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { HomeHero } from "@/components/home-hero";
-import { ProductCard } from "@/components/product-card";
 import { categories } from "@/lib/categories";
 import { featuredProducts } from "@/lib/products";
+import { industries } from "@/lib/industries";
 import { trustPoints } from "@/lib/site";
 import { MediaFrame } from "@/components/media-frame";
 import { PartnersStrip } from "@/components/partners-strip";
@@ -21,37 +21,10 @@ export async function generateMetadata(): Promise<Metadata> {
  return localizeMetadata(metadata, t, locale);
 }
 
-const applications = [
-  {
-    title: "Oil & gas",
-    body: "Differential pressure, level and methane detection for separators, storage and gathering lines.",
-    metric: "ATEX-grade housings",
-  },
-  {
-    title: "Water & wastewater",
-    body: "Submersible level, thermal flow switches and dissolved oxygen for treatment and networks.",
-    metric: "IP68 submersible",
-  },
-  {
-    title: "Chemical & petrochemical",
-    body: "Capacitive and magnetic level plus pressure control for aggressive and coating media.",
-    metric: "316L wetted parts",
-  },
-  {
-    title: "Power generation",
-    body: "Fibre-optic hotspot sensing, steam-side pressure and boiler level instrumentation.",
-    metric: "100 kV rated",
-  },
-  {
-    title: "Food & beverage",
-    body: "Sanitary PEEK and stainless level switches, RTD probes and pH/DO analysis.",
-    metric: "Hygienic designs",
-  },
-  {
-    title: "Machine building",
-    body: "Ultrasonic, laser and encoder feedback for automation and packaging equipment.",
-    metric: "OEM quantities",
-  },
+const guides = [
+  { title: "Which output do you need?", href: "/resources#outputs", image: "/images/reference-style/guide-output.webp" },
+  { title: "Six level principles, and when each one fails", href: "/resources#level-principles", image: "/images/reference-style/guide-level.webp" },
+  { title: "Reading an IP code", href: "/resources#ingress-protection", image: "/images/reference-style/guide-ip.webp" },
 ];
 
 export default function HomePage() {
@@ -85,32 +58,44 @@ export default function HomePage() {
       <section className="p1-applications">
         <div className="p1-wrap">
           <h2>{tx("Where these instruments run")}</h2>
-          <div className="p1-application-grid">
-            {applications.slice(0, 4).map((application) => <article key={application.title}>
-              <h3>{tx(application.title)}</h3><p>{tx(application.body)}</p><Link href="/industries">{tx("Industry applications →")}</Link>
-            </article>)}
-          </div>
-          <div className="p1-capabilities">
-            <h2>{tx("Factory-direct")}</h2>
-            <p>{tx("We assemble, calibrate and test our instruments in Jimei District, Xiamen. Our engineering team helps specify custom configurations.")}</p>
-            <div className="p1-capability-grid">{trustPoints.slice(0, 3).map((point) => <article key={point.title}><h3>{tx(point.title)}</h3><p>{tx(point.body)}</p><Link href={point.title === "Factory-direct" ? "/about" : point.title === "Custom ranges" ? "/custom" : "/contact?intent=quote"}>{tx(point.title === "Factory-direct" ? "About the company" : point.title === "Custom ranges" ? "Talk to an engineer →" : "Request a quote")}</Link></article>)}</div>
+          <div className="home-industry-grid">
+            {industries.map((industry) => (
+              <Link key={industry.id} className="home-industry-link group" href={`/industries/${industry.id}`}>
+                <MediaFrame className="aspect-[16/10]" src={industry.image} alt="" sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw" />
+                <h3>{tx(industry.name)}</h3>
+              </Link>
+            ))}
           </div>
         </div>
-      </section>
-
-      {/* P2: company capabilities, guides and product highlights */}
-      <section className="p2-stories p2-wrap">
-        {trustPoints.slice(0, 2).map((point, index) => <article key={point.title}><MediaFrame className="p2-story-image" src={index === 0 ? "/images/reference-style/story-factory.webp" : "/images/reference-style/story-custom.webp"} alt="" sizes="(max-width: 767px) 100vw, 50vw" /><div className="p2-story-copy"><h2>{tx(point.title)}</h2><p>{tx(point.body)}</p><Link href={point.title === "Factory-direct" ? "/about" : "/custom"}>{tx(point.title === "Factory-direct" ? "About the company" : "Talk to an engineer →")}</Link></div></article>)}
-      </section>
-      <section className="p2-banner">
-        <div><h2>{tx("Selection guide")}</h2><p>{tx("Compare measuring principles, output signals and environmental ratings to find a sensor for your application.")}</p><Link href="/resources">{tx("Selection guide")}</Link></div>
-        <MediaFrame className="p2-banner-image" src="/images/reference-style/resource-banner.webp" alt="" sizes="(max-width: 767px) 100vw, 50vw" />
       </section>
       <section className="p2-guides p2-wrap">
-        <h2>{tx("Resources")}</h2>
-        <div className="p2-guide-grid">
-          {[{title:"Which output do you need?", text:"The output is usually the first thing to fix, because it decides what the control system has to do with the measurement — and whether you need a control system at all.", href:"/resources#outputs", image:"/images/reference-style/guide-output.webp"}, {title:"Six level principles, and when each one fails", text:"Float, magnetic, capacitive, submersible and magnetostrictive level measurement", href:"/resources", image:"/images/reference-style/guide-level.webp"}, {title:"Reading an IP code", text:"Dust-tight; protected against temporary immersion to 1 m for 30 minutes.", href:"/resources", image:"/images/reference-style/guide-ip.webp"}].map((guide) => <article key={guide.title}><MediaFrame className="p2-guide-image" src={guide.image} alt="" sizes="(max-width: 767px) 100vw, 33vw" /><div><h3>{tx(guide.title)}</h3><p>{tx(guide.text)}</p><Link href={guide.href}>{tx("Selection guide")}</Link></div></article>)}
+        <div className="mb-7 flex flex-wrap items-end justify-between gap-3">
+          <h2>{tx("Selection guide")}</h2>
+          <Link className="text-sm font-semibold text-brand-700 underline underline-offset-4" href="/resources">{tx("Resources")}</Link>
         </div>
+        <p className="mb-6 max-w-prose text-ink-600">{tx("Compare measuring principles, output signals and environmental ratings to find a sensor for your application.")}</p>
+        <div className="p2-guide-grid">
+          {guides.map(({ title, href, image }) => (
+            <article key={href}>
+              <Link className="block" href={href}>
+                <MediaFrame className="p2-guide-image" src={image} alt="" sizes="(max-width: 767px) 100vw, 33vw" />
+                <div className="px-5 py-4"><h3>{tx(title)}</h3></div>
+              </Link>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="p2-stories p2-wrap">
+        {trustPoints.slice(0, 2).map((point, index) => (
+          <article key={point.title}>
+            <MediaFrame className="p2-story-image" src={index === 0 ? "/images/reference-style/story-factory.webp" : "/images/reference-style/story-custom.webp"} alt="" sizes="(max-width: 767px) 100vw, 50vw" />
+            <div className="p2-story-copy">
+              <h2>{tx(point.title)}</h2>
+              <p>{tx(point.body)}</p>
+              <Link href={index === 0 ? "/about" : "/custom"}>{tx(index === 0 ? "About the company" : "Talk to an engineer →")}</Link>
+            </div>
+          </article>
+        ))}
       </section>
       <section className="p2-products">
         <div className="p2-wrap"><h2>{tx("Workhorse models")}</h2><div className="p2-product-grid">{featuredProducts.filter((product) => product.model === "HSM10" || product.model === "HPS10").map((product) => <article key={product.slug}><MediaFrame className="p2-product-image" src={product.model === "HSM10" ? "/images/reference-style/product-flow.webp" : "/images/reference-style/product-level.webp"} alt={product.model + " " + tx(product.name)} sizes="(max-width: 767px) 100vw, 50vw" /><div className="p2-product-copy"><h3>{product.model} {tx(product.name)}</h3><p>{tx(product.summary)}</p><Link href={`/products/${product.category}/${product.slug}`}>{tx("View specifications")}</Link></div></article>)}</div></div>

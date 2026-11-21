@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { categories } from "@/lib/categories";
 import { products } from "@/lib/products";
+import { industries } from "@/lib/industries";
 import { site } from "@/lib/site";
 
 /**
@@ -38,5 +39,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...categoryPages, ...productPages];
+  const industryPages: MetadataRoute.Sitemap = industries.map(({ id }) => ({
+    url: `${base}/industries/${id}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...categoryPages, ...productPages, ...industryPages];
 }

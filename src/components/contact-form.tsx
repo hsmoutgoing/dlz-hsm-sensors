@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "@/lib/i18n/client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import {
   INTENTS,
@@ -9,6 +9,13 @@ import {
   type Intent,
 } from "@/lib/contact-schema";
 import { categories } from "@/lib/categories";
+import { site } from "@/lib/site";
+
+const shortcutIntents = ["quote", "custom", "datasheet", "support"] as const;
+
+const subscribeToHydration = () => () => {};
+const readClientHydration = () => true;
+const readServerHydration = () => false;
 
 interface FieldErrors {
   [key: string]: string;
@@ -20,6 +27,7 @@ interface ContactFormProps {
   /** Model code passed from a product page, prefilled and read-only-ish. */
   initialModel?: string;
   initialCategory?: string;
+  showIntentShortcuts?: boolean;
 }
 
 const emptyValues: ContactFormValues = {
@@ -38,15 +46,17 @@ const emptyValues: ContactFormValues = {
 
 type State = "idle" | "submitting" | "success" | "error";
 
-export function ContactForm({ initialIntent, initialModel, initialCategory }: ContactFormProps) {
+export function ContactForm({ initialIntent, initialModel, initialCategory, showIntentShortcuts }: ContactFormProps) {
   const tx = useTranslations();
-
-  const [values, setValues] = useState<ContactFormValues>({
+  const isHydrated = useSyncExternalStore(subscribeToHydration, readClientHydration, readServerHydration);
+  const initialValues: ContactFormValues = {
     ...emptyValues,
     intent: initialIntent,
     model: initialModel ?? "",
     category: initialCategory ?? "",
-  });
+  };
+
+  const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [state, setState] = useState<State>("idle");
   const [formError, setFormError] = useState("");
@@ -149,7 +159,7 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
           <button
             type="button"
             onClick={() => {
-              setValues({ ...emptyValues, intent: initialIntent });
+              setValues(initialValues);
               setReference("");
               setState("idle");
               mountedAt.current = Date.now();
@@ -162,8 +172,8 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
     );
   }
 
-  return (
-    <form onSubmit={handleSubmit} noValidate className="rounded-lg border border-ink-200 bg-white">
+  const form = (
+    <form method="post" action="/api/inquiries" onSubmit={handleSubmit} noValidate hidden={!isHydrated} className="rounded-lg border border-ink-200 bg-white">
       {formError && (
         <div
           ref={errorSummary}
@@ -346,6 +356,44 @@ export function ContactForm({ initialIntent, initialModel, initialCategory }: Co
         </div>
       </div>
     </form>
+  );
+
+  return (
+    <>
+      {!isHydrated && (
+        <p className="rounded-lg border border-ink-200 bg-white p-6">
+          <a className="font-medium text-brand-700 underline underline-offset-4" href={`mailto:${site.contact.email}`}>
+            {tx("Email an engineer")} · {site.contact.email}
+          </a>
+        </p>
+      )}
+      {showIntentShortcuts && (
+        <nav aria-label={tx("What do you need?")} className="mb-4 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-brand-700 underline-offset-4">
+          {shortcutIntents.map((intent) => (
+            <Link
+              key={intent}
+              href={{
+                pathname: "/contact",
+                query: initialModel ? { intent, model: initialModel } : { intent },
+                hash: "enquiry",
+              }}
+              aria-disabled={state === "submitting" || undefined}
+              onNavigate={(event) => {
+                if (state === "submitting") {
+                  event.preventDefault();
+                  return;
+                }
+                update("intent", intent);
+              }}
+              className="py-2 underline aria-disabled:cursor-not-allowed aria-disabled:opacity-60"
+            >
+              {tx(intent === "custom" ? "Custom engineering" : intentLabels[intent])}
+            </Link>
+          ))}
+        </nav>
+      )}
+      {form}
+    </>
   );
 }
 

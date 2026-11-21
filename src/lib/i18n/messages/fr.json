@@ -1770,6 +1770,7 @@
   "Metre-range M18 ultrasonic sensor: 60–1000 mm, 60 mm dead zone, 0.17 mm resolution, 52 ms response. PNP/NPN switching, teach-in, IP67, 38 g.": "Capteur ultrasonique M18 métrique : 60–1000 mm, zone morte 60 mm, résolution 0.17 mm, réponse 52 ms. PNP/NPN, apprentissage, IP67, 38 g.",
   "Two-metre range in an M30 barrel with a 100 mm dead zone. 0.17 mm resolution, 82 ms response, PNP/NPN output, teach-in, IP67, 105 g. For warehouse and vehicle-scale distances.": "Capteur M30 de portée 2 m, zone morte 100 mm, résolution 0.17 mm, réponse 82 ms. PNP/NPN, apprentissage, IP67, 105 g, pour entrepôts et véhicules.",
   "Four-metre ultrasonic range in an M30 barrel: 200–4000 mm, 200 mm dead zone, 0.17–1.5 mm resolution, 162 ms response, PNP/NPN switching. For silos, large vessels and AGV obstacle detection.": "Capteur ultrasonique M30, 200–4000 mm, zone morte 200 mm, résolution 0.17–1.5 mm, réponse 162 ms, PNP/NPN. Pour silos, grandes cuves et obstacles AGV.",
+  "Choose an industry to explore typical measurement tasks and the instruments used for them.": "Choisissez un secteur pour découvrir les mesures courantes et les instruments adaptés.",
   "Home": "Accueil",
   "Products": "Produits",
   "About": "À propos",

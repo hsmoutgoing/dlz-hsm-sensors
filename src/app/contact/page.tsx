@@ -47,6 +47,7 @@ export default async function ContactPage({ searchParams }: PageProps) {
     <>
       <PageHero
         compact
+        image={{ src: "/images/about-illustrations/materials.webp" }}
         eyebrow={tx("Contact")} 
         title={tx("Send the process conditions")} 
         lede={tx("Medium, pressure, temperature, pipe or vessel size, and the signal your control system accepts — that is enough for us to come back with a model, a price and a lead time.")} 
@@ -59,6 +60,8 @@ export default async function ContactPage({ searchParams }: PageProps) {
           {/* Form */}
           <div id="enquiry" tabIndex={-1} className="scroll-mt-24 lg:col-span-8">
             <ContactForm
+              key={modelCode}
+              showIntentShortcuts
               initialIntent={intent}
               initialModel={modelCode}
               initialCategory={product?.category}

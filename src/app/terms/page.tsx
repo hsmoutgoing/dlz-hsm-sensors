@@ -23,6 +23,7 @@ export default function TermsPage() {
   return (
     <>
       <PageHero
+        reading
         compact
         eyebrow={tx("Legal")} 
         title={tx("Terms of use")} 

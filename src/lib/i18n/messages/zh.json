@@ -1770,6 +1770,7 @@
   "Metre-range M18 ultrasonic sensor: 60–1000 mm, 60 mm dead zone, 0.17 mm resolution, 52 ms response. PNP/NPN switching, teach-in, IP67, 38 g.": "米级M18超声波传感器，60–1000 mm，盲区60 mm，分辨率0.17 mm，响应52 ms，PNP/NPN、自学习、IP67、38 g。",
   "Two-metre range in an M30 barrel with a 100 mm dead zone. 0.17 mm resolution, 82 ms response, PNP/NPN output, teach-in, IP67, 105 g. For warehouse and vehicle-scale distances.": "M30圆筒超声波传感器，量程2 m，盲区100 mm，分辨率0.17 mm，响应82 ms。PNP/NPN、自学习、IP67、105 g，适用于仓储及车辆级距离。",
   "Four-metre ultrasonic range in an M30 barrel: 200–4000 mm, 200 mm dead zone, 0.17–1.5 mm resolution, 162 ms response, PNP/NPN switching. For silos, large vessels and AGV obstacle detection.": "M30圆筒超声波传感器，量程200–4000 mm，盲区200 mm，分辨率0.17–1.5 mm，响应162 ms，PNP/NPN开关。适用于料仓、大型容器及AGV避障。",
+  "Choose an industry to explore typical measurement tasks and the instruments used for them.": "按行业查看典型测量任务和适用仪表。",
   "Home": "首页",
   "Products": "产品",
   "About": "关于我们",
